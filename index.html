@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f6b52">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>泰国双城记 · 迷你版</title>
+<style>
+:root{
+  --bg:#f3f7f4;
+  --card:#ffffff;
+  --ink:#1d2a26;
+  --dim:#6c7b75;
+  --brand:#0f6b52;
+  --brand2:#e6a23c;
+  --line:#e3eae6;
+  --danger:#c45b3c;
+  --radius:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.55;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing:antialiased;
+}
+.app{max-width:560px;margin:0 auto;padding:14px 14px 0}
+header{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 14px}
+.brand{display:flex;align-items:center;gap:9px}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--brand),#2ca381);display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;flex:none;box-shadow:0 4px 10px rgba(15,107,82,.25)}
+.brand h1{font-size:16px;line-height:1.2}
+.brand p{font-size:11px;color:var(--dim)}
+.pill{background:#fff;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--dim);padding:5px 10px;white-space:nowrap}
+.hero{background:linear-gradient(130deg,#0f6b52,#2ca381);border-radius:20px;padding:18px 17px;color:#fff;margin-bottom:14px}
+.hero h2{font-size:21px;line-height:1.35;font-weight:800}
+.hero p{font-size:12.5px;opacity:.9;margin-top:5px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+.quick a,.quick button{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:13px;padding:10px 6px;font-size:13px;font-weight:700;text-decoration:none}
+.section{margin:16px 0 8px;display:flex;align-items:baseline;justify-content:space-between}
+.section h3{font-size:16px}
+.section span{font-size:11px;color:var(--dim)}
+.daystrip{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.daystrip::-webkit-scrollbar{display:none}
+.daychip{flex:none;width:60px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px 4px;text-align:center;cursor:pointer}
+.daychip .d{font-size:11px;color:var(--dim)}
+.daychip .n{font-size:17px;font-weight:800;margin-top:2px}
+.daychip small{display:block;font-size:9.5px;color:#93a09b;margin-top:1px}
+.daychip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.daychip.on .d,.daychip.on small{color:rgba(255,255,255,.8)}
+.daychip.on .n{color:#fff}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;margin-bottom:10px}
+.day-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
+.day-head h2{font-size:17px;line-height:1.35}
+.day-head .tag{flex:none;font-size:10.5px;color:#0b6b4c;background:#e2f2ea;border-radius:999px;padding:3px 8px;white-space:nowrap;margin-top:3px}
+.tipbox{background:#fff8e9;border:1px solid #f3e2bc;border-radius:12px;padding:9px 11px;margin-bottom:9px}
+.tipbox p{font-size:12px;color:#7a6231;margin:3px 0;display:flex;gap:5px}
+.tipbox p::before{content:"•";color:#d99b2b}
+.item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.item .t{flex:none;font-size:11px;font-weight:800;color:var(--brand);background:#e7f3ee;border-radius:9px;padding:4px 6px;height:fit-content;min-width:52px;text-align:center}
+.item .body{flex:1;min-width:0}
+.item .body .nm{font-weight:800;font-size:15px;line-height:1.3}
+.item .body .rv{font-size:12.3px;color:#52615c;margin-top:3px}
+.item .body .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.chip{font-size:10.5px;background:#f0f4f1;color:#5b6c65;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.chip.book{background:#fdeadd;color:#b0471f}
+.actrow{display:flex;gap:8px;margin-top:10px}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:10px 8px;font-size:13.5px;font-weight:700;border:none;cursor:pointer;text-decoration:none;background:#eef4f0;color:#0d5d47}
+.btn.primary{background:var(--brand);color:#fff}
+.btn.gold{background:#fff3dd;color:#9a6500}
+.dining{background:#fbf8ef;border-radius:12px;padding:9px 11px;margin-top:8px}
+.dining h4{font-size:12px;color:#9a6500}
+.dining p{font-size:12px;color:#5a6b63;margin-top:2px}
+.meal{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#42524b;padding-top:3px}
+.meal b{color:#b0471f;white-space:nowrap;font-weight:600}
+.foot-note{margin-top:16px;text-align:center;font-size:11px;color:#97a59f;line-height:1.7}
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);
+  padding:6px 10px calc(6px + env(safe-area-inset-bottom));
+  display:flex;
+}
+.tabbar button{flex:1;border:none;background:none;padding:7px 2px;font-size:10px;color:#8a9891;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px;cursor:pointer}
+.tabbar button .ic{font-size:19px;line-height:1}
+.tabbar button.on{color:var(--brand);font-weight:700}
+.panel{display:none}
+.panel.on{display:block}
+.sheet{position:fixed;inset:0;background:rgba(20,35,30,.42);z-index:60;display:none;align-items:flex-end;justify-content:center}
+.sheet.on{display:flex}
+.sheet .box{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:560px;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.sheet .handle{width:38px;height:4px;background:#dfe6e2;border-radius:4px;margin:0 auto 12px}
+.sheet h3{font-size:17px;margin-bottom:3px}
+.sheet .sub{font-size:12px;color:var(--dim);margin-bottom:12px}
+.sheet .addr{background:#f3f7f4;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#3d4d46;margin-bottom:12px;word-break:break-all}
+.sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.listitem{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:8px}
+.listitem input{width:18px;height:18px;accent-color:var(--brand);flex:none}
+.listitem .txt{font-size:13px;flex:1}
+.listitem .deadline{font-size:11px;color:var(--danger);white-space:nowrap}
+.hotel{border-left:4px solid var(--brand)}
+.flight{border-left:4px solid var(--brand2)}
+.mini-note{font-size:11.5px;color:#8b9892;margin-top:8px;text-align:center}
+@media (min-width:600px){
+  .app{max-width:560px}
+  .tabbar .box{max-width:560px}
+}
+</style>
+</head>
+<body>
+
+<div id="app-lock" style="position:fixed;inset:0;z-index:99999;background:linear-gradient(150deg,#0f6b52,#2ca381);display:flex;align-items:center;justify-content:center;color:#fff;font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;padding:24px">
+  <div style="text-align:center;max-width:300px;width:100%">
+    <div style="font-size:44px;line-height:1">🔒</div>
+    <h1 style="font-size:21px;margin:14px 0 6px;letter-spacing:.04em">泰国双城记 · 8 天行程</h1>
+    <p style="font-size:13px;opacity:.85;margin-bottom:18px">输入四位访问密码后查看</p>
+    <input id="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" placeholder="••••" style="width:100%;box-sizing:border-box;text-align:center;font-size:24px;letter-spacing:10px;padding:10px 0;border:none;border-radius:14px;outline:none;color:#123a2d">
+    <button id="pin-btn" style="width:100%;box-sizing:border-box;margin-top:12px;background:#e6a23c;border:none;border-radius:14px;padding:13px 0;font-size:16px;font-weight:800;color:#402a00;cursor:pointer">进入行程</button>
+    <p id="pin-err" style="display:none;color:#ffd8c8;font-size:12.5px;margin-top:10px">密码不对，请再试一次</p>
+  </div>
+</div>
+<div class="app">
+  <header>
+    <div class="brand">
+      <div class="logo">✈</div>
+      <div>
+        <h1 id="app-title"></h1>
+        <p id="app-dates"></p>
+      </div>
+    </div>
+    <span class="pill" id="app-count"></span>
+  </header>
+
+  <div id="view-行程" class="panel on">
+    <div class="hero">
+      <h2 id="hero-day">点下面第几天开始浏览</h2>
+      <p id="hero-sub">每站都能一键导航 / 复制定位打车</p>
+      <div class="quick">
+        <button data-goto="map">🗺 打开全部地图</button>
+        <button data-goto="check">📋 出发前清单</button>
+      </div>
+    </div>
+    <div id="day-root"></div>
+  </div>
+  <div id="view-清单" class="panel"></div>
+  <div id="view-出行" class="panel"></div>
+</div>
+
+<nav class="tabbar">
+  <button data-tab="行程" class="on"><span class="ic">🗓</span>行程</button>
+  <button data-tab="清单"><span class="ic">✅</span>清单</button>
+  <button data-tab="出行"><span class="ic">🛎</span>酒店航班</button>
+</nav>
+
+<div class="sheet" id="sheet-nav">
+  <div class="box">
+    <div class="handle"></div>
+    <h3 id="sheet-title">导航到此</h3>
+    <p class="sub">选择地图 App 打开；打车请先复制定位，再到 Grab 粘贴。</p>
+    <div class="addr" id="sheet-addr"></div>
+    <div class="row">
+      <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
+      <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
+      <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
+      <button class="btn gold" id="btn-copy">📋 复制定位</button>
+      <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
+    </div>
+    <p class="mini-note">泰国打车通常用 Grab；复制下方定位后，在 Grab 里粘贴地点即可叫车。</p>
+  </div>
+</div>
+
+<div class="sheet" id="sheet-maps">
+  <div class="box">
+    <div class="handle"></div>
+    <h3>全部行程地图</h3>
+    <p class="sub">以下任选一个打开：</p>
+    <div class="row">
+      <a class="btn primary" id="map-all-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
+      <a class="btn primary" id="map-all-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
+      <button class="btn" id="btn-close-maps">关闭</button>
+    </div>
+    <p class="mini-note" id="map-all-info"></p>
+  </div>
+</div>
+
+<script id="trip-data" type="application/json">{
+  "title": "泰国双城记 · 曼谷 + 清迈 8 天 7 晚",
+  "subtitle": "2026.10.03–10.10 ｜ 两人自由行 ｜ 曼谷泰服写真 + 清迈大象瀑布 + 丛林与咖啡",
+  "startDate": "2026-10-03",
+  "colorScheme": "emerald-gold",
+  "preTrip": {
+    "weather": {
+      "summary": "10 月初仍处雨季末：曼谷 25–33°C、清迈 22–31°C。典型规律是早上晴朗、午后短时雷阵雨、下完很快放晴；户外项目尽量排在上午与傍晚，午后阵雨就躲进商场/咖啡店。",
+      "typhoon": "曼谷、清迈不是台风高频登陆区，但季风对流可能造成航班延误；出发前 3 天起留意航司 App 与当地天气，不要只信单日预报。"
+    },
+    "packing": "轻便速干衣为主；寺庙着装需遮肩过膝（也可到当地买泰式围布）；薄外套应对室内冷气与清迈早晚；轻便雨具、强效驱蚊液、好走鞋必备。瀑布日带溯溪鞋/防水袋/全套换洗；泰服写真日建议带小风扇。",
+    "payment": "备 3000–5000 泰铢现金给夜市/小摊/双条车，商场与连锁店可刷卡；银联/支付宝在部分商场可用。清迈老城小店与夜市找零慢，多备小面额。",
+    "apps": [
+      "Grab / Bolt（曼谷清迈打车）",
+      "Klook / KKday（大象营、丛林飞跃、SPA 预约）",
+      "航司官方 App（线上值机与行李额）",
+      "Google 地图 / 高德地图（离线收藏地点）",
+      "SuperRich（机场/市区换汇参考）"
+    ],
+    "ticketTip": "重要：中泰互免签证，正常旅游免签停留 30 天即可，无需落地签、无需 2 寸照片，但随身带好护照、返程机票与酒店预订单备查。泰服妆造、SPA、大象营、丛林飞跃等热门项目提前 1–7 天线上预约；廉价航空托运行李额提前在官网买。"
+  },
+  "flights": {
+    "booked": [],
+    "candidates": [
+      {
+        "label": "YZ3525 / VZ3525 泰国越捷（按你们票面）",
+        "code": "10.03 上海浦东 T2 → 曼谷",
+        "time": "02:40 起飞 / 06:10 抵达（当地时间）",
+        "note": "红眼直飞，建议 00:10 前到浦东 T2；落地机场与航站楼请以票面/航司 App 为准。"
+      },
+      {
+        "label": "FD3433 亚航 AirAsia",
+        "code": "10.05 曼谷 → 清迈（廊曼 T2 国内出发）",
+        "time": "12:30 / 13:45",
+        "note": "柜台值机约起飞前 30–45 分钟截止，建议 11:00 前到机场；托运行李额提前线上购买。"
+      },
+      {
+        "label": "SL507 狮航 Thai Lion Air",
+        "code": "10.09 清迈 → 曼谷",
+        "time": "10:30 / 11:45",
+        "note": "国内段建议 08:30 前到清迈机场；前一晚收好行李。"
+      },
+      {
+        "label": "SL926 狮航 Thai Lion Air",
+        "code": "10.10 曼谷 → 上海浦东（廊曼 T1 国际出发）",
+        "time": "19:50 / 次日 01:05（北京时间）",
+        "note": "重点：廊曼 T1 不是 T2；17:20 前到机场，留足出境排队时间。"
+      }
+    ]
+  },
+  "hotelAreas": [
+    {
+      "area": "曼谷前两晚 · 席隆 / Sala Daeng（10.3–10.5）",
+      "reason": "你已订：西铁城酒店克鲁姆曼谷席隆 Nishitetsu Hotel Croom Bangkok Silom。靠近 Sala Daeng BTS，下楼就是夜市；Day1 清晨落地可先寄存行李，Day2 去乍都乍、暹罗商圈都方便。",
+      "options": [
+        {
+          "tier": "已订",
+          "name": "西铁城酒店克鲁姆曼谷席隆 Nishitetsu Hotel Croom Bangkok Silom",
+          "priceRange": "已预订",
+          "note": "席隆区人气酒店；Saladaeng BTS 步行可达，楼下即夜市，生活便利。"
+        }
+      ]
+    },
+    {
+      "area": "清迈 · 古城（10.5–10.9）",
+      "reason": "你已订：Coucou Hotel（古城 Sri Poom Rd，近清曼寺与北门）。老城内大部分步行可达，去机场/宁曼路打车约 15–25 分钟。",
+      "options": [
+        {
+          "tier": "已订",
+          "name": "Coucou Hotel（古城店）",
+          "priceRange": "已预订",
+          "note": "小型精品酒店；近清曼寺，步行 5 分钟内到头疗店，北门夜市也在步行范围。"
+        }
+      ]
+    },
+    {
+      "area": "曼谷后两晚 · 乍都节北区（10.9–10.10）",
+      "reason": "你已订：UHG 四分之一拉查于丁酒店 The Quarter Ratchayothin by UHG。曼谷北部、距廊曼机场约 20–30 分钟车程；周边 Central Ladprao、JJ 夜市可补最后采购。",
+      "options": [
+        {
+          "tier": "已订",
+          "name": "The Quarter Ratchayothin by UHG",
+          "priceRange": "已预订",
+          "note": "乍都节区 1799 Phahonyothin Rd；步行/短车程可达 Central Ladprao 等大型商超，临走买纪念品、赶机都方便。"
+        }
+      ]
+    }
+  ],
+  "disclaimer": "本页全部信息（航班、酒店、天气、景点、门票、营业时间、餐厅、评分、价格等）均为参考，可能不准确或已过时，不承诺与实时一致。出发前请务必通过航司官方 App、订房平台、Google/高德地图、目的地官方渠道逐项核实后再做决定或前往。",
+  "tips": [
+    "中泰互免签证：2026-09-15 起泰国取消单方面 60 天免签、恢复双边协定 30 天免签；本次 8 天行程完全够用，无需落地签材料。",
+    "廉价航空三件事：托运行李额提前官网买；随身登机箱尺寸看航司规则；泰国国内段只查护照、液体不限 100ml。",
+    "10 月排程逻辑：户外放上午和傍晚；午后阵雨是常态，郑王庙写真、瀑布、古树公园都留一点‘雨备方案’。",
+    "寺庙着装遮肩过膝、进殿脱鞋；不要用脚指向佛像或他人，也不要摸别人头。",
+    "打车认 Grab/Bolt 车牌；机场走官方出租柜台或预约接机，避开门口揽客黑车。",
+    "夜市与路边摊多收现金，建议随身小面额泰铢；大额消费再刷卡或扫码。",
+    "古树公园、瀑布、丛林蚊虫多，强效驱蚊液必备；穿浅色衣物，粘粘瀑布只踩白色钙化岩。"
+  ],
+  "reminders": [
+    { "item": "核对去程 YZ3525/VZ3525 票面与落地机场、行李额", "leadDays": 14 },
+    { "item": "预约 Nana Photo Studio 泰服妆造", "leadDays": 7 },
+    { "item": "预约曼谷 Let's Relax（席隆店）90 分钟项目", "leadDays": 3 },
+    { "item": "预约 New Elephant Home 上午场（Klook/KKday）", "leadDays": 3 },
+    { "item": "预约 Jungle Flight 丛林飞跃（Klook，含接送）", "leadDays": 3 },
+    { "item": "预约清迈 ASMR 头疗 / Let's Relax 塔佩 / Kiyora", "leadDays": 1 },
+    { "item": "返程 SL926 线上值机并确认行李额", "leadDays": 14 }
+  ],
+  "days": [
+    {
+      "date": "2026-10-03",
+      "weekday": "周六",
+      "theme": "红眼落地 · 大皇宫 + 郑王庙泰服写真",
+      "tips": [
+        "凌晨红眼落地，当天体力有限：若很累，可把大皇宫段压缩到 1.5 小时，泰服写真（含妆造）尽量保留。",
+        "郑王庙外景 16:00–17:30 光线最柔和；若午后下雨，先去 ICONSIAM 室内，天晴再回来补拍。",
+        "今晚夜市宵夜是可选项，累了直接回酒店，为明天乍都乍保存体力。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "大皇宫 + 玉佛寺",
+          "time": "09:00–11:00",
+          "lat": 13.7493514,
+          "lng": 100.4918643,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/0005574_-_Wat_Phra_Kaew_006.jpg/330px-0005574_-_Wat_Phra_Kaew_006.jpg",
+          "rating": "4.8",
+          "review": "曼谷最经典的皇家寺院群；建议 09:00 开门后直奔玉佛寺，避开旅行团高峰。",
+          "openingHours": "约 08:30 开门，15:30 停止入场",
+          "ticketPrice": "外国游客参考 500 泰铢（含玉佛寺）",
+          "transport": {
+            "mode": "Grab 从席隆出发",
+            "fare": "参考 150–250 泰铢",
+            "duration": "约 15–25 分钟"
+          },
+          "needsBooking": false
+        },
+        {
+          "period": "noon",
+          "name": "卧佛寺（浅逛）",
+          "time": "11:00–12:00",
+          "lat": 13.7463456,
+          "lng": 100.4927381,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%84%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%AA%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%8A%E0%B8%95%E0%B8%B8%E0%B8%9E%E0%B8%99.jpg/330px-%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%84%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%AA%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%8A%E0%B8%95%E0%B8%B8%E0%B8%9E%E0%B8%99.jpg",
+          "rating": "4.7",
+          "review": "大卧佛与泰式按摩发源地，离大皇宫步行约 10 分钟，浅逛一小时正好。",
+          "openingHours": "约 08:00–18:30",
+          "ticketPrice": "参考 200 泰铢",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "Nana Photo Studio · 泰服妆造",
+          "time": "13:20–16:00",
+          "lat": 13.7472,
+          "lng": 100.4902,
+          "rating": "4.5",
+          "review": "小红书热门泰服租赁 + 妆造店，紧邻卧佛寺一侧；14:00 前到店，建议提前在 IG/小红书预约。",
+          "openingHours": "约 09:00–18:00",
+          "needsBooking": true,
+          "leadDays": 7
+        },
+        {
+          "period": "evening",
+          "name": "郑王庙 · 泰服外景",
+          "time": "16:00–17:30",
+          "lat": 13.7440526,
+          "lng": 100.489838,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg/330px-%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg",
+          "rating": "4.7",
+          "review": "以郑王庙高塔为背景拍泰服最出片；18:00 前需回店里归还服装。",
+          "openingHours": "约 08:00–18:00",
+          "ticketPrice": "参考 200 泰铢",
+          "transport": {
+            "mode": "Tha Tien 码头渡船过河",
+            "fare": "约 20 泰铢",
+            "duration": "约 5 分钟"
+          },
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "ICONSIAM · SookSiam 晚餐",
+          "time": "18:30–20:00",
+          "lat": 13.7268227,
+          "lng": 100.510294,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Magnolias_Waterfront_Residences_Iconsiam.jpg/330px-Magnolias_Waterfront_Residences_Iconsiam.jpg",
+          "rating": "4.6",
+          "review": "河畔巨型商场；SookSiam 一层仿水上市场小吃区，泰奶冰沙和河边夜景都值得。",
+          "openingHours": "约 10:00–22:00",
+          "needsBooking": false
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "大皇宫/卧佛寺附近河边简餐",
+          "hours": "12:00–13:20",
+          "dishes": [
+            { "name": "泰式炒河粉 Pad Thai", "price": "约 80–120 泰铢" },
+            { "name": "芒果糯米饭", "price": "约 60–100 泰铢" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "ICONSIAM · SookSiam",
+          "hours": "18:30–20:00",
+          "dishes": [
+            { "name": "泰奶冰沙", "price": "约 60–90 泰铢" },
+            { "name": "自选泰式小吃拼盘", "price": "按份 60–150 泰铢" }
+          ]
+        },
+        {
+          "meal": "宵夜（可选）",
+          "place": "席隆 / 朱拉夜市",
+          "hours": "20:30 后",
+          "dishes": [
+            { "name": "Pungdet 爆浆烤面包（斑斓/泰茶）", "price": "约 50–80 泰铢" },
+            { "name": "榴莲配小菠萝", "price": "约 60–150 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "weekday": "周日",
+      "theme": "乍都乍周末市场 + 暹罗商圈 + 席隆按摩",
+      "tips": [
+        "市场 11:00 后很晒很挤，早点到、穿舒服的鞋；分区规划，买伴手礼不必第一天就买齐。",
+        "Let's Relax 席隆店周日晚上很满，你攻略已注明要提前 1 天预约，记得确认双人时段。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "乍都乍周末市场 Chatuchak",
+          "time": "09:00–14:00",
+          "lat": 13.8002651,
+          "lng": 100.5511228,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Bangkok_-_Jatujak_Market_02.JPG/330px-Bangkok_-_Jatujak_Market_02.JPG",
+          "rating": "4.6",
+          "review": "东南亚最大周末市集，衣物、手作、香薰、绿植分区清楚；逛 4–5 小时也只算走马观花。",
+          "openingHours": "仅周六/周日 09:00–18:00",
+          "ticketPrice": "免费入场",
+          "transport": {
+            "mode": "BTS：Sala Daeng → Siam 换乘 → Mo Chit",
+            "fare": "参考 40–60 泰铢/人单程",
+            "duration": "约 35–45 分钟"
+          },
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "暹罗商圈 + 四面佛",
+          "time": "14:30–18:00",
+          "lat": 13.7467785,
+          "lng": 100.534954,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Siam_Paragon_06.23.jpg/330px-Siam_Paragon_06.23.jpg",
+          "rating": "4.6",
+          "review": "Siam Paragon、Central World 与四面佛同片区连逛；室内空调正好避开午后热浪。",
+          "openingHours": "商场约 10:00–22:00",
+          "ticketPrice": "商场免费；四面佛参拜鲜花套组现场买",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "Let's Relax SPA 席隆店（90 分钟）",
+          "time": "19:30–21:00",
+          "lat": 13.7276,
+          "lng": 100.5312,
+          "rating": "4.7",
+          "review": "泰国国民连锁、口碑稳定；90 分钟古法泰式按摩适合逛完市场放松双腿。",
+          "openingHours": "约 10:00–23:59，最后接待约 22:30",
+          "ticketPrice": "90 分钟古法参考 1100–1300 泰铢",
+          "needsBooking": true,
+          "leadDays": 1
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "乍都乍市场内简餐",
+          "hours": "12:00 前后",
+          "dishes": [
+            { "name": "椰子冰淇淋", "price": "约 40–60 泰铢" },
+            { "name": "烤猪颈肉", "price": "约 60–100 泰铢" }
+          ]
+        },
+        {
+          "meal": "晚餐（二选一）",
+          "place": "Central World 内：E-ga Bangkok / PASTA AMA",
+          "hours": "18:00 前入座",
+          "dishes": [
+            { "name": "E-ga：猪肉虾肉椰子酱、冬阴功汤、炙烤牛肉", "price": "人均约 300–600 泰铢" },
+            { "name": "PASTA AMA：辣酱卡邦尼意面（泰意融合）", "price": "人均约 300–500 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-05",
+      "weekday": "周一",
+      "theme": "转场清迈 · 古城漫步 + 草本头疗",
+      "tips": [
+        "12:30 起飞：09:30 前退房出发，席隆 → 廊曼平日约 50–60 分钟，预留堵车缓冲。",
+        "13:45 落地清迈后先到酒店放行李；今日定位为缓冲日，节奏放慢。",
+        "下午 15:30 后古城很多店刚开门；Khao Soi 当下午餐吃，夜市留到宵夜。"
+      ],
+      "slots": [
+        {
+          "period": "afternoon",
+          "name": "清曼寺（清迈最老佛寺）",
+          "time": "15:30–16:15",
+          "lat": 18.7935584,
+          "lng": 98.9893792,
+          "rating": "4.7",
+          "review": "清迈建城初期的第一座寺庙，白象传说与柚木大殿很有味道，紧邻酒店步行可达。",
+          "openingHours": "约 06:00–18:00",
+          "ticketPrice": "免费（大殿可随缘）",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "三王纪念碑",
+          "time": "16:15–16:45",
+          "lat": 18.7902299,
+          "lng": 98.9873524,
+          "rating": "4.4",
+          "review": "清迈建城三王纪念广场，旁边的清迈市立艺术文化中心可顺路看（闭馆时间以现场为准）。",
+          "openingHours": "广场全天；博物馆参考 08:30–17:00",
+          "ticketPrice": "广场免费",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "北门一带 · Khao Soi 下午餐",
+          "time": "17:00–18:30",
+          "lat": 18.7965,
+          "lng": 98.9875,
+          "rating": "4.6",
+          "review": "北门（Chang Phueak）是泰北咖喱面名区，Khao Soi 配炸面、酸菜与鸡腿；Roti Pa Dea 晚些才出摊。",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "ASMR Massage & Wellness · 60 分钟草本头疗",
+          "time": "19:00–20:00",
+          "lat": 18.7945,
+          "lng": 98.9888,
+          "rating": "4.6",
+          "review": "古城 Sri Phum Rd 上的感官头疗，适合红眼转场后放松；提前 1 天预约，可两人同时段。",
+          "openingHours": "需预约确认",
+          "ticketPrice": "60 分钟草本头疗参考 400–600 泰铢",
+          "needsBooking": true,
+          "leadDays": 1
+        },
+        {
+          "period": "evening",
+          "name": "北门夜市宵夜",
+          "time": "20:15–21:00",
+          "lat": 18.7968,
+          "lng": 98.9872,
+          "rating": "4.5",
+          "review": "香蕉饼、泰北香肠（sai ua）、烤串都在北门夜市一带；原攻略写的 Roti Pa Dea 若现场没有此招牌，就认人气最旺的香蕉饼摊。",
+          "openingHours": "傍晚起陆续出摊",
+          "needsBooking": false
+        }
+      ],
+      "dining": [
+        {
+          "meal": "下午餐",
+          "place": "北门 Khao Soi（泰北咖喱面）",
+          "hours": "17:00–18:30",
+          "dishes": [
+            { "name": "Khao Soi 咖喱面（鸡腿）", "price": "约 60–100 泰铢" },
+            { "name": "泰式奶茶", "price": "约 40–60 泰铢" }
+          ]
+        },
+        {
+          "meal": "宵夜",
+          "place": "北门夜市",
+          "hours": "20:15 后",
+          "dishes": [
+            { "name": "北门夜市香蕉饼（原攻略记作 Roti Pa Dea）", "price": "约 40–60 泰铢" },
+            { "name": "泰北香肠 sai ua", "price": "约 50–90 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "weekday": "周二",
+      "theme": "湄登山区一日 · 大象 + 三瀑布全保留 + 晚间 SPA",
+      "tips": [
+        "四站你要求全保留：四站间总车程约 190–210 公里，8 小时包车实际偏紧，建议和司机确认包到 9–9.5 小时或超时计费方式；天使瀑布压缩到 40–50 分钟最不影响主线。",
+        "大象营会湿身，带换洗衣物；粘粘瀑布 16:30 停止下水，尽量 14:00 前到。",
+        "Let's Relax 塔佩店 SPA 保留，只是把顺序改成：回程先到宁曼吃 Cherng Doi 烤鸡（20:00 收档），再去塔佩店 19:15 按摩，避免原先‘先 SPA 再吃饭’撞打烊。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "New Elephant Home 新象之家（上午场）",
+          "time": "08:00–10:30",
+          "lat": 19.1940832,
+          "lng": 98.895656,
+          "rating": "4.8",
+          "review": "无骑象、无表演的救助营地：换营服、做维他命球、林间散步、陪大象洗澡；上午象群状态最好。",
+          "ticketPrice": "Klook/KKday 半日套餐参考 2500–3200 泰铢/人",
+          "transport": {
+            "mode": "Grab 8 小时包车（07:30 酒店出发）",
+            "fare": "包车费需与司机提前确认",
+            "duration": "古城 → 营地约 60–80 分钟"
+          },
+          "needsBooking": true,
+          "leadDays": 3
+        },
+        {
+          "period": "noon",
+          "name": "Elephant POOPOOPAPER Park 大象粑粑纸公园",
+          "time": "11:15–12:15",
+          "lat": 18.925562,
+          "lng": 98.9316702,
+          "rating": "4.5",
+          "review": "没有活象的环保科普园：看粪便制纸、亲手造纸压花；你要求保留，因此把停留压到 60 分钟内。",
+          "openingHours": "约 08:30–17:00",
+          "ticketPrice": "现场约 50 泰铢",
+          "needsBooking": false
+        },
+        {
+          "period": "noon",
+          "name": "天使瀑布 Dantewada（原攻略写作 Tara）",
+          "time": "12:40–13:40",
+          "lat": 19.1228809,
+          "lng": 98.9423182,
+          "rating": "4.4",
+          "review": "人造仙境感瀑布公园，出片率高、步道轻松；地图上的正式名多为 Dantewada / Land of Angels。",
+          "ticketPrice": "参考 80 泰铢/人",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "粘粘瀑布 Bua Tong",
+          "time": "14:00–16:00",
+          "lat": 19.0679872,
+          "lng": 99.0795302,
+          "rating": "4.8",
+          "review": "可赤脚攀爬的钙华瀑壁，分四层、越往上越陡；只踩白色岩面，青苔石头不碰。",
+          "openingHours": "约 16:30 后禁止下水",
+          "ticketPrice": "免费",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "Cherng Doi 烤鸡晚餐（返程顺路）",
+          "time": "17:45–18:45",
+          "lat": 18.7985,
+          "lng": 98.9655,
+          "rating": "4.6",
+          "review": "宁曼后巷 Suk Kasame Rd 的炭火无骨烤鸡名店（米其林推荐）；山区返程先到店用餐，避开 20:00 收档风险。",
+          "openingHours": "约 11:00–20:00（周一休；去前电话确认）",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "Let's Relax SPA 塔佩店（90 分钟古法）",
+          "time": "19:15–20:45",
+          "lat": 18.788,
+          "lng": 98.992,
+          "rating": "4.6",
+          "review": "原攻略的 SPA 不取消，只改时间：Cherng Doi 晚餐后从宁曼过来，90 分钟古法拉伸刚好缓解山区一天的疲劳。",
+          "openingHours": "约 10:00–23:00（以预约确认为准）",
+          "ticketPrice": "90 分钟古法参考 1100–1400 泰铢",
+          "needsBooking": true,
+          "leadDays": 1
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "包车途中简餐 / 大象营餐点",
+          "hours": "视路线",
+          "dishes": [
+            { "name": "泰式炒饭或打抛饭", "price": "约 60–120 泰铢" },
+            { "name": "冰镇椰子/瓶装水", "price": "约 30–60 泰铢" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "Cherng Doi Roast Chicken（原 Yod Sab Joom 查无实店，已用这家真实米其林推荐店替换）",
+          "hours": "17:45–18:45",
+          "dishes": [
+            { "name": "炭火无骨烤鸡", "price": "半只约 150–250 泰铢" },
+            { "name": "青木瓜沙拉 / 糯米饭", "price": "约 50–100 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "weekday": "周三",
+      "theme": "古树公园 + 实弹射击 + 宁曼咖啡 + Kiyora SPA",
+      "tips": [
+        "古树公园光线最佳在 09:00 或 15:00–16:00；返程不好打车，离开前 10 分钟先叫 Grab。",
+        "靶场 12:00–13:00 午休；新手选 .22 口径，需出示护照（或照片页），无预约直接去即可。",
+        "按新安排：清迈大学 + 后门夜市整体挪到明天（10.8）丛林飞跃回来后；今晚把时间留给宁曼咖啡、So Good Thai 和 Kiyora SPA。",
+        "Toffee Roasters 约 16:00 打烊：射击 14:30 结束、约 15:00 到宁曼，先逛它（15:00–15:45），再逛 GRAPH/JOOST；实在赶不上就只去 GRAPH 或 One Nimman 内咖啡。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "昌通古树公园 Changthong Heritage Park",
+          "time": "08:30–11:00",
+          "lat": 18.826,
+          "lng": 98.965,
+          "rating": "4.7",
+          "review": "泰国第一座古树博物馆：丁达尔光、螺旋椰树、苔藓树根都很出片；门票可抵咖啡券。蚊虫极多，穿浅色。",
+          "openingHours": "约 09:00–19:00，16:30 停止入园",
+          "ticketPrice": "参考 250 泰铢（可抵 30 泰铢咖啡券）",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "Thai Green 清迈绿航实弹射击",
+          "time": "13:00–14:30",
+          "lat": 18.8245,
+          "lng": 98.9753,
+          "rating": "4.5",
+          "review": "清迈体量较大的靶场，位于 Chang Phueak 片区；无需预约，带护照照片页现场登记，新手优先 .22 小口径。",
+          "openingHours": "约 09:00–18:00（12:00–13:00 午休，17:40 停止售票）",
+          "ticketPrice": "套餐按发数计，参考 500–1200 泰铢/人",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "宁曼路咖啡探店",
+          "time": "15:00–17:00",
+          "lat": 18.8001262,
+          "lng": 98.9680725,
+          "rating": "4.6",
+          "review": "Toffee Roasters（Soi 5，07:00–16:00）→ GRAPH One Nimman / GRAPH → JOOST 果昔；顺路逛 One Nimman 市集。",
+          "openingHours": "Toffee 约 07:00–16:00；GRAPH One Nimman 约 11:00–22:00",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "So Good Thai 晚餐（Nimman Soi 15）",
+          "time": "17:15–18:30",
+          "lat": 18.7960883,
+          "lng": 98.9664746,
+          "rating": "4.5",
+          "review": "你点名的泰北风味小店：碎肉生菜包、泰式炒菜都适合配糯米饭；在宁曼逛完直接吃。",
+          "openingHours": "约 10:30–22:00（部分平台显示周日休）",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "Kiyora 柚木庄园 SPA",
+          "time": "19:00–20:30",
+          "lat": 18.7890715,
+          "lng": 98.99594,
+          "rating": "4.7",
+          "review": "柚木老宅改建的兰纳风 SPA（Chang Moi Soi 2）；原排 10.8，为避免和丛林飞跃日打架提前到这里。",
+          "openingHours": "约 10:30–21:00",
+          "ticketPrice": "90 分钟古法/精油参考 1200–1800 泰铢",
+          "needsBooking": true,
+          "leadDays": 1
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "Shu Homemade（古城 Phra Pokklao Soi 12）",
+          "hours": "09:30–16:30（从古树公园回城正好）",
+          "dishes": [
+            { "name": "三文鱼香蒜意大利面", "price": "约 185 泰铢" },
+            { "name": "奶油鸡肉青酱意面", "price": "约 150–180 泰铢" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "So Good Thai（Nimman Soi 15）",
+          "hours": "17:15–18:30",
+          "dishes": [
+            { "name": "泰北碎肉生菜包 larb", "price": "约 120–180 泰铢" },
+            { "name": "招牌泰式炒菜/冬阴功", "price": "约 100–200 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "weekday": "周四",
+      "theme": "Jungle Flight 丛林飞跃 + 瓦洛洛 + 清迈大学日落（瑜伽已替换）",
+      "tips": [
+        "按你的决定：丛林飞跃替换原丛林瑜伽。Jungle Flight 含酒店接送和午餐，全程约 6 小时（08:00 出发、约 15:00 回城），需提前 1–3 天预约。",
+        "瓦洛洛 17:00 后陆续收摊；若飞跃返程晚于 15:30，就果断删瓦洛洛、只保留清迈大学日落（重要伴手礼可在 10.7 午餐前后顺路买，Shu Homemade 就在古城内）。",
+        "清迈大学观光车末班约 16:30；从瓦洛洛过去刚好能赶上，先坐车再等静心湖日落，然后直接在学生夜市解决晚餐。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "Jungle Flight 丛林飞跃（含接送 · 原瑜伽替换）",
+          "time": "08:00–15:00",
+          "lat": 18.9529042,
+          "lng": 99.2962861,
+          "rating": "4.7",
+          "review": "老牌丛林飞跃：距清迈约 50 公里/1 小时车程，滑索体验约 2 小时，含装备与午餐；穿运动鞋长裤，贵重物品留酒店。",
+          "ticketPrice": "Klook/KKday 参考 1600–2500 泰铢/人（含接送午餐，实时价以平台为准）",
+          "transport": {
+            "mode": "酒店接送",
+            "fare": "含在套餐内",
+            "duration": "单程约 1 小时"
+          },
+          "needsBooking": true,
+          "leadDays": 3
+        },
+        {
+          "period": "afternoon",
+          "name": "瓦洛洛市场伴手礼（压缩版）",
+          "time": "15:15–16:00",
+          "lat": 18.7902357,
+          "lng": 99.000535,
+          "rating": "4.5",
+          "review": "本地批发市场：果干、香料、咖啡豆、手信比宁曼便宜；45 分钟只够定向采购，先列清单再去。",
+          "openingHours": "约 06:00–18:00，17:00 后陆续收摊",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "清迈大学 + 静心湖日落",
+          "time": "16:15–18:15",
+          "lat": 18.8009264,
+          "lng": 98.9521552,
+          "rating": "4.6",
+          "review": "赶 16:30 末班观光车绕校园（100 泰铢），静心湖 17:00–18:15 光线最好，湖边草坪看日落。",
+          "openingHours": "校园全天；观光车约 09:00–16:30",
+          "ticketPrice": "观光车参考 100 泰铢/人",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "后门夜市 Mor Night Market 晚餐",
+          "time": "18:30–20:00",
+          "lat": 18.8085049,
+          "lng": 98.9557478,
+          "rating": "4.5",
+          "review": "清迈大学一带的学生夜市：火山排骨、船面、果汁都在这；结束回酒店收拾次日行李。",
+          "openingHours": "傍晚起出摊",
+          "needsBooking": false
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "Jungle Flight 套餐内午餐",
+          "hours": "飞跃行程内",
+          "dishes": [
+            { "name": "泰式自助/简餐（随套餐）", "price": "含在套餐" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "后门夜市 Mor Night Market",
+          "hours": "18:30 后",
+          "dishes": [
+            { "name": "火山排骨", "price": "小份约 120–200 泰铢" },
+            { "name": "船面（后门夜市多家人气摊，认准排队长的）", "price": "约 20–60 泰铢/碗" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "weekday": "周五",
+      "theme": "清迈 → 曼谷 · 乍都节北区（建议填空）",
+      "tips": [
+        "你原攻略到这里就断了；下面两天是按 10.9–10.10 酒店（The Quarter Ratchayothin）补的‘填空题’，可随时让我改。",
+        "SL507 10:30 起飞，08:30 前到清迈机场；前一晚务必收好全部行李。",
+        "乍都乍周末市场只在周六日开；周五晚更适合去 JJ Green 夜市（约 17:00 后开摊）。"
+      ],
+      "slots": [
+        {
+          "period": "noon",
+          "name": "抵达曼谷 · 前往乍都节北区酒店",
+          "time": "11:45–13:00",
+          "lat": 13.9122207,
+          "lng": 100.6035314,
+          "rating": "4.4",
+          "review": "SL507 落地廊曼；The Quarter Ratchayothin 距机场约 20–30 分钟车程，先寄存行李。",
+          "openingHours": "酒店一般 14:00 后可入住",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "Central Ladprao 午餐 + 采购",
+          "time": "12:45–14:30",
+          "lat": 13.8162899,
+          "lng": 100.5609968,
+          "rating": "4.5",
+          "review": "乍都节北区大型商场，超市与伴手礼齐全，距酒店步行可达；午后阵雨也能舒舒服服躲室内。",
+          "openingHours": "约 10:00–22:00",
+          "needsBooking": false
+        },
+        {
+          "period": "evening",
+          "name": "JJ Green 夜市（可选）",
+          "time": "17:00–21:00",
+          "lat": 13.808487,
+          "lng": 100.5560011,
+          "rating": "4.4",
+          "review": "乍都乍公园一带的古着/手作/小吃夜市，周四至周日约 17:00 后开摊；不想出门就留在 Central Ladprao 商圈。",
+          "openingHours": "周四–周日约 17:00–次日 02:00",
+          "needsBooking": false
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "Central Ladprao 美食层",
+          "hours": "13:00 前后",
+          "dishes": [
+            { "name": "泰式猪脚饭/海南鸡饭", "price": "约 80–150 泰铢" }
+          ]
+        },
+        {
+          "meal": "晚餐",
+          "place": "JJ Green 夜市 / Central Ladprao",
+          "hours": "18:00 后",
+          "dishes": [
+            { "name": "夜市小吃自选", "price": "人均约 100–250 泰铢" }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-10",
+      "weekday": "周六",
+      "theme": "最后采购 · 回程（建议填空）",
+      "tips": [
+        "赶机结论：不会来不及。回程 19:50 才起飞、17:20 前到机场即可，时间非常充裕；只要严守下面两个截止点（10:15 离开市场、14:30 出发去机场），怎么都不会误机。",
+        "10.9 在 Central Ladprao / JJ Green 已经采购过，10.10 早上只按清单‘补漏’：想逛就 09:00–10:15 短逛乍都乍，不想逛就直接退房、酒店周边或 Central Ladprao 慢慢吃午饭。",
+        "回程 SL926 从廊曼 T1（不是 T2）国际出发；Ratchayothin 到机场约 20–30 分钟，14:30 出发约 15:00–15:20 就到，比 17:20 建议抵达时间提前 2 小时。"
+      ],
+      "slots": [
+        {
+          "period": "morning",
+          "name": "乍都乍周末市场（可选短逛，10:15 前撤）",
+          "time": "09:00–10:15",
+          "lat": 13.8002651,
+          "lng": 100.5511228,
+          "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Bangkok_-_Jatujak_Market_02.JPG/330px-Bangkok_-_Jatujak_Market_02.JPG",
+          "rating": "4.6",
+          "review": "只补漏网之鱼：手作、香薰、果干；10:15 必须撤，回酒店约 10:45，11:30 前完成退房。",
+          "openingHours": "周六/周日 09:00–18:00",
+          "needsBooking": false
+        },
+        {
+          "period": "afternoon",
+          "name": "午餐退房后 → 廊曼机场 T1（国际出发）",
+          "time": "14:30–19:50",
+          "lat": 13.9122207,
+          "lng": 100.6035314,
+          "rating": "4.2",
+          "review": "14:30 从酒店出发，约 15:00–15:30 到机场，留足 2 小时以上缓冲；值机托运后先过边检再逛免税店。",
+          "openingHours": "建议 17:20 前抵达",
+          "needsBooking": false
+        }
+      ],
+      "dining": [
+        {
+          "meal": "午餐",
+          "place": "Central Ladprao / 酒店周边",
+          "hours": "12:00–13:30",
+          "dishes": [
+            { "name": "泰餐或商场简餐", "price": "人均约 100–250 泰铢" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+</script>
+<script>
+(function(){
+  var TRIP = JSON.parse(document.getElementById('trip-data').textContent);
+  var PERIOD = {morning:'上午', noon:'中午', afternoon:'下午', evening:'晚上'};
+  var state = { day: 0, tab: '行程' };
+
+  document.getElementById('app-title').textContent = '泰国双城记 · 迷你版';
+  document.getElementById('app-dates').textContent = TRIP.days[0].date + ' → ' + TRIP.days[TRIP.days.length-1].date;
+  document.getElementById('app-count').textContent = TRIP.days.length + ' 天行程';
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function mapLinks(p){
+    var q = encodeURIComponent(p.lat + ',' + p.lng);
+    return {
+      apple: 'https://maps.apple.com/?ll=' + p.lat + ',' + p.lng + '&q=' + encodeURIComponent(p.name),
+      google: 'https://www.google.com/maps/search/?api=1&query=' + q,
+      amap: 'https://uri.amap.com/marker?position=' + p.lng + ',' + p.lat + '&name=' + encodeURIComponent(p.name) + '&coordinate=wgs84&callnative=1'
+    };
+  }
+
+  function renderDayStrip(){
+    var h = TRIP.days.map(function(d,i){
+      var d2 = d.date.slice(5).replace('-','/');
+      return '<div class="daychip' + (i===state.day?' on':'') + '" data-day="' + i + '"><div class="d">' + d2 + '</div><div class="n">' + (i+1) + '</div><small>' + esc(d.weekday) + '</small></div>';
+    }).join('');
+    return '<div class="daystrip">' + h + '</div>';
+  }
+
+  function mealHTML(list){
+    if(!list || !list.length) return '';
+    return '<div class="dining"><h4>🍜 今日吃喝</h4>' + list.map(function(m){
+      var ds=(m.dishes||[]).map(function(x){return '<div class="meal"><span>' + esc(x.name) + '</span><b>' + esc(x.price||'') + '</b></div>';}).join('');
+      return '<p style="margin-top:6px;font-weight:700">' + esc(m.meal) + ' · ' + esc(m.place) + (m.hours?('（'+esc(m.hours)+'）'):'') + '</p>' + ds;
+    }).join('') + '</div>';
+  }
+
+  function slotHTML(s){
+    var meta='';
+    if(s.rating) meta+='<span class="chip">★ '+esc(String(s.rating))+'</span>';
+    if(s.openingHours) meta+='<span class="chip">🕐 '+esc(s.openingHours)+'</span>';
+    if(s.ticketPrice) meta+='<span class="chip">🎫 '+esc(s.ticketPrice)+'</span>';
+    if(s.transport && s.transport.mode) meta+='<span class="chip">🚕 '+esc(s.transport.mode)+'</span>';
+    if(s.needsBooking) meta+='<span class="chip book">⚠ 建议提前'+s.leadDays+'天订</span>';
+    return '<div class="item"><div class="t">' + esc(s.time||'') + '</div><div class="body">' +
+      '<div class="nm">' + esc((PERIOD[s.period]?PERIOD[s.period]+'·':'') + s.name) + '</div>' +
+      (s.review?'<div class="rv">'+esc(s.review)+'</div>':'') +
+      '<div class="meta">' + meta + '</div>' +
+      '<div class="actrow">' +
+        '<button class="btn primary" data-nav data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🧭 导航</button>' +
+        '<button class="btn gold" data-copy data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🚕 打车</button>' +
+      '</div></div></div>';
+  }
+
+  function renderDay(){
+    var d = TRIP.days[state.day];
+    var h = renderDayStrip();
+    h += '<div class="card day-head"><div><h2>第 ' + (state.day+1) + ' 天 · ' + esc(d.weekday) + ' ' + esc(d.date) + '</h2><div class="tag">' + esc(d.theme||'') + '</div></div></div>';
+    if(d.tips && d.tips.length) h += '<div class="tipbox">' + d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('') + '</div>';
+    (d.slots||[]).forEach(function(s){ h += '<div class="card">' + slotHTML(s) + '</div>'; });
+    h += '<div class="card">' + (mealHTML(d.dining)||'<p style="font-size:12px;color:var(--dim)">本日无单独餐饮安排</p>') + '</div>';
+    document.getElementById('hero-day').textContent = '第 ' + (state.day+1) + ' 天 · ' + esc(d.weekday);
+    document.getElementById('hero-sub').textContent = esc(d.theme||'');
+    document.getElementById('day-root').innerHTML = h;
+    bindChips();
+  }
+
+  function bindChips(){
+    var chips = document.querySelectorAll('.daychip');
+    chips.forEach(function(c){ c.addEventListener('click', function(){ state.day = Number(c.getAttribute('data-day')); renderDay(); }); });
+    document.querySelectorAll('[data-nav]').forEach(function(b){ b.addEventListener('click', function(){ openNav(b); }); });
+    document.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){ openCopy(b); }); });
+  }
+
+  var cur=null;
+  function openNav(el){
+    cur={name:el.getAttribute('data-name'),lat:Number(el.getAttribute('data-lat')),lng:Number(el.getAttribute('data-lng'))};
+    var links=mapLinks(cur);
+    document.getElementById('sheet-title').textContent='导航：'+cur.name;
+    document.getElementById('sheet-addr').textContent=cur.name+'\n'+cur.lat+', '+cur.lng;
+    document.getElementById('lnk-apple').href=links.apple;
+    document.getElementById('lnk-google').href=links.google;
+    document.getElementById('lnk-amap').href=links.amap;
+    showSheet('sheet-nav');
+  }
+  function openCopy(el){
+    cur={name:el.getAttribute('data-name'),lat:Number(el.getAttribute('data-lat')),lng:Number(el.getAttribute('data-lng'))};
+    var links=mapLinks(cur);
+    document.getElementById('sheet-title').textContent='打车：'+cur.name;
+    document.getElementById('sheet-addr').textContent=cur.name+'\n'+cur.lat+', '+cur.lng+'\n'+links.google;
+    document.getElementById('lnk-apple').href=links.apple;
+    document.getElementById('lnk-google').href=links.google;
+    document.getElementById('lnk-amap').href=links.amap;
+    showSheet('sheet-nav');
+  }
+
+  function renderChecklist(){
+    var items = (TRIP.reminders||[]).map(function(r){
+      var dt=new Date(TRIP.startDate+'T00:00:00Z'); dt.setUTCDate(dt.getUTCDate()-r.leadDays);
+      return {item:r.item, leadDays:r.leadDays, date:dt.toISOString().slice(0,10)};
+    }).sort(function(a,b){return a.date<b.date?-1:1;});
+    var h='<div class="card"><p style="font-size:13px;color:var(--dim);margin-bottom:8px">按建议提前天数倒推，完成一项勾一项：</p>';
+    items.forEach(function(r){ h+='<label class="listitem"><input type="checkbox"><span class="txt">'+esc(r.item)+'</span><span class="deadline">'+r.date+' 前</span></label>'; });
+    h+='</div>';
+    document.getElementById('view-清单').innerHTML=h;
+  }
+
+  function renderTravel(){
+    var h='<div class="section"><h3>航班</h3><span>按票面整理</span></div>';
+    (TRIP.flights.candidates||[]).forEach(function(f){
+      h+='<div class="listitem flight"><div class="txt"><b>'+esc(f.label)+'</b><br><span style="font-size:12px;color:var(--dim)">'+esc(f.code)+' · '+esc(f.time)+'</span><br><span style="font-size:11.5px;color:#8a9791">'+esc(f.note||'')+'</span></div></div>';
+    });
+    h+='<div class="section"><h3>酒店</h3><span>已订</span></div>';
+    (TRIP.hotelAreas||[]).forEach(function(x){
+      (x.options||[]).forEach(function(o){
+        h+='<div class="listitem hotel"><div class="txt"><b>'+esc(o.name)+'</b><br><span style="font-size:12px;color:var(--dim)">'+esc(x.area)+'</span><br><span style="font-size:11.5px;color:#8a9791">'+esc(o.note||'')+'</span></div></div>';
+      });
+    });
+    h+='<div class="section"><h3>通用提示</h3><span>精简</span></div><div class="card">'+(TRIP.tips||[]).slice(0,5).map(function(t){return '<div class="tipbox" style="margin-bottom:5px"><p>'+esc(t)+'</p></div>';}).join('')+'</div>';
+    document.getElementById('view-出行').innerHTML=h;
+  }
+
+  function openAllMaps(){
+    var pts=[];
+    TRIP.days.forEach(function(d){(d.slots||[]).forEach(function(s){pts.push(s);});});
+    var g=pts.map(function(p){return encodeURIComponent(p.lat+','+p.lng);}).join('/');
+    document.getElementById('map-all-google').href='https://www.google.com/maps/dir/'+g;
+    var a=pts[0];
+    document.getElementById('map-all-apple').href='https://maps.apple.com/?ll='+a.lat+','+a.lng+'&q='+encodeURIComponent(TRIP.days[0].slots[0].name);
+    document.getElementById('map-all-info').textContent='全部 '+pts.length+' 站，按行程顺序排列。跨城线路（曼谷↔清迈）较长，分段看更清楚。';
+    showSheet('sheet-maps');
+  }
+
+  function showSheet(id){ document.getElementById(id).classList.add('on'); }
+  function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); }
+
+  document.querySelectorAll('[data-tab]').forEach(function(b){
+    b.addEventListener('click', function(){
+      state.tab=b.getAttribute('data-tab');
+      document.querySelectorAll('.tabbar button').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+      var mapPanels={'行程':'view-行程','清单':'view-清单','出行':'view-出行'};
+      document.getElementById(mapPanels[state.tab]).classList.add('on');
+      if(state.tab==='清单') renderChecklist();
+      if(state.tab==='出行') renderTravel();
+    });
+  });
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var g=b.getAttribute('data-goto');
+      if(g==='map'){ openAllMaps(); return; }
+      var tabmap={'check':'清单'};
+      document.querySelector('.tabbar button[data-tab="'+tabmap[g]+'"]').click();
+    });
+  });
+  document.getElementById('btn-copy').addEventListener('click', function(){
+    var txt=document.getElementById('sheet-addr').textContent;
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){document.getElementById('btn-copy').textContent='✓ 已复制';setTimeout(function(){document.getElementById('btn-copy').textContent='📋 复制定位';},1500);}); }
+    else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); document.getElementById('btn-copy').textContent='✓ 已复制'; setTimeout(function(){document.getElementById('btn-copy').textContent='📋 复制定位';},1500); }
+  });
+  document.getElementById('btn-close-maps').addEventListener('click', hideSheets);
+  document.querySelectorAll('.sheet').forEach(function(s){ s.addEventListener('click', function(e){ if(e.target===s) s.classList.remove('on'); }); });
+
+  renderDay();
+  renderChecklist();
+})();
+</script>
+
+<script>
+(function(){
+  function djb2(s){ var h=5381; for(var i=0;i<s.length;i++){ h=((h<<5)+h)+s.charCodeAt(i); } return (h>>>0).toString(16); }
+  var EXPECT='7c78c4ea';
+  var lock=document.getElementById('app-lock');
+  var inp=document.getElementById('pin');
+  var err=document.getElementById('pin-err');
+  function unlock(){ if(lock){ lock.style.display='none'; } try{ sessionStorage.setItem('trip-lock','1'); }catch(e){} }
+  function check(){
+    var v=(inp&&inp.value||'').trim();
+    if(v && djb2(v)===EXPECT){ err.style.display='none'; unlock(); }
+    else { err.style.display='block'; if(inp){ inp.value=''; inp.focus(); } }
+  }
+  try{ if(sessionStorage.getItem('trip-lock')==='1'){ unlock(); } }catch(e){}
+  if(inp){
+    inp.addEventListener('keydown', function(ev){ if(ev.key==='Enter') check(); });
+    setTimeout(function(){ inp.focus(); }, 200);
+  }
+  var btn=document.getElementById('pin-btn');
+  if(btn){ btn.addEventListener('click', check); }
+})();
+</script>
+</body>
+</html>
