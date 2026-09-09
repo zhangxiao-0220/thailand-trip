@@ -9,62 +9,50 @@
 <title>泰国双城记 · 迷你版</title>
 <style>
 :root{
-  --bg:#f3f7f4;
-  --card:#ffffff;
-  --ink:#1d2a26;
-  --dim:#6c7b75;
-  --brand:#0f6b52;
-  --brand2:#e6a23c;
-  --line:#e3eae6;
-  --danger:#c45b3c;
-  --radius:16px;
+  --bg:#f3f7f4; --card:#fff; --ink:#1d2a26; --dim:#6c7b75;
+  --brand:#0f6b52; --brand2:#e6a23c; --line:#e3eae6; --danger:#c45b3c; --radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
-body{
-  font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  background:var(--bg);color:var(--ink);line-height:1.55;
-  padding-bottom:calc(78px + env(safe-area-inset-bottom));
-  -webkit-font-smoothing:antialiased;
-}
-.app{max-width:560px;margin:0 auto;padding:14px 14px 0}
-header{display:flex;align-items:center;justify-content:space-between;padding:8px 2px 14px}
+body{font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;padding-bottom:calc(82px + env(safe-area-inset-bottom));-webkit-font-smoothing:antialiased}
+.app{max-width:600px;margin:0 auto;padding:14px 13px 0}
+header{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 12px}
 .brand{display:flex;align-items:center;gap:9px}
-.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--brand),#2ca381);display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;flex:none;box-shadow:0 4px 10px rgba(15,107,82,.25)}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--brand),#2ca381);display:flex;align-items:center;justify-content:center;font-size:19px;color:#fff;flex:none}
 .brand h1{font-size:16px;line-height:1.2}
 .brand p{font-size:11px;color:var(--dim)}
 .pill{background:#fff;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--dim);padding:5px 10px;white-space:nowrap}
-.hero{background:linear-gradient(130deg,#0f6b52,#2ca381);border-radius:20px;padding:18px 17px;color:#fff;margin-bottom:14px}
-.hero h2{font-size:21px;line-height:1.35;font-weight:800}
-.hero p{font-size:12.5px;opacity:.9;margin-top:5px}
-.quick{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
-.quick a,.quick button{display:flex;align-items:center;justify-content:center;gap:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:13px;padding:10px 6px;font-size:13px;font-weight:700;text-decoration:none}
-.section{margin:16px 0 8px;display:flex;align-items:baseline;justify-content:space-between}
+.hero{background:linear-gradient(130deg,#0f6b52,#2ca381);border-radius:20px;padding:17px;color:#fff;margin-bottom:12px}
+.hero h2{font-size:19px;line-height:1.35;font-weight:800}
+.hero p{font-size:12.5px;opacity:.9;margin-top:4px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.quick a,.quick button{display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:12px;padding:9px 6px;font-size:12.5px;font-weight:700;text-decoration:none;cursor:pointer}
+.section{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:15px 0 8px}
 .section h3{font-size:16px}
 .section span{font-size:11px;color:var(--dim)}
-.daystrip{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.daystrip{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
 .daystrip::-webkit-scrollbar{display:none}
-.daychip{flex:none;width:60px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px 4px;text-align:center;cursor:pointer}
-.daychip .d{font-size:11px;color:var(--dim)}
+.daychip{flex:none;width:62px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px 4px;text-align:center;cursor:pointer}
+.daychip .d{font-size:10.5px;color:var(--dim)}
 .daychip .n{font-size:17px;font-weight:800;margin-top:2px}
-.daychip small{display:block;font-size:9.5px;color:#93a09b;margin-top:1px}
+.daychip small{display:block;font-size:9.5px;color:#93a09b}
 .daychip.on{background:var(--brand);border-color:var(--brand);color:#fff}
-.daychip.on .d,.daychip.on small{color:rgba(255,255,255,.8)}
+.daychip.on .d,.daychip.on small{color:rgba(255,255,255,.82)}
 .daychip.on .n{color:#fff}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:13px 14px;margin-bottom:10px}
 .day-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:10px}
-.day-head h2{font-size:17px;line-height:1.35}
-.day-head .tag{flex:none;font-size:10.5px;color:#0b6b4c;background:#e2f2ea;border-radius:999px;padding:3px 8px;white-space:nowrap;margin-top:3px}
-.tipbox{background:#fff8e9;border:1px solid #f3e2bc;border-radius:12px;padding:9px 11px;margin-bottom:9px}
+.day-head h2{font-size:16.5px;line-height:1.35}
+.day-head .tag{flex:none;font-size:10.5px;color:#0b6b4c;background:#e2f2ea;border-radius:999px;padding:3px 8px;margin-top:3px}
+.tipbox{background:#fff8e9;border:1px solid #f3e2bc;border-radius:12px;padding:8px 11px;margin-bottom:8px}
 .tipbox p{font-size:12px;color:#7a6231;margin:3px 0;display:flex;gap:5px}
 .tipbox p::before{content:"•";color:#d99b2b}
-.item{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--line)}
+.item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
 .item:last-child{border-bottom:none}
-.item .t{flex:none;font-size:11px;font-weight:800;color:var(--brand);background:#e7f3ee;border-radius:9px;padding:4px 6px;height:fit-content;min-width:52px;text-align:center}
+.item .t{flex:none;font-size:10.5px;font-weight:800;color:var(--brand);background:#e7f3ee;border-radius:9px;padding:4px 6px;height:fit-content;min-width:52px;text-align:center}
 .item .body{flex:1;min-width:0}
-.item .body .nm{font-weight:800;font-size:15px;line-height:1.3}
-.item .body .rv{font-size:12.3px;color:#52615c;margin-top:3px}
-.item .body .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.item .nm{font-weight:800;font-size:14.5px;line-height:1.3}
+.item .rv{font-size:12.2px;color:#52615c;margin-top:3px}
+.item .meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
 .chip{font-size:10.5px;background:#f0f4f1;color:#5b6c65;border-radius:999px;padding:2px 8px;white-space:nowrap}
 .chip.book{background:#fdeadd;color:#b0471f}
 .actrow{display:flex;gap:8px;margin-top:10px}
@@ -73,41 +61,56 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
 .btn.gold{background:#fff3dd;color:#9a6500}
 .dining{background:#fbf8ef;border-radius:12px;padding:9px 11px;margin-top:8px}
 .dining h4{font-size:12px;color:#9a6500}
-.dining p{font-size:12px;color:#5a6b63;margin-top:2px}
 .meal{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:#42524b;padding-top:3px}
 .meal b{color:#b0471f;white-space:nowrap;font-weight:600}
 .foot-note{margin-top:16px;text-align:center;font-size:11px;color:#97a59f;line-height:1.7}
-.tabbar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
-  background:rgba(255,255,255,.96);backdrop-filter:blur(12px);
-  border-top:1px solid var(--line);
-  padding:6px 10px calc(6px + env(safe-area-inset-bottom));
-  display:flex;
-}
-.tabbar button{flex:1;border:none;background:none;padding:7px 2px;font-size:10px;color:#8a9891;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:12px;cursor:pointer}
-.tabbar button .ic{font-size:19px;line-height:1}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));display:flex;max-width:640px;margin:0 auto}
+.tabbar button{flex:1;border:none;background:none;padding:6px 2px;font-size:9.5px;color:#8a9891;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:12px;cursor:pointer}
+.tabbar button .ic{font-size:18px;line-height:1}
 .tabbar button.on{color:var(--brand);font-weight:700}
 .panel{display:none}
 .panel.on{display:block}
+.daycard-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:5px}
+.daycard-head b{font-size:15px}
+.gobtn{flex:none;border:none;background:#e7f3ee;color:#0b6b4c;font-size:11px;font-weight:700;border-radius:999px;padding:5px 10px;cursor:pointer}
+.mealrow{border:1px solid #efe8d2;background:#fffdf7;border-radius:13px;padding:10px 12px;margin-bottom:8px}
+.mealrow .mt{font-size:11px;color:#9a6500;font-weight:800}
+.mealrow .pl{font-weight:700;font-size:14px;margin-top:2px}
+.mealrow .hs{font-size:11px;color:var(--dim);margin:1px 0 5px}
+.dish{display:flex;justify-content:space-between;gap:10px;font-size:12.2px;color:#42524b;padding:2px 0}
+.dish b{color:#b0471f;white-space:nowrap;font-weight:600}
+.hotel-card{border-left:4px solid var(--brand)}
+.hotel-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.hotel-top b{font-size:15px;line-height:1.35}
+.hotel-date{font-size:10.5px;color:#fff;background:#0f6b52;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.hotel-addr{font-size:11.5px;color:var(--dim);margin:5px 0 7px}
+.line-item{display:flex;gap:10px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 12px;margin-bottom:7px}
+.line-item .ic{font-size:18px;flex:none;width:30px;text-align:center}
+.line-item b{font-size:13px}
+.line-item p{font-size:11.5px;color:#56665f;margin-top:2px}
+.check-group{background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px 13px;margin-bottom:10px}
+.check-group h4{font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.check-group h4 .cnt{font-size:11px;color:#6f7e78;font-weight:500}
+.bar{height:5px;border-radius:4px;background:#edf2ef;margin:7px 0 9px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brand);border-radius:4px;width:0;transition:width .2s}
+.chk-item{display:flex;align-items:flex-start;gap:9px;padding:6px 0;font-size:12.8px}
+.chk-item input{width:17px;height:17px;accent-color:var(--brand);margin-top:2px;flex:none}
+.chk-item.done{color:#98a49f;text-decoration:line-through}
 .sheet{position:fixed;inset:0;background:rgba(20,35,30,.42);z-index:60;display:none;align-items:flex-end;justify-content:center}
 .sheet.on{display:flex}
-.sheet .box{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:560px;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.sheet .box{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:600px;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
 .sheet .handle{width:38px;height:4px;background:#dfe6e2;border-radius:4px;margin:0 auto 12px}
 .sheet h3{font-size:17px;margin-bottom:3px}
 .sheet .sub{font-size:12px;color:var(--dim);margin-bottom:12px}
-.sheet .addr{background:#f3f7f4;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#3d4d46;margin-bottom:12px;word-break:break-all}
+.sheet .addr{background:#f3f7f4;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#3d4d46;margin-bottom:12px;word-break:break-all;white-space:pre-wrap}
 .sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.listitem{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:8px}
-.listitem input{width:18px;height:18px;accent-color:var(--brand);flex:none}
-.listitem .txt{font-size:13px;flex:1}
+.mini-note{font-size:11.5px;color:#8b9892;margin-top:10px;text-align:center}
+.listitem{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 13px;margin-bottom:8px}
+.listitem .txt{font-size:12.8px;flex:1}
 .listitem .deadline{font-size:11px;color:var(--danger);white-space:nowrap}
-.hotel{border-left:4px solid var(--brand)}
 .flight{border-left:4px solid var(--brand2)}
-.mini-note{font-size:11.5px;color:#8b9892;margin-top:8px;text-align:center}
-@media (min-width:600px){
-  .app{max-width:560px}
-  .tabbar .box{max-width:560px}
-}
+.flight .note{font-size:11.3px;color:#85928c;margin-top:3px}
+@media (min-width:600px){ .tabbar{max-width:600px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0} }
 </style>
 </head>
 <body>
@@ -126,10 +129,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
   <header>
     <div class="brand">
       <div class="logo">✈</div>
-      <div>
-        <h1 id="app-title"></h1>
-        <p id="app-dates"></p>
-      </div>
+      <div><h1>泰国双城记 · 迷你版</h1><p id="app-dates"></p></div>
     </div>
     <span class="pill" id="app-count"></span>
   </header>
@@ -137,29 +137,34 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
   <div id="view-行程" class="panel on">
     <div class="hero">
       <h2 id="hero-day">点下面第几天开始浏览</h2>
-      <p id="hero-sub">每站都能一键导航 / 复制定位打车</p>
+      <p id="hero-sub">每站可一键导航、打车；美食/酒店/交通/清单都在底部</p>
       <div class="quick">
-        <button data-goto="map">🗺 打开全部地图</button>
-        <button data-goto="check">📋 出发前清单</button>
+        <button data-goto="美食">🍜 今天吃什么</button>
+        <button data-goto="出行">🚗 航班与交通</button>
       </div>
     </div>
     <div id="day-root"></div>
   </div>
-  <div id="view-清单" class="panel"></div>
+
+  <div id="view-美食" class="panel"></div>
+  <div id="view-酒店" class="panel"></div>
   <div id="view-出行" class="panel"></div>
+  <div id="view-清单" class="panel"></div>
 </div>
 
 <nav class="tabbar">
   <button data-tab="行程" class="on"><span class="ic">🗓</span>行程</button>
+  <button data-tab="美食"><span class="ic">🍜</span>美食</button>
+  <button data-tab="酒店"><span class="ic">🏨</span>酒店</button>
+  <button data-tab="出行"><span class="ic">🚗</span>出行</button>
   <button data-tab="清单"><span class="ic">✅</span>清单</button>
-  <button data-tab="出行"><span class="ic">🛎</span>酒店航班</button>
 </nav>
 
 <div class="sheet" id="sheet-nav">
   <div class="box">
     <div class="handle"></div>
     <h3 id="sheet-title">导航到此</h3>
-    <p class="sub">选择地图 App 打开；打车请先复制定位，再到 Grab 粘贴。</p>
+    <p class="sub">选择地图 App 打开；打车请复制定位后粘贴到 Grab。</p>
     <div class="addr" id="sheet-addr"></div>
     <div class="row">
       <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
@@ -168,21 +173,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
       <button class="btn gold" id="btn-copy">📋 复制定位</button>
       <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
     </div>
-    <p class="mini-note">泰国打车通常用 Grab；复制下方定位后，在 Grab 里粘贴地点即可叫车。</p>
-  </div>
-</div>
-
-<div class="sheet" id="sheet-maps">
-  <div class="box">
-    <div class="handle"></div>
-    <h3>全部行程地图</h3>
-    <p class="sub">以下任选一个打开：</p>
-    <div class="row">
-      <a class="btn primary" id="map-all-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
-      <a class="btn primary" id="map-all-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
-      <button class="btn" id="btn-close-maps">关闭</button>
-    </div>
-    <p class="mini-note" id="map-all-info"></p>
+    <p class="mini-note">泰国打车通常用 Grab；复制定位后在 Grab 里粘贴地点即可叫车。</p>
   </div>
 </div>
 
@@ -245,7 +236,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
           "tier": "已订",
           "name": "西铁城酒店克鲁姆曼谷席隆 Nishitetsu Hotel Croom Bangkok Silom",
           "priceRange": "已预订",
-          "note": "席隆区人气酒店；Saladaeng BTS 步行可达，楼下即夜市，生活便利。"
+          "note": "席隆区人气酒店；Saladaeng BTS 步行约 5 分钟，楼下即夜市，生活便利。",
+          "address": "68/1 Si Lom Rd, Suriya Wong, Bang Rak, Bangkok 10500",
+          "days": "10.3–10.5",
+          "lat": 13.7279,
+          "lng": 100.5349
         }
       ]
     },
@@ -257,7 +252,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
           "tier": "已订",
           "name": "Coucou Hotel（古城店）",
           "priceRange": "已预订",
-          "note": "小型精品酒店；近清曼寺，步行 5 分钟内到头疗店，北门夜市也在步行范围。"
+          "note": "小型精品酒店；近清曼寺，步行 5 分钟内到头疗店，北门夜市也在步行范围。",
+          "address": "77 Sri Poom Rd, Tambon Si Phum, Mueang Chiang Mai 50200",
+          "days": "10.5–10.9",
+          "lat": 18.7951913,
+          "lng": 98.9884637
         }
       ]
     },
@@ -269,7 +268,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
           "tier": "已订",
           "name": "The Quarter Ratchayothin by UHG",
           "priceRange": "已预订",
-          "note": "乍都节区 1799 Phahonyothin Rd；步行/短车程可达 Central Ladprao 等大型商超，临走买纪念品、赶机都方便。"
+          "note": "乍都节区 1799 Phahonyothin Rd；步行/短车程可达 Central Ladprao 等大型商超，临走买纪念品、赶机都方便。",
+          "address": "1799 Phahon Yothin Rd, Chatuchak, Bangkok 10900（近 Ratchayothin BTS）",
+          "days": "10.9–10.10",
+          "lat": 13.8265,
+          "lng": 100.5685
         }
       ]
     }
@@ -292,6 +295,98 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
     { "item": "预约 Jungle Flight 丛林飞跃（Klook，含接送）", "leadDays": 3 },
     { "item": "预约清迈 ASMR 头疗 / Let's Relax 塔佩 / Kiyora", "leadDays": 1 },
     { "item": "返程 SL926 线上值机并确认行李额", "leadDays": 14 }
+  ],
+  "checklists": [
+    {
+      "icon": "🛂",
+      "name": "证件与签证",
+      "items": [
+        "护照有效期 > 6 个月，空白页 ≥ 2 页",
+        "护照原件 + 手机拍照/复印件各一份",
+        "返程机票与全程酒店订单存到手机",
+        "旅游保险单号与紧急联系电话",
+        "身份证（国内段备查）"
+      ]
+    },
+    {
+      "icon": "✈️",
+      "name": "航班与值机",
+      "items": [
+        "核对去程票面航司/落地机场与行李额",
+        "AirAsia FD3433 提前线上值机、购买托运额度",
+        "狮航 SL507/SL926 提前线上值机",
+        "记住回程在廊曼 T1（不是 T2）",
+        "手机存好 4 段航班电子行程单"
+      ]
+    },
+    {
+      "icon": "📅",
+      "name": "预订核对（两人）",
+      "items": [
+        "Nana Photo Studio 泰服妆造预约确认",
+        "曼谷 Let's Relax 席隆店 90 分钟预约",
+        "New Elephant Home 上午场确认单",
+        "Jungle Flight 丛林飞跃含接送确认单",
+        "清迈 ASMR 头疗 / Let's Relax 塔佩 / Kiyora 预约",
+        "10.6 Grab 8 小时包车与司机确认路线与超时费"
+      ]
+    },
+    {
+      "icon": "🏨",
+      "name": "酒店入住",
+      "items": [
+        "席隆酒店：入住 15:00，清晨先寄存行李",
+        "清迈 Coucou Hotel：14:30 后入住，退房约 07:00 并确认送机",
+        "The Quarter Ratchayothin：14:00 入住/行李寄存",
+        "三家酒店地址分别收藏到手机地图"
+      ]
+    },
+    {
+      "icon": "🎒",
+      "name": "行李与装备",
+      "items": [
+        "寺庙着装：遮肩/过膝衣物或围布",
+        "轻便雨具 + 防晒霜 + 驱蚊液",
+        "瀑布日：溯溪鞋、手机防水袋、全套换洗衣物",
+        "大象营会湿身：另备一套换洗",
+        "薄外套（室内冷气 + 清迈早晚）",
+        "小风扇（泰服写真时用）",
+        "充电宝、充电线、泰标插头（三脚设备需转接头）"
+      ]
+    },
+    {
+      "icon": "💵",
+      "name": "支付与通讯",
+      "items": [
+        "泰铢现金 3000–5000 + 零钱",
+        "Visa/Master/银联卡各确认境外可用",
+        "eSIM/漫游套餐在出发前激活",
+        "下载 Grab、Google Maps、Klook/KKday",
+        "微信/支付宝小额备用"
+      ]
+    },
+    {
+      "icon": "💊",
+      "name": "健康与应急",
+      "items": [
+        "肠胃药、退烧药、感冒药、创可贴",
+        "防蚊/止痒用品",
+        "晕车药（山区包车可用）",
+        "记录中国驻泰使馆应急电话",
+        "重要证件照片存云端一份"
+      ]
+    },
+    {
+      "icon": "🌤",
+      "name": "每天出门前",
+      "items": [
+        "手机满电 + 充电宝",
+        "房卡、护照复印件、现金与零钱",
+        "雨具和当日换洗衣物（大象/瀑布日）",
+        "提前看天气：午后有阵雨就先排室内",
+        "确认当天预约的时间与接送（如有）"
+      ]
+    }
   ],
   "days": [
     {
@@ -972,164 +1067,209 @@ header{display:flex;align-items:center;justify-content:space-between;padding:8px
   var PERIOD = {morning:'上午', noon:'中午', afternoon:'下午', evening:'晚上'};
   var state = { day: 0, tab: '行程' };
 
-  document.getElementById('app-title').textContent = '泰国双城记 · 迷你版';
-  document.getElementById('app-dates').textContent = TRIP.days[0].date + ' → ' + TRIP.days[TRIP.days.length-1].date;
-  document.getElementById('app-count').textContent = TRIP.days.length + ' 天行程';
-
   function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function setDates(){
+    document.getElementById('app-dates').textContent = TRIP.days[0].date + ' → ' + TRIP.days[TRIP.days.length-1].date;
+    document.getElementById('app-count').textContent = TRIP.days.length + ' 天';
+  }
+
   function mapLinks(p){
     var q = encodeURIComponent(p.lat + ',' + p.lng);
     return {
-      apple: 'https://maps.apple.com/?ll=' + p.lat + ',' + p.lng + '&q=' + encodeURIComponent(p.name),
-      google: 'https://www.google.com/maps/search/?api=1&query=' + q,
-      amap: 'https://uri.amap.com/marker?position=' + p.lng + ',' + p.lat + '&name=' + encodeURIComponent(p.name) + '&coordinate=wgs84&callnative=1'
+      apple:'https://maps.apple.com/?ll='+p.lat+','+p.lng+'&q='+encodeURIComponent(p.name),
+      google:'https://www.google.com/maps/search/?api=1&query='+q,
+      amap:'https://uri.amap.com/marker?position='+p.lng+','+p.lat+'&name='+encodeURIComponent(p.name)+'&coordinate=wgs84&callnative=1'
     };
   }
 
+  function bindNavCopy(root){
+    root.querySelectorAll('[data-nav]').forEach(function(b){ b.addEventListener('click', function(){ openPoint({name:b.getAttribute('data-name'),lat:Number(b.getAttribute('data-lat')),lng:Number(b.getAttribute('data-lng'))}, true); }); });
+    root.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){ openPoint({name:b.getAttribute('data-name'),lat:Number(b.getAttribute('data-lat')),lng:Number(b.getAttribute('data-lng'))}, false); }); });
+  }
+
+  function showSheet(id){ document.getElementById(id).classList.add('on'); }
+  function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); }
+  function openPoint(p, isNav){
+    var links = mapLinks(p);
+    document.getElementById('sheet-title').textContent = (isNav?'导航：':'打车：') + p.name;
+    document.getElementById('sheet-addr').textContent = p.name + '\n' + p.lat + ', ' + p.lng + '\n' + links.google;
+    document.getElementById('lnk-apple').href = links.apple;
+    document.getElementById('lnk-google').href = links.google;
+    document.getElementById('lnk-amap').href = links.amap;
+    showSheet('sheet-nav');
+  }
+
+  /* ===== 行程 ===== */
   function renderDayStrip(){
-    var h = TRIP.days.map(function(d,i){
-      var d2 = d.date.slice(5).replace('-','/');
-      return '<div class="daychip' + (i===state.day?' on':'') + '" data-day="' + i + '"><div class="d">' + d2 + '</div><div class="n">' + (i+1) + '</div><small>' + esc(d.weekday) + '</small></div>';
-    }).join('');
-    return '<div class="daystrip">' + h + '</div>';
+    var h = '<div class="daystrip">';
+    TRIP.days.forEach(function(d,i){
+      h += '<div class="daychip'+(i===state.day?' on':'')+'" data-day="'+i+'"><div class="d">'+d.date.slice(5).replace('-','/')+'</div><div class="n">'+(i+1)+'</div><small>'+esc(d.weekday)+'</small></div>';
+    });
+    return h + '</div>';
   }
-
   function mealHTML(list){
-    if(!list || !list.length) return '';
-    return '<div class="dining"><h4>🍜 今日吃喝</h4>' + list.map(function(m){
-      var ds=(m.dishes||[]).map(function(x){return '<div class="meal"><span>' + esc(x.name) + '</span><b>' + esc(x.price||'') + '</b></div>';}).join('');
-      return '<p style="margin-top:6px;font-weight:700">' + esc(m.meal) + ' · ' + esc(m.place) + (m.hours?('（'+esc(m.hours)+'）'):'') + '</p>' + ds;
-    }).join('') + '</div>';
+    if(!list||!list.length) return '<div class="dining"><h4>本日无单独餐饮安排</h4><p style="font-size:12px;color:#6b5836">餐点多随行程简餐/夜市解决，可切到“美食”页签查看。</p></div>';
+    return '<div class="dining"><h4>🍜 今日吃喝</h4>'+list.map(function(m){
+      var ds=(m.dishes||[]).map(function(x){ return '<div class="meal"><span>'+esc(x.name)+'</span><b>'+esc(x.price||'')+'</b></div>'; }).join('');
+      return '<p style="margin-top:6px;font-weight:700">'+esc(m.meal)+' · '+esc(m.place)+(m.hours?'（'+esc(m.hours)+'）':'')+'</p>'+ds;
+    }).join('')+'</div>';
   }
-
   function slotHTML(s){
     var meta='';
     if(s.rating) meta+='<span class="chip">★ '+esc(String(s.rating))+'</span>';
     if(s.openingHours) meta+='<span class="chip">🕐 '+esc(s.openingHours)+'</span>';
     if(s.ticketPrice) meta+='<span class="chip">🎫 '+esc(s.ticketPrice)+'</span>';
-    if(s.transport && s.transport.mode) meta+='<span class="chip">🚕 '+esc(s.transport.mode)+'</span>';
-    if(s.needsBooking) meta+='<span class="chip book">⚠ 建议提前'+s.leadDays+'天订</span>';
-    return '<div class="item"><div class="t">' + esc(s.time||'') + '</div><div class="body">' +
-      '<div class="nm">' + esc((PERIOD[s.period]?PERIOD[s.period]+'·':'') + s.name) + '</div>' +
-      (s.review?'<div class="rv">'+esc(s.review)+'</div>':'') +
-      '<div class="meta">' + meta + '</div>' +
-      '<div class="actrow">' +
-        '<button class="btn primary" data-nav data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🧭 导航</button>' +
-        '<button class="btn gold" data-copy data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🚕 打车</button>' +
+    if(s.transport&&s.transport.mode) meta+='<span class="chip">🚕 '+esc(s.transport.mode)+(s.transport.duration?' · '+esc(s.transport.duration):'')+'</span>';
+    if(s.needsBooking) meta+='<span class="chip book">⚠ 提前'+s.leadDays+'天订</span>';
+    return '<div class="item"><div class="t">'+esc(s.time||'')+'</div><div class="body">'+
+      '<div class="nm">'+esc((s.period?PERIOD[s.period]+' · ':'')+s.name)+'</div>'+
+      (s.review?'<div class="rv">'+esc(s.review)+'</div>':'')+
+      '<div class="meta">'+meta+'</div>'+
+      '<div class="actrow">'+
+        '<button class="btn primary" data-nav data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🧭 导航</button>'+
+        '<button class="btn gold" data-copy data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🚕 打车</button>'+
       '</div></div></div>';
   }
-
   function renderDay(){
     var d = TRIP.days[state.day];
     var h = renderDayStrip();
-    h += '<div class="card day-head"><div><h2>第 ' + (state.day+1) + ' 天 · ' + esc(d.weekday) + ' ' + esc(d.date) + '</h2><div class="tag">' + esc(d.theme||'') + '</div></div></div>';
-    if(d.tips && d.tips.length) h += '<div class="tipbox">' + d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('') + '</div>';
-    (d.slots||[]).forEach(function(s){ h += '<div class="card">' + slotHTML(s) + '</div>'; });
-    h += '<div class="card">' + (mealHTML(d.dining)||'<p style="font-size:12px;color:var(--dim)">本日无单独餐饮安排</p>') + '</div>';
-    document.getElementById('hero-day').textContent = '第 ' + (state.day+1) + ' 天 · ' + esc(d.weekday);
-    document.getElementById('hero-sub').textContent = esc(d.theme||'');
-    document.getElementById('day-root').innerHTML = h;
-    bindChips();
+    h += '<div class="card day-head"><div><h2>第 '+(state.day+1)+' 天 · '+esc(d.weekday)+' '+esc(d.date)+'</h2><div class="tag">'+esc(d.theme||'')+'</div></div></div>';
+    if(d.tips&&d.tips.length) h+='<div class="tipbox">'+d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('')+'</div>';
+    (d.slots||[]).forEach(function(s){ h+='<div class="card">'+slotHTML(s)+'</div>'; });
+    h += '<div class="card">'+mealHTML(d.dining)+'</div>';
+    document.getElementById('hero-day').textContent='第 '+(state.day+1)+' 天 · '+esc(d.weekday);
+    document.getElementById('hero-sub').textContent='今日主题：'+(d.theme||'');
+    document.getElementById('day-root').innerHTML=h;
+    document.querySelectorAll('.daychip').forEach(function(c){ c.addEventListener('click',function(){ state.day=Number(c.getAttribute('data-day')); renderDay(); }); });
+    bindNavCopy(document.getElementById('day-root'));
   }
 
-  function bindChips(){
-    var chips = document.querySelectorAll('.daychip');
-    chips.forEach(function(c){ c.addEventListener('click', function(){ state.day = Number(c.getAttribute('data-day')); renderDay(); }); });
-    document.querySelectorAll('[data-nav]').forEach(function(b){ b.addEventListener('click', function(){ openNav(b); }); });
-    document.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){ openCopy(b); }); });
-  }
-
-  var cur=null;
-  function openNav(el){
-    cur={name:el.getAttribute('data-name'),lat:Number(el.getAttribute('data-lat')),lng:Number(el.getAttribute('data-lng'))};
-    var links=mapLinks(cur);
-    document.getElementById('sheet-title').textContent='导航：'+cur.name;
-    document.getElementById('sheet-addr').textContent=cur.name+'\n'+cur.lat+', '+cur.lng;
-    document.getElementById('lnk-apple').href=links.apple;
-    document.getElementById('lnk-google').href=links.google;
-    document.getElementById('lnk-amap').href=links.amap;
-    showSheet('sheet-nav');
-  }
-  function openCopy(el){
-    cur={name:el.getAttribute('data-name'),lat:Number(el.getAttribute('data-lat')),lng:Number(el.getAttribute('data-lng'))};
-    var links=mapLinks(cur);
-    document.getElementById('sheet-title').textContent='打车：'+cur.name;
-    document.getElementById('sheet-addr').textContent=cur.name+'\n'+cur.lat+', '+cur.lng+'\n'+links.google;
-    document.getElementById('lnk-apple').href=links.apple;
-    document.getElementById('lnk-google').href=links.google;
-    document.getElementById('lnk-amap').href=links.amap;
-    showSheet('sheet-nav');
-  }
-
-  function renderChecklist(){
-    var items = (TRIP.reminders||[]).map(function(r){
-      var dt=new Date(TRIP.startDate+'T00:00:00Z'); dt.setUTCDate(dt.getUTCDate()-r.leadDays);
-      return {item:r.item, leadDays:r.leadDays, date:dt.toISOString().slice(0,10)};
-    }).sort(function(a,b){return a.date<b.date?-1:1;});
-    var h='<div class="card"><p style="font-size:13px;color:var(--dim);margin-bottom:8px">按建议提前天数倒推，完成一项勾一项：</p>';
-    items.forEach(function(r){ h+='<label class="listitem"><input type="checkbox"><span class="txt">'+esc(r.item)+'</span><span class="deadline">'+r.date+' 前</span></label>'; });
-    h+='</div>';
-    document.getElementById('view-清单').innerHTML=h;
-  }
-
-  function renderTravel(){
-    var h='<div class="section"><h3>航班</h3><span>按票面整理</span></div>';
-    (TRIP.flights.candidates||[]).forEach(function(f){
-      h+='<div class="listitem flight"><div class="txt"><b>'+esc(f.label)+'</b><br><span style="font-size:12px;color:var(--dim)">'+esc(f.code)+' · '+esc(f.time)+'</span><br><span style="font-size:11.5px;color:#8a9791">'+esc(f.note||'')+'</span></div></div>';
-    });
-    h+='<div class="section"><h3>酒店</h3><span>已订</span></div>';
-    (TRIP.hotelAreas||[]).forEach(function(x){
-      (x.options||[]).forEach(function(o){
-        h+='<div class="listitem hotel"><div class="txt"><b>'+esc(o.name)+'</b><br><span style="font-size:12px;color:var(--dim)">'+esc(x.area)+'</span><br><span style="font-size:11.5px;color:#8a9791">'+esc(o.note||'')+'</span></div></div>';
+  /* ===== 美食 ===== */
+  function renderFood(){
+    var h='<div class="section"><h3>按日安排</h3><span>午餐/晚餐与当天行程契合</span></div>';
+    TRIP.days.forEach(function(d,di){
+      h+='<div class="card"><div class="daycard-head"><div><b>第 '+(di+1)+' 天 · '+esc(d.weekday)+' '+esc(d.date)+'</b><div style="font-size:11px;color:#6f7e78;margin-top:2px">'+esc(d.theme||'')+'</div></div><button class="gobtn" data-goday="'+di+'">回到这天</button></div>';
+      var meals=(d.dining||[]);
+      if(!meals.length){ h+='<p style="font-size:12px;color:#8a9791">当天以行程中的简餐/小吃为主，无固定餐厅安排。</p>'; }
+      meals.forEach(function(m){
+        h+='<div class="mealrow"><div class="mt">'+esc(m.meal)+'</div><div class="pl">'+esc(m.place)+'</div>'+(m.hours?'<div class="hs">'+esc(m.hours)+'</div>':'');
+        (m.dishes||[]).forEach(function(x){ h+='<div class="dish"><span>'+esc(x.name)+'</span><b>'+esc(x.price||'')+'</b></div>'; });
+        h+='</div>';
       });
+      h+='</div>';
     });
-    h+='<div class="section"><h3>通用提示</h3><span>精简</span></div><div class="card">'+(TRIP.tips||[]).slice(0,5).map(function(t){return '<div class="tipbox" style="margin-bottom:5px"><p>'+esc(t)+'</p></div>';}).join('')+'</div>';
+    document.getElementById('view-美食').innerHTML=h;
+    document.querySelectorAll('#view-美食 [data-goday]').forEach(function(b){ b.addEventListener('click',function(){ state.day=Number(b.getAttribute('data-goday')); switchTab('行程'); renderDay(); }); });
+  }
+
+  /* ===== 酒店 ===== */
+  function hotelActions(h){
+    var acts='';
+    (h.options||[]).forEach(function(o){
+      if(!o.lat||!o.lng) return;
+      acts+='<div class="hotel-card card"><div class="hotel-top"><b>'+esc(o.name)+'</b>'+(o.days?'<span class="hotel-date">'+esc(o.days)+'</span>':'')+'</div>'+(o.address?'<div class="hotel-addr">📍 '+esc(o.address)+'</div>':'')+'<div class="small muted" style="font-size:12px;color:#55665f">'+esc(o.note||'')+'</div><div class="actrow">'+
+        '<button class="btn primary" data-nav data-name="'+esc(o.name)+'" data-lat="'+o.lat+'" data-lng="'+o.lng+'">🧭 地图导航</button>'+
+        '<button class="btn gold" data-copy data-name="'+esc(o.name)+'" data-lat="'+o.lat+'" data-lng="'+o.lng+'">🚕 打车去酒店</button>'+
+      '</div></div>';
+    });
+    return acts;
+  }
+  function renderHotels(){
+    var h='<div class="section"><h3>分段住宿</h3><span>已订 · 含导航/打车</span></div>';
+    (TRIP.hotelAreas||[]).forEach(function(ha){
+      h+='<div class="card"><div style="font-size:11px;color:#0b6b4c;font-weight:800">'+esc(ha.area)+'</div><p style="font-size:12.3px;color:#5b6c65;margin:5px 0 2px">'+esc(ha.reason)+'</p></div>';
+      h += hotelActions(ha);
+    });
+    h+='<div class="tipbox"><p>定位为酒店坐标参考：点“地图导航”会唤起苹果/谷歌/高德，打车前建议先在 Grab 里确认上车点名称。</p></div>';
+    document.getElementById('view-酒店').innerHTML=h;
+    bindNavCopy(document.getElementById('view-酒店'));
+  }
+
+  /* ===== 出行 ===== */
+  function renderTravel(){
+    var h='<div class="section"><h3>航班</h3><span>按票面整理 · 值机提醒</span></div>';
+    (TRIP.flights.candidates||[]).forEach(function(f){
+      h+='<div class="listitem flight"><div class="txt"><b>'+esc(f.label)+'</b><br><span style="font-size:12px;color:#4d5d56">'+esc(f.code)+' · '+esc(f.time)+'</span>'+(f.note?'<div class="note">✈ '+esc(f.note)+'</div>':'')+'</div></div>';
+    });
+    h+='<div class="section"><h3>曼谷天铁 / 地铁</h3><span>本次用到的线路</span></div>';
+    h+='<div class="line-item"><div class="ic">🚈</div><div><b>BTS 素坤逸线（浅绿）</b><p>乍都乍 Mo Chit（10.4/10.10）↔ Siam ↔ 阿索/通罗；Ratchayothin（10.9–10.10 酒店）在北延段 N10。</p></div></div>';
+    h+='<div class="line-item"><div class="ic">🚈</div><div><b>BTS 席隆线（深绿）</b><p>Sala Daeng（10.3–10.5 酒店旁）↔ Siam，去暹罗商圈换乘主力。</p></div></div>';
+    h+='<div class="line-item"><div class="ic">🚇</div><div><b>MRT 蓝线</b><p>Silom / Chatuchak Park 等站可接 BTS；闸机支持部分银行卡/扫码，买票可人工或机器。</p></div></div>';
+    h+='<div class="card" style="background:#eaf5f0"><p style="font-size:12px;color:#2d5c4c">本行程最常用的两段：<br>① Sala Daeng BTS → Siam → Mo Chit（乍都乍）<br>② Ratchayothin BTS → 市区/机场方向<br>建议装 Google Maps 并开启“公交”模式看实时班次。</p><div class="actrow"><a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/Sala+Daeng+BTS/Mo+Chit+BTS/?dirflg=r">🧭 查 Sala Daeng→Mo Chit 公交</a><a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Ratchayothin+BTS">📍 找 Ratchayothin BTS</a></div></div>';
+    h+='<div class="section"><h3>清迈交通</h3><span>古城步行 + 短途打车</span></div>';
+    h+='<div class="card"><p style="font-size:12.3px;color:#3f514a">机场→古城：Grab 约 120–200 泰铢 / 20–30 分钟；古城内 Coucou Hotel 到清曼寺、北门、塔佩门大多步行可达。Day 10.6 山区一日用 Grab 8 小时包车，路线与超时费出发前与司机确认。</p></div>';
+    h+='<div class="tipbox"><p>到曼谷后先连网/买 eSIM：导航和 Grab 都依赖网络；BTS/MRT 人多时尽量避开 08:00–09:30 与 18:00–19:30。</p></div>';
     document.getElementById('view-出行').innerHTML=h;
   }
 
-  function openAllMaps(){
-    var pts=[];
-    TRIP.days.forEach(function(d){(d.slots||[]).forEach(function(s){pts.push(s);});});
-    var g=pts.map(function(p){return encodeURIComponent(p.lat+','+p.lng);}).join('/');
-    document.getElementById('map-all-google').href='https://www.google.com/maps/dir/'+g;
-    var a=pts[0];
-    document.getElementById('map-all-apple').href='https://maps.apple.com/?ll='+a.lat+','+a.lng+'&q='+encodeURIComponent(TRIP.days[0].slots[0].name);
-    document.getElementById('map-all-info').textContent='全部 '+pts.length+' 站，按行程顺序排列。跨城线路（曼谷↔清迈）较长，分段看更清楚。';
-    showSheet('sheet-maps');
+  /* ===== 清单 ===== */
+  function ckKey(g,i){ return 'thai-ck-'+g+'-'+i; }
+  function ckGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function ckSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function ckClear(){ try{ localStorage.clear(); }catch(e){} }
+  function renderChecklist(){
+    var h='<div class="section"><h3>出发前待办</h3><span>完成一项勾一项，本机自动保存</span></div>';
+    (TRIP.reminders||[]).map(function(r){
+      var dt=new Date(TRIP.startDate+'T00:00:00Z'); dt.setUTCDate(dt.getUTCDate()-r.leadDays);
+      return {item:r.item, date:dt.toISOString().slice(0,10)};
+    }).sort(function(a,b){return a.date<b.date?-1:1;}).forEach(function(r){
+      h+='<div class="listitem"><div class="txt"><b>'+esc(r.item)+'</b></div><div class="deadline">'+r.date+' 前</div></div>';
+    });
+    h+='<div class="section"><h3>查漏补缺清单</h3><span id="ck-summary"></span></div>';
+    var total=0,done=0;
+    (TRIP.checklists||[]).forEach(function(g,gi){
+      var items=g.items||[]; var gdone=0;
+      items.forEach(function(it,ii){ if(ckGet(ckKey(gi,ii))==='1'){ gdone++; done++; } total++; });
+      h+='<div class="check-group"><h4>'+esc(g.icon||'✅')+' '+esc(g.name)+'<span class="cnt" id="ck-cnt-'+gi+'">'+gdone+'/'+items.length+'</span></h4><div class="bar"><i id="ck-bar-'+gi+'" style="width:'+(items.length?Math.round(gdone/items.length*100):0)+'%"></i></div>';
+      items.forEach(function(it,ii){
+        var on=ckGet(ckKey(gi,ii))==='1';
+        h+='<label class="chk-item'+(on?' done':'')+'"><input type="checkbox" data-g="'+gi+'" data-i="'+ii+'" '+(on?'checked':'')+'><span>'+esc(it)+'</span></label>';
+      });
+      h+='</div>';
+    });
+    h+='<button class="btn" id="ck-reset" style="width:100%">↺ 重置所有勾选</button>';
+    document.getElementById('view-清单').innerHTML=h;
+    document.getElementById('ck-summary').textContent=done+'/'+total+' 已准备';
+    document.querySelectorAll('#view-清单 input[type=checkbox]').forEach(function(cb){
+      cb.addEventListener('change', function(){
+        var gi=Number(cb.getAttribute('data-g')), ii=Number(cb.getAttribute('data-i'));
+        ckSet(ckKey(gi,ii), cb.checked?'1':'0');
+        renderChecklist();
+      });
+    });
+    document.getElementById('ck-reset').addEventListener('click', function(){
+      if(confirm('确定重置全部勾选状态吗？')){ ckClear(); renderChecklist(); }
+    });
   }
 
-  function showSheet(id){ document.getElementById(id).classList.add('on'); }
-  function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); }
-
-  document.querySelectorAll('[data-tab]').forEach(function(b){
-    b.addEventListener('click', function(){
-      state.tab=b.getAttribute('data-tab');
-      document.querySelectorAll('.tabbar button').forEach(function(x){x.classList.remove('on');});
-      b.classList.add('on');
-      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
-      var mapPanels={'行程':'view-行程','清单':'view-清单','出行':'view-出行'};
-      document.getElementById(mapPanels[state.tab]).classList.add('on');
-      if(state.tab==='清单') renderChecklist();
-      if(state.tab==='出行') renderTravel();
-    });
-  });
-  document.querySelectorAll('[data-goto]').forEach(function(b){
-    b.addEventListener('click', function(){
-      var g=b.getAttribute('data-goto');
-      if(g==='map'){ openAllMaps(); return; }
-      var tabmap={'check':'清单'};
-      document.querySelector('.tabbar button[data-tab="'+tabmap[g]+'"]').click();
-    });
-  });
+  /* ===== 页签切换 ===== */
+  function switchTab(name){
+    state.tab=name;
+    document.querySelectorAll('.tabbar button').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelector('.tabbar button[data-tab="'+name+'"]').classList.add('on');
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
+    document.getElementById('view-'+name).classList.add('on');
+    if(name==='美食') renderFood();
+    if(name==='酒店') renderHotels();
+    if(name==='出行') renderTravel();
+    if(name==='清单') renderChecklist();
+    window.scrollTo(0,0);
+  }
+  document.querySelectorAll('[data-tab]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); }); });
+  document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-goto')); }); });
   document.getElementById('btn-copy').addEventListener('click', function(){
     var txt=document.getElementById('sheet-addr').textContent;
-    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){document.getElementById('btn-copy').textContent='✓ 已复制';setTimeout(function(){document.getElementById('btn-copy').textContent='📋 复制定位';},1500);}); }
-    else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); document.getElementById('btn-copy').textContent='✓ 已复制'; setTimeout(function(){document.getElementById('btn-copy').textContent='📋 复制定位';},1500); }
+    function ok(){ var b=document.getElementById('btn-copy'); b.textContent='✓ 已复制'; setTimeout(function(){ b.textContent='📋 复制定位'; },1500); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok); }
+    else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok(); }
   });
-  document.getElementById('btn-close-maps').addEventListener('click', hideSheets);
-  document.querySelectorAll('.sheet').forEach(function(s){ s.addEventListener('click', function(e){ if(e.target===s) s.classList.remove('on'); }); });
+  document.querySelectorAll('.sheet').forEach(function(s){ s.addEventListener('click',function(e){ if(e.target===s) s.classList.remove('on'); }); });
 
+  setDates();
   renderDay();
+  renderFood();
+  renderHotels();
+  renderTravel();
   renderChecklist();
 })();
 </script>
