@@ -136,7 +136,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .chk-item.done{color:#98a49f;text-decoration:line-through}
 .sheet{position:fixed;inset:0;background:rgba(20,35,30,.42);z-index:60;display:none;align-items:flex-end;justify-content:center}
 .sheet.on{display:flex}
-.sheet .box{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:600px;padding:16px 16px 16px;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.sheet .box{background:#fff;border-radius:22px 22px 0 0;width:100%;max-width:600px;padding:16px 16px 16px;padding:16px 16px calc(16px + env(safe-area-inset-bottom));max-height:88vh;display:flex;flex-direction:column;overflow:hidden}
+.sheet .scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.sheet .foot{flex:0 0 auto;grid-template-columns:1fr;background:#fff;padding-top:10px;margin-top:8px;border-top:1px solid var(--line)}
 .sheet .handle{width:38px;height:4px;background:#dfe6e2;border-radius:4px;margin:0 auto 12px}
 .sheet h3{font-size:17px;margin-bottom:3px}
 .sheet .sub{font-size:12px;color:var(--dim);margin-bottom:12px}
@@ -208,33 +210,36 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 <div class="sheet" id="sheet-nav">
   <div class="box">
     <div class="handle"></div>
-    <h3 id="sheet-title">导航到此</h3>
-    <p class="sub">选择地图 App 打开；打车请复制定位后粘贴到 Grab。</p>
-    <div class="addr" id="sheet-addr"></div>
-    <div class="row">
-      <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
-      <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
-      <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
-      <button class="btn gold" id="btn-copy">📋 复制定位</button>
-      <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
+    <div class="scroll">
+      <h3 id="sheet-title">导航到此</h3>
+      <p class="sub">选择地图 App 打开；打车请复制定位后粘贴到 Grab。</p>
+      <div class="addr" id="sheet-addr"></div>
+      <div class="row">
+        <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
+        <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
+        <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
+        <button class="btn gold" id="btn-copy">📋 复制定位</button>
+        <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
+      </div>
+      <p class="mini-note">泰国打车通常用 Grab；复制定位后在 Grab 里粘贴地点即可叫车。</p>
     </div>
-    <p class="mini-note">泰国打车通常用 Grab；复制定位后在 Grab 里粘贴地点即可叫车。</p>
+    <div class="row foot"><button class="btn" id="nav-close" data-close>关闭</button></div>
   </div>
 </div>
 
 <div class="sheet" id="sheet-guide">
   <div class="box">
     <div class="handle"></div>
-    <div id="guide-body"></div>
-    <div class="row" style="margin-top:10px"><button class="btn" id="guide-close">关闭</button></div>
+    <div class="scroll"><div id="guide-body"></div></div>
+    <div class="row foot"><button class="btn" id="guide-close" data-close>关闭</button></div>
   </div>
 </div>
 
 <div class="sheet" id="sheet-food">
   <div class="box">
     <div class="handle"></div>
-    <div id="food-body"></div>
-    <div class="row" style="margin-top:10px"><button class="btn" id="food-close">关闭</button></div>
+    <div class="scroll"><div id="food-body"></div></div>
+    <div class="row foot"><button class="btn" id="food-close" data-close>关闭</button></div>
   </div>
 </div>
 
@@ -304,8 +309,34 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     root.querySelectorAll('[data-copy]').forEach(function(b){ b.addEventListener('click', function(){ openPoint({name:b.getAttribute('data-name'),lat:Number(b.getAttribute('data-lat')),lng:Number(b.getAttribute('data-lng'))}, false); }); });
   }
 
-  function showSheet(id){ document.getElementById(id).classList.add('on'); }
-  function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); }
+  var lastSheet=null;
+  var zTop=61;
+  function anySheetOn(){ return !!document.querySelector('.sheet.on'); }
+  function lockScroll(on){ document.documentElement.style.overflow = on?'hidden':''; }
+  function showSheet(id){
+    var open=document.querySelector('.sheet.on');
+    if(open && open.id!==id){ lastSheet=open.id; }
+    else if(!open){ lastSheet=null; }
+    var el=document.getElementById(id);
+    if(el){ el.classList.add('on'); el.style.zIndex=String(++zTop); }
+    lockScroll(true);
+    var sc=el&&el.querySelector('.scroll');
+    if(sc) sc.scrollTop=0;
+  }
+  function closeTop(){
+    var cur=document.querySelector('.sheet.on');
+    if(!cur) return;
+    cur.classList.remove('on');
+    if(lastSheet && lastSheet!==cur.id && document.getElementById(lastSheet)){
+      var prev=lastSheet; lastSheet=null;
+      var pel=document.getElementById(prev);
+      pel.classList.add('on'); pel.style.zIndex=String(++zTop);
+    } else {
+      lastSheet=null;
+      if(!anySheetOn()) lockScroll(false);
+    }
+  }
+  function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); lastSheet=null; lockScroll(false); }
   function openPoint(p, isNav){
     var links = mapLinks(p);
     document.getElementById('sheet-title').textContent = (isNav?'导航：':'打车：') + p.name;
@@ -600,7 +631,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok); }
     else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok(); }
   });
-  document.querySelectorAll('.sheet').forEach(function(s){ s.addEventListener('click',function(e){ if(e.target===s) s.classList.remove('on'); }); });
+  document.querySelectorAll('.sheet').forEach(function(s){ s.addEventListener('click',function(e){ if(e.target===s) closeTop(); }); });
+  document.addEventListener('click', function(e){
+    var t=e.target && e.target.closest ? e.target.closest('[data-close]') : null;
+    if(t){ e.preventDefault(); closeTop(); }
+  });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeTop(); });
   document.getElementById('geo-btn').addEventListener('click', startGeo);
   document.getElementById('geo-sort').addEventListener('click', function(){
     geo.sort=!geo.sort;
