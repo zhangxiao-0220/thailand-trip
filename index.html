@@ -228,6 +228,28 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .tldetail .mealcard{border-left:none}
 #pwa-hint{position:fixed;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:70;background:#0f6b52;color:#fff;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.6;box-shadow:0 6px 20px rgba(0,0,0,.22);max-width:600px;margin:0 auto}
 #pwa-hint button{margin-top:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700}
+
+.qbtns{display:flex;gap:6px;flex:none}
+.qbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:14px;line-height:1;cursor:pointer}
+.qbtn.petal{background:#fff0f0;border-color:#f6d3d3}
+.qbtn.grab{background:#eafaef;border-color:#c9ecd6}
+.qrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.qrow a,.qrow button{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:11px 8px;font-size:13.5px;font-weight:700;border:none;text-decoration:none;cursor:pointer}
+.qrow .b1{background:#fff0f0;color:#c0392b}
+.qrow .b2{background:#eafaef;color:#1c7a44}
+.qrow .b3{background:#eef4f0;color:#0d5d47}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(80px + env(safe-area-inset-bottom));background:#1d2a26;color:#fff;border-radius:12px;padding:11px 16px;font-size:13.5px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none;max-width:88%}
+#toast.on{opacity:.95}
+
+#sos-btn{position:fixed;right:14px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:45;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(135deg,#c0392b,#e05a45);color:#fff;font-size:23px;box-shadow:0 6px 18px rgba(192,57,43,.34);cursor:pointer}
+.emggrp{font-size:14px;font-weight:800;color:#0b6b4c;margin:16px 0 8px}
+.emg{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px 15px;margin-bottom:9px;text-decoration:none;color:inherit}
+.emg .ic2{flex:none;width:42px;height:42px;border-radius:13px;background:#eef4f0;display:flex;align-items:center;justify-content:center;font-size:20px}
+.emg.hot .ic2{background:#fdeae2}
+.emg .nm2{font-size:15px;font-weight:800;color:#1e332c}
+.emg .sub2{font-size:12.5px;color:#6c7b75;margin-top:3px;line-height:1.5}
+.emg .num2{margin-left:auto;flex:none;font-size:13.5px;font-weight:800;color:#0f6b52}
+.emg.hot .num2{color:#c0392b}
 </style>
 </head>
 <body>
@@ -277,11 +299,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   <div class="bottom-spacer" style="height:150px"></div>
 </div>
 
+<button id="sos-btn" title="紧急联络">☎️</button>
 <nav class="tabbar">
   <button data-tab="行程" class="on"><span class="ic">🗓</span>行程</button>
-  <button data-tab="预订"><span class="ic">🎫</span>预订</button>
   <button data-tab="美食"><span class="ic">🍜</span>美食</button>
-  <button data-tab="酒店"><span class="ic">🏨</span>酒店</button>
   <button data-tab="出行"><span class="ic">🚗</span>出行</button>
   <button data-tab="清单"><span class="ic">✅</span>清单</button>
 </nav>
@@ -308,6 +329,36 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   </div>
 </div>
 
+<div class="sheet" id="sheet-emg">
+  <div class="box">
+    <div class="handle"></div>
+    <div class="scroll">
+      <h3>☎️ 紧急联络（点号码直接拨号）</h3>
+      <p class="sub">号码已按中国驻泰使领馆官网核对；泰国本地号码可直接拨，中国的号码境外出境后也能拨。</p>
+
+      <div class="emggrp">🇨🇳 中国使领馆</div>
+      <a class="emg hot" href="tel:+6622457010"><div class="ic2">🛡</div><div><div class="nm2">驻泰国大使馆 · 领事保护</div><div class="sub2">曼谷，护照丢失、被扣、事故等找这个</div></div><div class="num2">+66-2-245-7010</div></a>
+      <a class="emg" href="tel:+6622450888"><div class="ic2">🏛</div><div><div class="nm2">驻泰国大使馆 · 总机</div><div class="sub2">工作日 9:00–12:00 / 14:30–17:00</div></div><div class="num2">+66-2-245-0888</div></a>
+      <a class="emg hot" href="tel:+6653280618"><div class="ic2">🛡</div><div><div class="nm2">驻清迈总领馆 · 领事保护</div><div class="sub2">清迈/泰北段用这个；非工作时间自动转 12308</div></div><div class="num2">+66-53-280-618</div></a>
+      <a class="emg" href="tel:+6653280380"><div class="ic2">📄</div><div><div class="nm2">驻清迈总领馆 · 证件咨询</div><div class="sub2">旅行证、证件类问题</div></div><div class="num2">+66-53-280-380</div></a>
+      <a class="emg hot" href="tel:+861012308"><div class="ic2">🌐</div><div><div class="nm2">外交部全球领保热线 12308</div><div class="sub2">24 小时，境外拨打请加 +86-10</div></div><div class="num2">+86-10-12308</div></a>
+
+      <div class="emggrp">🇹🇭 泰国当地</div>
+      <a class="emg hot" href="tel:1155"><div class="ic2">👮</div><div><div class="nm2">旅游警察（有中文服务）</div><div class="sub2">游客纠纷、被宰、走失、求助首选，24 小时</div></div><div class="num2">1155</div></a>
+      <a class="emg hot" href="tel:191"><div class="ic2">🚨</div><div><div class="nm2">报警（通用紧急）</div><div class="sub2">交通事故、治安、火警以外的紧急情况</div></div><div class="num2">191</div></a>
+      <a class="emg" href="tel:1669"><div class="ic2">🚑</div><div><div class="nm2">急救 / 救护车</div><div class="sub2">需要送医时拨，说明地点与人数</div></div><div class="num2">1669</div></a>
+      <a class="emg" href="tel:1178"><div class="ic2">🛂</div><div><div class="nm2">移民局 / 签证问题</div><div class="sub2">逾期、签证、入境记录问题</div></div><div class="num2">1178</div></a>
+
+      <div class="card" style="background:#eef7f3;border-color:#cfe9dd;margin-top:14px"><b>📋 打电话前先准备好</b>
+      <p style="font-size:13.5px;color:#2f4a3f;margin-top:6px;line-height:1.75">护照号、所在城市与具体地址（可以直接把当前地点的坐标念给接线员）、同行人数、是否需要中文翻译。使领馆只管中国公民的领事事务，医疗与报警仍要先找泰国当地。</p></div>
+      <div class="card"><b>🧾 证件丢了怎么办</b>
+      <p style="font-size:13.5px;color:#3f514a;margin-top:6px;line-height:1.75">① 先去当地警局报案拿报案单（很多场所补办需要）② 联系使领馆办旅行证回国 ③ 护照复印件与照片建议提前存云端，页面「清单」页也有这条。</p></div>
+      <div class="tipbox"><p>中国手机号在泰国拨 +66 开头号码：+66 之后要去掉泰国号码前的 0。例：曼谷 02-245-7010 → +66-2-245-7010。</p></div>
+    </div>
+    <div class="row foot"><button class="btn" data-close>关闭</button></div>
+  </div>
+</div>
+
 <div class="sheet" id="sheet-guide">
   <div class="box">
     <div class="handle"></div>
@@ -330,6 +381,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   var TRIP = JSON.parse(document.getElementById('trip-data').textContent);
   var PERIOD = {morning:'上午', noon:'中午', afternoon:'下午', evening:'晚上'};
   var state = { day: 0, tab: '行程' };
+  (function(){
+    try{
+      var n=new Date(), mm=('0'+(n.getMonth()+1)).slice(-2), dd=('0'+n.getDate()).slice(-2);
+      var iso=n.getFullYear()+'-'+mm+'-'+dd;
+      for(var i=0;i<TRIP.days.length;i++){ if(TRIP.days[i].date===iso){ state.day=i; break; } }
+    }catch(e){}
+  })();
   var geo = { pos: null, sort: false, watch: null };
 
   function hav(la1,ln1,la2,ln2){
@@ -467,6 +525,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
        '<button class="btn primary" data-nav data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🧭 导航</button>'+
        '<button class="btn gold" data-copy data-name="'+esc(s.name)+'" data-lat="'+s.lat+'" data-lng="'+s.lng+'">🚕 打车</button>'+
        '</div>';
+    if(typeof s.lat==='number'&&typeof s.lng==='number'){
+      h='<div class="qrow">'+
+        '<button class="b1" data-act="petal" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">⭐ 花瓣地图（收藏）</button>'+
+        '<button class="b2" data-act="grab" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🚕 Grab 打车</button>'+
+        '<button class="b3" data-act="amap" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🗺 高德导航</button>'+
+        '<button class="b3" data-act="petalnav" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🧭 花瓣导航</button>'+
+        '</div>'+h;
+    }
     var body=document.getElementById('guide-body');
     body.innerHTML=h; bindNavCopy(body); showSheet('sheet-guide');
   }
@@ -743,7 +809,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     return h;
   }
 
-  var DAYVIEWS=['时间线','路线','美食','贴士'];
+  var DAYVIEWS=['时间线','路线'];
   function timeGroup(t){ var m=String(t||'').match(/(\d{1,2}):(\d{2})/); if(!m) return '全天'; var v=+m[1]*60 + +m[2]; if(v<11*60) return '上午'; if(v<14*60) return '中午'; if(v<18*60) return '下午'; return '晚上'; }
   function dayView(name){
     state.dayView=name;
@@ -770,23 +836,42 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     var h = renderDayStrip();
     h += '<div class="card day-head"><div><h2>第 '+(state.day+1)+' 天 · '+esc(d.weekday)+' '+esc(d.date)+'</h2><div class="tag">'+esc(d.theme||'')+'</div></div></div>';
 
-    var view = state.dayView || '时间线';
+    var view = (state.dayView==='路线') ? '路线' : '时间线';
     h += '<div class="daynav">'+DAYVIEWS.map(function(v){
       return '<button data-dv="'+v+'"'+(v===view?' class="on"':'')+'>'+v+'</button>';
     }).join('')+'</div>';
 
     /* 时间线：按上午/中午/下午/晚上分组，条目可折叠 */
     h += '<div class="dview'+(view==='时间线'?' on':'')+'" id="dv-时间线">';
+    if(d.tips&&d.tips.length){
+      h += '<button class="bkreset" id="tips-toggle" style="margin-bottom:10px">📌 今日提醒（'+d.tips.length+' 条，点开看）</button>'+
+           '<div id="tips-box" style="display:none"><div class="tipbox">'+d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('')+'</div></div>';
+    }
     var lastGrp=null;
     items.forEach(function(it,idx){
       if(it.grp!==lastGrp){ lastGrp=it.grp; var c=items.filter(function(x){return x.grp===it.grp;}).length; h+='<div class="grp">'+it.grp+'<span>'+c+' 项</span></div>'; }
+      var la=null, ln=null, nm=it.name;
+      if(it.kind==='slot'&&typeof it.slot.lat==='number'){ la=it.slot.lat; ln=it.slot.lng; nm=it.slot.name; }
+      if(it.kind==='meal'){ var o0=(it.meal.options||[])[0]; if(o0&&typeof o0.lat==='number'){ la=o0.lat; ln=o0.lng; nm=o0.name; } }
       var detail = it.kind==='meal' ? mealCardHTML(it.meal) : slotHTML(it.slot,it.gid);
+      if(la!=null&&ln!=null){
+        detail = '<div class="qrow">'+
+          '<button class="b1" data-act="petal" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'">⭐ 花瓣地图（收藏）</button>'+
+          '<button class="b2" data-act="grab" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'">🚕 Grab 打车</button>'+
+          '<button class="b3" data-act="amap" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'">🗺 高德导航</button>'+
+          '<button class="b3" data-act="petalnav" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'">🧭 花瓣导航</button>'+
+          '</div>' + detail;
+      }
       var sub = it.kind==='meal'
         ? '🍽 '+(it.meal.options&&it.meal.options.length?it.meal.options.length+' 个选项':'')+(it.meal.hours?' · '+esc(it.meal.hours):'')
         : [it.slot.rating?'★ '+esc(String(it.slot.rating)):'', it.slot.ticketPrice?esc(it.slot.ticketPrice):'', (it.slot.transport&&it.slot.transport.mode)?'🚕 '+esc(it.slot.transport.mode):''].filter(Boolean).join(' · ');
+      var quick=(la!=null&&ln!=null)?('<div class="qbtns">'+
+        '<button class="qbtn petal" data-act="petal" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'" title="花瓣地图收藏">⭐</button>'+
+        '<button class="qbtn grab" data-act="grab" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'" title="复制坐标并打开 Grab">🚕</button>'+
+        '</div>'):'';
       h+='<div class="tlrow'+(it.kind==='meal'?' meal':'')+'" data-tl="'+idx+'"><div class="tltime">'+esc(it.time||'')+'</div>'+
          '<div class="tlbody"><div class="tlnm">'+(it.kind==='meal'?'🍽 ':'')+esc(it.name)+'</div>'+(sub?'<div class="tlsub">'+sub+'</div>':'')+'</div>'+
-         '<div class="tlchev">▾</div></div>'+
+         quick+'<div class="tlchev">▾</div></div>'+
          '<div class="tldetail" id="tld-'+idx+'" style="display:none">'+detail+'</div>';
     });
     h+='</div>';
@@ -805,19 +890,24 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     }
     h+='</div>';
 
-    /* 贴士 */
-    h += '<div class="dview'+(view==='贴士'?' on':'')+'" id="dv-贴士">';
-    h+='<div class="card"><div class="tag" style="display:inline-block">今日主题</div><p style="font-size:15px;margin-top:8px;line-height:1.7">'+esc(d.theme||'')+'</p></div>';
-    if(d.tips&&d.tips.length) h+='<div class="tipbox">'+d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('')+'</div>';
-    var need=(d.slots||[]).filter(function(s){return s.needsBooking;});
-    if(need.length){ h+='<div class="card"><b>⚠️ 今天需要提前预约的</b>'+need.map(function(s){return '<p style="font-size:14px;margin-top:8px">· '+esc(s.name)+'（提前 '+s.leadDays+' 天）</p>';}).join('')+'</div>'; }
-    h+='</div>';
+    /* 今日提醒：折在时间线最上面，默认收起 */
+    if(d.tips&&d.tips.length){
+      h += '<div class="dview'+(view==='时间线'?' on':'')+'" id="dv-提醒" style="display:none">';
+      h+='<div class="tipbox">'+d.tips.map(function(t){return '<p>'+esc(t)+'</p>';}).join('')+'</div></div>';
+    }
 
     document.getElementById('hero-day').textContent='第 '+(state.day+1)+' 天 · '+esc(d.weekday);
     document.getElementById('hero-sub').textContent='今日主题：'+(d.theme||'');
     document.getElementById('day-root').innerHTML=h;
     document.querySelectorAll('.daychip').forEach(function(c){ c.addEventListener('click',function(){ state.day=Number(c.getAttribute('data-day')); renderDay(); }); });
     document.querySelectorAll('.daynav button').forEach(function(b){ b.addEventListener('click', function(){ dayView(b.getAttribute('data-dv')); }); });
+    var tt=document.getElementById('tips-toggle');
+    if(tt) tt.addEventListener('click', function(){
+      var box=document.getElementById('tips-box');
+      var open=box.style.display==='none';
+      box.style.display=open?'block':'none';
+      tt.textContent=(open?'📌 今日提醒（收起）':'📌 今日提醒（'+d.tips.length+' 条，点开看）');
+    });
     document.querySelectorAll('#day-root .tlrow').forEach(function(r){
       r.addEventListener('click', function(){
         var idx=r.getAttribute('data-tl');
@@ -829,6 +919,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     bindNavCopy(document.getElementById('day-root'));
     document.querySelectorAll('#day-root [data-guide]').forEach(function(b){ b.addEventListener('click', function(){ openGuide(guideMap[b.getAttribute('data-guide')]); }); });
     document.querySelectorAll('#day-root [data-goto]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-goto')); }); });
+  document.querySelectorAll('[data-goto="__emg__"]').forEach(function(b){ b.addEventListener('click', function(){ showSheet('sheet-emg'); }); });
     if((state.dayView||'时间线')==='路线') loadRoute(d);
     refreshDistances();
   }
@@ -941,6 +1032,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     }
     h+='<div class="card" style="background:#eef7f3;border-color:#cfe9dd"><b>🚕 交通总原则（本行程不开车）</b><p style="font-size:13.5px;color:#2f4a3f;margin-top:6px;line-height:1.7">全程不用自己开车：曼谷用 Grab 打车 + BTS/MRT + 湄南河渡船；清迈除 10.6 山区一日是包车（07:30–18:30 共约 11 小时，含大象营等待与瀑布）外，其余都是 Grab 打车，古城区内以步行为主。机场四段都是已订的接送机。</p></div>';
     h+='<div class="card" style="background:#fff8e9;border-color:#f0dfb8"><b>🗺 地图 App 怎么用</b><p style="font-size:13.5px;color:#6b5836;margin-top:6px;line-height:1.75">• 花瓣地图（Petal Maps）：已接入官方 AppLink —— 点任意地点的「⭐ 花瓣地图打开」会在 App 里定位到这家店，按右上角星标即可收藏；「🧭 花瓣地图导航」直接发起路线。<br>• 底图：标准图为 OpenStreetMap（泰国覆盖完整）；高德路网瓦片在泰国是空白的，但卫星影像可用，路线卡里有「🛰 切换卫星影像（高德）」按钮。<br>• 谷歌地图 / 苹果地图 / 高德：页面里都有直接跳转的按钮。<br>• 打车用 Grab：复制的坐标同样可以粘进 Grab 的目的地栏。</p></div>';
+    h+='<div class="section"><h3>☎️ 紧急联络</h3><span>点号码直接拨号</span></div>';
+    h+='<div class="card"><p style="font-size:13.5px;color:#3f514a;line-height:1.8">· 驻泰使馆领保 <b>+66-2-245-7010</b>｜驻清迈总领馆领保 <b>+66-53-280-618</b><br>· 外交部全球领保 <b>+86-10-12308</b>（24h）<br>· 泰国旅游警察 <b>1155</b>（有中文）｜报警 <b>191</b>｜急救 <b>1669</b></p><div class="actrow"><button class="btn primary" data-goto="__emg__">☎️ 打开紧急联络页（一键拨打）</button></div></div>';
     h+='<div class="section"><h3>航班</h3><span>已确认 · 接送机已安排</span></div>';
     var flights=(TRIP.flights.booked||[]).concat(TRIP.flights.candidates||[]);
     flights.forEach(function(f){
@@ -954,7 +1047,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     h+='<div class="section"><h3>清迈交通</h3><span>古城步行 + 短途打车</span></div>';
     h+='<div class="card"><p style="font-size:14px;color:#3f514a">机场→古城：Grab 约 120–200 泰铢 / 20–30 分钟；古城内 Coucou Hotel 到清曼寺、北门、塔佩门大多步行可达。Day 10.6 山区一日用 Grab 8 小时包车，路线与超时费出发前与司机确认。</p></div>';
     h+='<div class="tipbox"><p>到曼谷后先连网/买 eSIM：导航和 Grab 都依赖网络；BTS/MRT 人多时尽量避开 08:00–09:30 与 18:00–19:30。</p></div>';
+    h += '<div class="section"><h3>🏨 住宿</h3><span>三段酒店 · 含导航</span></div><div id="tv-hotels"></div>';
     document.getElementById('view-出行').innerHTML=h;
+    try{
+      renderHotels();
+      var ht=document.getElementById('view-酒店'), host2=document.getElementById('tv-hotels');
+      if(ht&&host2){ while(ht.firstChild) host2.appendChild(ht.firstChild); }
+    }catch(e){}
   }
 
   /* ===== 清单 ===== */
@@ -983,7 +1082,15 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='</div>';
     });
     h+='<button class="btn" id="ck-reset" style="width:100%">↺ 重置所有勾选</button>';
+    h+='<div class="section"><h3>☎️ 紧急联络</h3><span>一键拨打</span></div>';
+    h+='<div class="card"><p style="font-size:13.5px;color:#3f514a;line-height:1.8">驻泰使馆领保 <b>+66-2-245-7010</b>｜驻清迈领保 <b>+66-53-280-618</b>｜外交部 <b>+86-10-12308</b>｜旅游警察 <b>1155</b>（中文）｜报警 <b>191</b>｜急救 <b>1669</b></p><div class="actrow"><button class="btn primary" data-goto="__emg__">☎️ 打开紧急联络页</button></div></div>';
+    h = '<div id="cl-bookings"></div>' + h;
     document.getElementById('view-清单').innerHTML=h;
+    try{
+      renderBookings();
+      var bk=document.getElementById('view-预订'), host=document.getElementById('cl-bookings');
+      if(bk&&host){ while(bk.firstChild) host.appendChild(bk.firstChild); }
+    }catch(e){}
     document.getElementById('ck-summary').textContent=done+'/'+total+' 已准备';
     document.querySelectorAll('#view-清单 input[type=checkbox]').forEach(function(cb){
       cb.addEventListener('change', function(){
@@ -1070,6 +1177,28 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     });
   }
 
+  function showToast(msg){ var t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; document.body.appendChild(t); } t.textContent=msg; t.classList.add('on'); if(t.__h) clearTimeout(t.__h); t.__h=setTimeout(function(){ t.classList.remove('on'); }, 2600); }
+  function copyText(txt, done){
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done, done); }
+    else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} document.body.removeChild(ta); done(); }
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('[data-act]') : null;
+    if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    var act=b.getAttribute('data-act');
+    var lat=b.getAttribute('data-lat'), lng=b.getAttribute('data-lng');
+    var nm=b.getAttribute('data-name')||'';
+    var plat=lat+','+lng;
+    var U='&utm_source=thailand-trip-app';
+    if(act==='petal'){ window.open('https://www.petalmaps.com/place/?center='+plat+'&z=16&marker='+plat+U,'_blank'); showToast('已打开花瓣地图，按右上角☆收藏'); }
+    else if(act==='petalnav'){ window.open('https://www.petalmaps.com/routes/?daddr='+plat+'&type=drive'+U,'_blank'); }
+    else if(act==='amap'){ window.open('https://uri.amap.com/navigation?to='+encodeURIComponent(lng+','+lat+','+nm)+'&mode=car&coordinate=wgs84&callnative=1','_blank'); }
+    else if(act==='grab'){ copyText(plat+' '+nm, function(){ showToast('已复制坐标：'+plat+'　打开 Grab 粘贴到目的地'); }); window.open('https://www.grab.com/th/en/','_blank'); }
+    else if(act==='copycoord'){ copyText(plat, function(){ showToast('已复制坐标 '+plat); }); }
+  });
+  var sos=document.getElementById('sos-btn');
+  if(sos) sos.addEventListener('click', function(){ showSheet('sheet-emg'); });
   document.querySelectorAll('[data-tab]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-goto')); }); });
   document.getElementById('btn-copy').addEventListener('click', function(){
