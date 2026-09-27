@@ -291,10 +291,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
         <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
         <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
         <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
-        <button class="btn gold" id="btn-copy">📋 复制定位</button>
+        <button class="btn gold" id="btn-copy">📋 复制坐标（花瓣/高德/Grab）</button>
         <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
       </div>
-      <p class="mini-note">泰国打车通常用 Grab；复制定位后在 Grab 里粘贴地点即可叫车。</p>
+      <p class="mini-note">花瓣地图、高德、Grab 都支持直接粘贴经纬度：先点上面的「复制坐标」，打开 App 粘进搜索框即可。谷歌/苹果地图可以直接点按钮跳转。</p>
     </div>
     <div class="row foot"><button class="btn" id="nav-close" data-close>关闭</button></div>
   </div>
@@ -413,7 +413,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   function openPoint(p, isNav){
     var links = mapLinks(p);
     document.getElementById('sheet-title').textContent = (isNav?'导航：':'打车：') + p.name;
-    document.getElementById('sheet-addr').textContent = p.name + '\n' + p.lat + ', ' + p.lng + '\n' + links.google;
+    document.getElementById('sheet-addr').textContent = p.lat + ', ' + p.lng + '\n' + p.name + '\n' + links.google;
     document.getElementById('lnk-apple').href = links.apple;
     document.getElementById('lnk-google').href = links.google;
     document.getElementById('lnk-amap').href = links.amap;
@@ -910,6 +910,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='<div class="tipbox"><p>已确认 4 段接送机，订单都在平台里：10.3 07:00 BKK 接机（乘车码 A000004）、10.5 10:00 席隆送机至廊曼 T2、10.5 14:15 清迈接机、10.9 08:16 清迈送机（CARIFY，含提拿行李）。<br>还缺 2 段：<b>10.9 廊曼 T2 接机</b>（清迈送机页面可直接加购 ¥173，含航班延误免费等）与<b>10.10 廊曼 T1 送机</b>。确认后我再补进来。</p></div>';
     }
     h+='<div class="card" style="background:#eef7f3;border-color:#cfe9dd"><b>🚕 交通总原则（本行程不开车）</b><p style="font-size:13.5px;color:#2f4a3f;margin-top:6px;line-height:1.7">全程不用自己开车：曼谷用 Grab 打车 + BTS/MRT + 湄南河渡船；清迈除 10.6 山区一日是包车（07:30–18:30 共约 11 小时，含大象营等待与瀑布）外，其余都是 Grab 打车，古城区内以步行为主。机场四段都是已订的接送机。</p></div>';
+    h+='<div class="card" style="background:#fff8e9;border-color:#f0dfb8"><b>🗺 地图 App 怎么用</b><p style="font-size:13.5px;color:#6b5836;margin-top:6px;line-height:1.75">• 花瓣地图（Petal Maps）：没有网页版，也接不了网页链接，但支持在搜索框直接粘贴经纬度 —— 点任意地点的「复制坐标」再粘进去即可。<br>• 谷歌地图 / 苹果地图 / 高德：页面里都有直接跳转的按钮。<br>• 打车用 Grab：复制的坐标同样可以粘进 Grab 的目的地栏。</p></div>';
     h+='<div class="section"><h3>航班</h3><span>已确认 · 接送机已安排</span></div>';
     var flights=(TRIP.flights.booked||[]).concat(TRIP.flights.candidates||[]);
     flights.forEach(function(f){
