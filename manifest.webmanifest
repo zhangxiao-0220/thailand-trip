@@ -1,0 +1,32 @@
+{
+  "name": "泰国双城记 · 曼谷+清迈 8天7晚",
+  "short_name": "泰国行程",
+  "description": "曼谷+清迈 8 天行程：时间线、路线地图、美食、酒店、出行、清单",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f7f4",
+  "theme_color": "#0f6b52",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

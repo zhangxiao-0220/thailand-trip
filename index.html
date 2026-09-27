@@ -23,7 +23,11 @@
 <meta name="twitter:title" content="泰国双城记 · 曼谷+清迈 8天7晚">
 <meta name="twitter:description" content="大皇宫 · 大象营 · 粘粘瀑布 · 丛林飞跃">
 <meta name="twitter:image" content="https://zhangxiao-0220.github.io/thailand-trip/images/share-cover.png">
-<link rel="apple-touch-icon" href="images/app-icon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="泰国行程">
+<meta name="apple-mobile-web-app-title" content="泰国行程">
 <style>
 :root{
   --bg:#f3f7f4; --card:#fff; --ink:#1d2a26; --dim:#6c7b75;
@@ -222,6 +226,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .tldetail .item{border-bottom:none;padding:0}
 .tldetail .card{border:none;padding:0;margin:0}
 .tldetail .mealcard{border-left:none}
+#pwa-hint{position:fixed;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:70;background:#0f6b52;color:#fff;border-radius:14px;padding:12px 14px;font-size:13.5px;line-height:1.6;box-shadow:0 6px 20px rgba(0,0,0,.22);max-width:600px;margin:0 auto}
+#pwa-hint button{margin-top:8px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700}
 </style>
 </head>
 <body>
@@ -1093,6 +1099,28 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   renderChecklist();
   try{ if(sessionStorage.getItem('trip-geo')==='1'){ startGeo(); } }catch(e){}
   refreshDistances();
+})();
+</script>
+<script>
+(function(){
+  if('serviceWorker' in navigator && location.protocol==='https:'){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('sw.js', {scope:'./'}).catch(function(){});
+    });
+  }
+  var KEY='pwa-hint-dismissed';
+  try{
+    if(!localStorage.getItem(KEY) && !window.matchMedia('(display-mode: standalone)').matches){
+      var bar=document.createElement('div');
+      bar.id='pwa-hint';
+      bar.innerHTML='📲 想当 App 用？华为/安卓：浏览器菜单 → 「添加到桌面」；iPhone：分享 → 「添加到主屏幕」。装好后有图标、能离线看。<button id="pwa-hint-x">知道了</button>';
+      document.body.appendChild(bar);
+      document.getElementById('pwa-hint-x').addEventListener('click', function(){
+        try{ localStorage.setItem(KEY,'1'); }catch(e){}
+        bar.remove();
+      });
+    }
+  }catch(e){}
 })();
 </script>
 
