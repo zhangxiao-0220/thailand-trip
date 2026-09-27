@@ -292,9 +292,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
         <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
         <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
         <button class="btn gold" id="btn-copy">📋 复制坐标（花瓣/高德/Grab）</button>
-        <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
+        <a class="btn" id="lnk-petal" target="_blank" rel="noopener" style="grid-column:1/-1;background:#fff0f0;color:#c0392b">⭐ 花瓣地图打开（可收藏 / 标星）</a>
+      <a class="btn" id="lnk-petal-nav" target="_blank" rel="noopener" style="grid-column:1/-1;background:#fff0f0;color:#c0392b">🧭 花瓣地图导航</a>
+      <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab（官网）</a>
       </div>
-      <p class="mini-note">花瓣地图、高德、Grab 都支持直接粘贴经纬度：先点上面的「复制坐标」，打开 App 粘进搜索框即可。谷歌/苹果地图可以直接点按钮跳转。</p>
+      <p class="mini-note">点「花瓣地图打开」会在花瓣 App 里定位到这家店，你在 App 里按右上角星标即可收藏；「花瓣地图导航」直接发起驾车路线。谷歌/苹果/高德可直接点按钮。</p>
     </div>
     <div class="row foot"><button class="btn" id="nav-close" data-close>关闭</button></div>
   </div>
@@ -417,6 +419,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     document.getElementById('lnk-apple').href = links.apple;
     document.getElementById('lnk-google').href = links.google;
     document.getElementById('lnk-amap').href = links.amap;
+    var plat = p.lat + ',' + p.lng;
+    var petalPlace = 'https://www.petalmaps.com/place/?center=' + plat + '&z=16&marker=' + plat + '&utm_source=thailand-trip-app';
+    var petalRoute = 'https://www.petalmaps.com/routes/?daddr=' + plat + '&type=drive&utm_source=thailand-trip-app';
+    var ep = document.getElementById('lnk-petal'); if (ep) ep.href = petalPlace;
+    var en = document.getElementById('lnk-petal-nav'); if (en) en.href = petalRoute;
     showSheet('sheet-nav');
   }
 
@@ -561,7 +568,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     var pts=dayPoints(d);
     if(pts.length<2) return '';
     return '<div class="card routecard"><div class="hd"><b>🗺 今日路线</b><span class="chip" id="route-chip">'+pts.length+' 个点 · 计算中…</span></div>'+
-      '<div class="mapwrap" id="mapwrap"><div id="daymap"></div></div>'+
+      '<div style="padding:0 16px 8px"><button class="bkreset" id="tile-toggle">🛰 切换卫星影像（高德）</button></div><div class="mapwrap" id="mapwrap"><div id="daymap"></div></div>'+
       '<div class="legs" id="legs">'+pts.map(function(p,i){
         return '<div class="legrow"><div class="idx'+(i===pts.length-1?' to':'')+'">'+(i+1)+'</div><div><div class="nm">'+esc(p.name)+'</div><div class="mt">'+esc(p.hotel?'出发':(p.time||''))+(i<pts.length-1?'':' · 当日最后一站')+'</div></div></div>';
       }).join('')+'</div>'+
@@ -600,7 +607,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
      var fresh=document.createElement('div'); fresh.id='daymap';
      host.appendChild(fresh);
      map=L.map(fresh,{zoomControl:false,attributionControl:true,scrollWheelZoom:false});
-     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap'}).addTo(map);
+     window.__tileStd=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© OpenStreetMap 标准图'}).addTo(map);
+     window.__tileSat=L.tileLayer('https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',{maxZoom:18,subdomains:'1234',attribution:'© 高德卫星影像'});
+     window.__tileMode='std';
      lg=L.layerGroup().addTo(map);
      window.__daymap=map; window.__daylayer=lg;
    }
@@ -636,7 +645,22 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     setTimeout(function(){ ensureMap(pts,geom); },250);
     return false;
   }
+  function bindTileToggle(){
+    var b=document.getElementById('tile-toggle');
+    if(!b||b.__bound) return; b.__bound=1;
+    b.addEventListener('click', function(){
+      if(!window.__daymap||!window.__tileStd||!window.__tileSat) return;
+      if(window.__tileMode==='std'){
+        window.__daymap.removeLayer(window.__tileStd); window.__tileSat.addTo(window.__daymap);
+        window.__tileMode='sat'; b.textContent='🗺 切换标准地图（OSM）';
+      } else {
+        window.__daymap.removeLayer(window.__tileSat); window.__tileStd.addTo(window.__daymap);
+        window.__tileMode='std'; b.textContent='🛰 切换卫星影像（高德）';
+      }
+    });
+  }
   function loadRoute(d){
+    bindTileToggle();
     var pts=dayPoints(d);
     if(pts.length<2) return;
     var key=d.date;
@@ -910,7 +934,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='<div class="tipbox"><p>已确认 4 段接送机，订单都在平台里：10.3 07:00 BKK 接机（乘车码 A000004）、10.5 10:00 席隆送机至廊曼 T2、10.5 14:15 清迈接机、10.9 08:16 清迈送机（CARIFY，含提拿行李）。<br>还缺 2 段：<b>10.9 廊曼 T2 接机</b>（清迈送机页面可直接加购 ¥173，含航班延误免费等）与<b>10.10 廊曼 T1 送机</b>。确认后我再补进来。</p></div>';
     }
     h+='<div class="card" style="background:#eef7f3;border-color:#cfe9dd"><b>🚕 交通总原则（本行程不开车）</b><p style="font-size:13.5px;color:#2f4a3f;margin-top:6px;line-height:1.7">全程不用自己开车：曼谷用 Grab 打车 + BTS/MRT + 湄南河渡船；清迈除 10.6 山区一日是包车（07:30–18:30 共约 11 小时，含大象营等待与瀑布）外，其余都是 Grab 打车，古城区内以步行为主。机场四段都是已订的接送机。</p></div>';
-    h+='<div class="card" style="background:#fff8e9;border-color:#f0dfb8"><b>🗺 地图 App 怎么用</b><p style="font-size:13.5px;color:#6b5836;margin-top:6px;line-height:1.75">• 花瓣地图（Petal Maps）：没有网页版，也接不了网页链接，但支持在搜索框直接粘贴经纬度 —— 点任意地点的「复制坐标」再粘进去即可。<br>• 谷歌地图 / 苹果地图 / 高德：页面里都有直接跳转的按钮。<br>• 打车用 Grab：复制的坐标同样可以粘进 Grab 的目的地栏。</p></div>';
+    h+='<div class="card" style="background:#fff8e9;border-color:#f0dfb8"><b>🗺 地图 App 怎么用</b><p style="font-size:13.5px;color:#6b5836;margin-top:6px;line-height:1.75">• 花瓣地图（Petal Maps）：已接入官方 AppLink —— 点任意地点的「⭐ 花瓣地图打开」会在 App 里定位到这家店，按右上角星标即可收藏；「🧭 花瓣地图导航」直接发起路线。<br>• 底图：标准图为 OpenStreetMap（泰国覆盖完整）；高德路网瓦片在泰国是空白的，但卫星影像可用，路线卡里有「🛰 切换卫星影像（高德）」按钮。<br>• 谷歌地图 / 苹果地图 / 高德：页面里都有直接跳转的按钮。<br>• 打车用 Grab：复制的坐标同样可以粘进 Grab 的目的地栏。</p></div>';
     h+='<div class="section"><h3>航班</h3><span>已确认 · 接送机已安排</span></div>';
     var flights=(TRIP.flights.booked||[]).concat(TRIP.flights.candidates||[]);
     flights.forEach(function(f){
