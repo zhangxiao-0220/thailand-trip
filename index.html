@@ -104,6 +104,28 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .foodopt:first-of-type{border-top:none}
 .foodopt .pl{font-size:15px}
 .foodopt .note{font-size:13px;color:#7b8a82;margin:2px 0 4px}
+.fooddays{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.fooddays::-webkit-scrollbar{display:none}
+.fdchip{flex:0 0 auto;min-width:54px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:7px 11px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer}
+.fdchip b{font-size:15px;color:#3f514a;line-height:1.1}
+.fdchip small{font-size:10.5px;color:#8a9891;font-weight:600}
+.fdchip.on{background:linear-gradient(135deg,#0f6b52,#2ca381);border-color:transparent;box-shadow:0 4px 12px rgba(15,107,82,.22)}
+.fdchip.on b,.fdchip.on small{color:#fff}
+.fooddayhead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.fooddayhead b{font-size:16px}
+.fdtheme{font-size:13px;color:#6f7e78;margin-top:3px;line-height:1.5}
+.mealcard2{padding:14px 15px}
+.mt2{display:flex;align-items:baseline;gap:8px;font-size:15.5px;font-weight:800;color:#0b6b4c;border-bottom:1px dashed #e3ece7;padding-bottom:8px;margin-bottom:4px}
+.mt2 i{font-style:normal;font-size:12.5px;font-weight:600;color:#8a9891}
+.fopt{padding:11px 0;border-bottom:1px solid #f1f5f3}
+.fopt:last-child{border-bottom:0;padding-bottom:2px}
+.fohead{display:flex;gap:8px;align-items:baseline}
+.fonum{flex:0 0 auto;width:19px;height:19px;border-radius:50%;background:#e7f3ee;color:#0f6b52;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.fohead b{font-size:15px;font-weight:700;color:#1e332c;line-height:1.4}
+.fometa{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;font-size:12.5px;color:#5b6c65}
+.fometa>span{background:#f3f7f5;border-radius:7px;padding:2px 7px}
+.fonote{font-size:13.5px;color:#42524b;line-height:1.65;margin-top:7px}
+.fosrc{font-size:12px;color:#c0392b;margin-top:6px;line-height:1.5}
 .slotphoto{position:relative;height:150px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#2ca381,#0f6b52);margin:8px 0 4px}
 .slotphoto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .pguide{margin-top:6px;border-top:1px dashed var(--line);padding-top:6px}
@@ -307,7 +329,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   <div id="view-行程" class="panel on">
     <div class="hero">
       <h2 id="hero-day">点下面第几天开始浏览</h2>
-      <p id="hero-sub">每站可一键导航、打车；美食/酒店/交通/清单都在底部</p>
+      <p id="hero-sub">每站可一键花瓣地图 / 谷歌地图 / Grab</p>
       <div class="quick">
         <button data-goto="美食">🍜 今天吃什么</button>
         <button data-goto="出行">🚗 航班与交通</button>
@@ -317,7 +339,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   </div>
 
   <div id="view-预订" class="panel"></div>
-  <div id="view-课表" class="panel"></div>
+  <div id="view-行程表" class="panel"></div>
   <div id="view-美食" class="panel"></div>
   <div id="view-酒店" class="panel"></div>
   <div id="view-出行" class="panel"></div>
@@ -328,7 +350,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 <button id="sos-btn" title="紧急联络">☎️</button>
 <nav class="tabbar">
   <button data-tab="行程" class="on"><span class="ic">🗓</span>行程</button>
-  <button data-tab="课表"><span class="ic">📋</span>课表</button>
+  <button data-tab="行程表"><span class="ic">📋</span>行程表</button>
   <button data-tab="美食"><span class="ic">🍜</span>美食</button>
   <button data-tab="出行"><span class="ic">🚗</span>出行</button>
   <button data-tab="清单"><span class="ic">✅</span>清单</button>
@@ -339,18 +361,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     <div class="handle"></div>
     <div class="scroll">
       <h3 id="sheet-title">导航到此</h3>
-      <p class="sub">选择地图 App 打开；打车请复制定位后粘贴到 Grab。</p>
       <div class="addr" id="sheet-addr"></div>
       <div class="row">
-        <a class="btn primary" id="lnk-apple" target="_blank" rel="noopener">🍎 苹果地图</a>
+        <a class="btn primary" id="lnk-petal" target="_blank" rel="noopener" style="background:#fff0f0;color:#c0392b">⭐ 花瓣地图</a>
         <a class="btn primary" id="lnk-google" target="_blank" rel="noopener">🧭 谷歌地图</a>
-        <a class="btn primary" id="lnk-amap" target="_blank" rel="noopener">🗺 高德地图</a>
-        <button class="btn gold" id="btn-copy">📋 复制坐标</button>
-        <a class="btn" id="lnk-petal" target="_blank" rel="noopener" style="grid-column:1/-1;background:#fff0f0;color:#c0392b">⭐ 花瓣地图</a>
-      <a class="btn" id="lnk-petal-nav" target="_blank" rel="noopener" style="grid-column:1/-1;background:#eef4f0;color:#0d5d47">🧭 谷歌导航</a>
-      <a class="btn" href="https://www.grab.com" target="_blank" rel="noopener" style="grid-column:1/-1">🚕 打开 Grab</a>
+        <a class="btn" id="lnk-google-nav" target="_blank" rel="noopener">🧭 谷歌导航</a>
+        <a class="btn gold" id="lnk-grab" href="https://www.grab.com" target="_blank" rel="noopener">🚕 Grab</a>
       </div>
-      <p class="mini-note">「花瓣地图」会打开花瓣的网页地图并定位到这一家（标记点就是它），页面右上角有「打开App」，点一下就能跳进花瓣 App 收藏标星。</p>
     </div>
     <div class="row foot"><button class="btn" id="nav-close" data-close>关闭</button></div>
   </div>
@@ -504,18 +521,17 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   }
   function hideSheets(){ document.querySelectorAll('.sheet').forEach(function(s){ s.classList.remove('on'); }); lastSheet=null; lockScroll(false); }
   function openPoint(p, isNav){
-    var links = mapLinks(p);
-    document.getElementById('sheet-title').textContent = (isNav?'导航：':'打车：') + p.name;
-    document.getElementById('sheet-addr').textContent = p.lat + ', ' + p.lng + '\n' + p.name + '\n' + links.google;
-    document.getElementById('lnk-apple').href = links.apple;
-    document.getElementById('lnk-google').href = links.google;
-    document.getElementById('lnk-amap').href = links.amap;
+    document.getElementById('sheet-title').textContent = p.name;
+    document.getElementById('sheet-addr').textContent = p.name + '\n' + p.lat + ', ' + p.lng;
     var plat = p.lat + ',' + p.lng;
     var nmEn = (p.en && p.en.trim()) ? p.en.trim() : p.name;
     var petalPlace = 'https://www.petalmaps.com/place/?center=' + plat + '&z=17&marker=' + plat + '&utm_source=thailand-trip-app';
     var petalRoute = 'https://www.google.com/maps/dir/?api=1&destination=' + plat + '&travelmode=driving';
+    var googleSearch = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(nmEn);
     var ep = document.getElementById('lnk-petal'); if (ep) ep.href = petalPlace;
-    var en = document.getElementById('lnk-petal-nav'); if (en) en.href = petalRoute;
+    var gg = document.getElementById('lnk-google'); if (gg) gg.href = googleSearch;
+    var gn = document.getElementById('lnk-google-nav'); if (gn) gn.href = petalRoute;
+    var gb = document.getElementById('lnk-grab'); if (gb) gb.href = 'https://www.grab.com/th/en/';
     showSheet('sheet-nav');
   }
 
@@ -556,8 +572,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h='<div class="qrow">'+
         '<button class="b1" data-act="petal" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">⭐ 花瓣地图</button>'+
         '<button class="b2" data-act="grab" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🚕 Grab 打车</button>'+
-        '<button class="b3" data-act="amap" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🗺 高德导航</button>'+
-        '<button class="b3" data-act="gmapnav" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🧭 谷歌导航</button>'+
+        '<button class="b3" data-act="gmap" data-lat="'+s.lat+'" data-lng="'+s.lng+'" data-name="'+esc(s.name)+'">🧭 谷歌地图</button>'+
         '</div>'+h;
     }
     var body=document.getElementById('guide-body');
@@ -899,13 +914,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     return h;
   }
   function renderTimetable(){
-    var h='<div class="section"><h3>📋 全程课表</h3><span>点行程跳到当天那一条</span></div>';
+    var h='<div class="section"><h3>📋 全程行程表</h3><span>点行程跳到当天那一条</span></div>';
     h+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px">'+
        '<span class="chip" style="background:#e9f1fb;color:#2c5b8a">✈️ 航班日</span>'+
        '<span class="chip" style="background:#fdf0e3;color:#a05a12">🚐 包车日</span>'+
        '<span class="chip">点格子里的行程 → 当天那一条自动展开</span></div>';
     h+=timetableHTML();
-    var el=document.getElementById('view-课表');
+    var el=document.getElementById('view-行程表');
     el.innerHTML=h;
     el.querySelectorAll('.ttjump').forEach(function(t){
       t.addEventListener('click', function(e){
@@ -973,13 +988,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
         detail = '<div class="qrow">'+
           '<button class="b1" data-act="petal" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(en||nm)+'" data-city="'+esc(city)+'">⭐ 花瓣地图</button>'+
           '<button class="b2" data-act="grab" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(en||nm)+'" data-city="'+esc(city)+'">🚕 Grab 打车</button>'+
-          '<button class="b3" data-act="amap" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(nm)+'">🗺 高德导航</button>'+
-          '<button class="b3" data-act="gmapnav" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(en||nm)+'" data-city="'+esc(city)+'">🧭 谷歌导航</button>'+
+          '<button class="b3" data-act="gmap" data-lat="'+la+'" data-lng="'+ln+'" data-name="'+esc(en||nm)+'" data-city="'+esc(city)+'">🧭 谷歌地图</button>'+
           '</div>' + detail;
       }
       var sub = it.kind==='meal'
         ? '🍽 '+(it.meal.options&&it.meal.options.length?it.meal.options.length+' 个选项':'')+(it.meal.hours?' · '+esc(it.meal.hours):'')
-        : [it.slot.rating?'★ '+esc(String(it.slot.rating)):'', it.slot.ticketPrice?esc(it.slot.ticketPrice):'', (it.slot.transport&&it.slot.transport.mode)?'🚕 '+esc(it.slot.transport.mode):'', it.slot.xhs?'📕 '+esc(it.slot.xhs.slice(0,18))+'…':''].filter(Boolean).join(' · ');
+        : [it.slot.rating?'★ '+esc(String(it.slot.rating)):'', it.slot.ticketPrice?esc(it.slot.ticketPrice):'', (it.slot.transport&&it.slot.transport.mode)?'🚕 '+esc(it.slot.transport.mode):''].filter(Boolean).join(' · ');
       var en=it.kind==='slot'?(it.slot.en||''):(it.meal.options&&it.meal.options[0]?(it.meal.options[0].en||''):'');
       var city=TRIP.days[state.day].date<'2026-10-05'?'Bangkok':(TRIP.days[state.day].date<'2026-10-09'?'Chiang Mai':'Bangkok');
       var quick=(la!=null&&ln!=null)?('<div class="qbtns">'+
@@ -1044,98 +1058,55 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 
   /* ===== 美食 ===== */
   function renderFood(){
-    var srcList=[
-      '「曼谷超全美食攻略 真的太好吃啦」（1,876 赞）→ 评论区店单：Jeh O Chula、Somsak Pu Ob、SomSom Seafood、Thongsmith、Ruathong 船面',
-      '「曼谷暹罗百丽宫 G 层美食」（1,057 赞）→ Siam Paragon G 层：Bread Ahead、Karun 泰奶、Parameter Gelato、Gourmet Market 榴莲',
-      '「离开素万那普机场✈️非买不可的炸鸡」（206 赞）→ Bonchon 炸鸡（机场店已停业，改吃 Central Ladprao / The Avenue）',
-      '「泰国清迈旅行避雷经验分享」（857 赞，评论区点点 AI 总结）→ Ekachan、三兄弟等避雷店单',
-      '「清迈很美味！附上我念念不忘的 8 家（含店名）」（776 赞 · 1,057 收藏）→ Alice\u2019s、Nai To Congee、Black Gooseberry、Kiew Kai Ka、Kao Soy Nimman、后门夜市',
-      '「清迈的所有人立刻去吃这家！」（46 赞）→ SANAE（辣牛肉汤必点）',
-      '「清迈宁曼路一家好吃的饭店」（42 赞）→ So Good Thai（炒软壳蟹）',
-      '「连着三天三刷清迈这家咖啡和三明治」（30 赞）→ Toffee Roasters',
-      '「清迈新开的网红炸鸡，到底怎么样？」（60 赞）→ JOE WINGS',
-      '「当我去清迈在Vpada买了9双草编拖鞋…」（1,827 赞）→ VPADA 草编鞋（One Nimman 二楼，10.7 已排）',
-      '「泰国🇹🇭｜机场免税店编织包包👜均价300多」（627 赞）→ SUGAR MONDAY 草编包（廊曼 T1 安检后，10.10 已排）'
-    ];
-    var srcCard='<div class="card" style="background:#fff8f5;border-color:#f3ded6"><b style="font-size:15.5px">📕 这些推荐是怎么挑出来的</b>'+
-      '<p style="font-size:13.5px;color:#5b4a44;margin-top:8px;line-height:1.85">先在小红书按「曼谷美食 / 清迈美食 / 清迈避雷 / 机场必买」翻高赞笔记，逐篇看正文并翻评论区，确认是多数人认可（不是广）之后，再用大众点评、携程、Google 地图的评分与评价量复核，最后按当天路线就近排进餐次。主要来源：</p>'+
-      '<ul style="margin:8px 0 0 17px;font-size:13.2px;color:#3f514a;line-height:1.8">'+srcList.map(function(x){return '<li style="margin:5px 0">'+esc(x)+'</li>';}).join('')+'</ul>'+
-      '<p style="font-size:12.5px;color:#8a9791;margin-top:9px">价格与营业时间会有变动，出发前用地图 App 再确认一次；带 📕 标记的店，点进去都能看到具体来源与点赞数。</p></div>';
-    var h='';
-    TRIP.days.forEach(function(d,di){
-      var nOpt=(d.dining||[]).reduce(function(a,m){return a+((m.options&&m.options.length)||1);},0);
-      var nXhs=(d.dining||[]).reduce(function(a,m){return a+((m.options||[]).filter(function(o){return o.xhs;}).length);},0);
-      h+='<div class="card fday" data-fday="'+di+'"><div class="daycard-head"><div><b>第 '+(di+1)+' 天 · '+esc(d.weekday)+' '+esc(d.date)+'</b><div style="font-size:13px;color:#6f7e78;margin-top:2px">'+esc(d.theme||'')+' · '+(d.dining||[]).length+' 餐 · '+nOpt+' 个选择'+(nXhs?' · 📕'+nXhs:'')+'</div></div><button class="gobtn" data-goday="'+di+'">回到这天</button></div><div class="fbody" id="fbody-'+di+'" style="display:none">';
-      var meals=(d.dining||[]);
-      if(!meals.length){ h+='<p style="font-size:13.5px;color:#8a9791">当天以行程中的简餐/小吃为主，无固定餐厅安排。</p>'; }
-      meals.forEach(function(m){
-        var city = di<=1 ? '曼谷' : (di<=5 ? '清迈' : '曼谷');
-        h+='<div class="mealrow"><div class="mt">'+esc(m.meal)+'</div>';
-        var opts=(m.options&&m.options.length)?m.options:[{name:m.place,hours:m.hours,note:'',dishes:m.dishes}];
-        if(geo.sort&&geo.pos){ opts=opts.slice().sort(function(a,b){ return foodDist(a)-foodDist(b); }); }
-        opts.forEach(function(o,oi){
-          var fid='f'+di+'_'+oi; foodMap[fid]=o;
-          var meta='';
-          if(o.reviews) meta+='<span class="chip">'+esc(o.reviews)+'</span>';
-          if(o.avg) meta+='<span class="chip">💰 '+esc(o.avg)+'</span>';
-          h+='<div class="foodopt"><div class="pl">'+(oi+1)+'. '+esc(o.name)+((typeof o.lat==='number'&&typeof o.lng==='number')?' <span class="chip distchip" data-geo-lat="'+o.lat+'" data-geo-lng="'+o.lng+'">📍 --</span>':'')+(o.xhs?'<span class="chip" style="background:#fdeaea;color:#c0392b">📕 小红书</span>':'')+'</div><div class="gmeta">'+meta+'</div>'+(o.hours?'<div class="hs">'+esc(o.hours)+'</div>':'')+(o.note?'<div class="note">'+esc(o.note)+'</div>':'')+(o.address?'<div class="gsrc">📍 '+esc(o.address)+'</div>':'')+(o.xhs?'<div class="gsrc" style="color:#c0392b">📕 来源：'+esc(o.xhs)+'</div>':'')+(o.source?'<div class="gsrc">来源：'+esc(o.source)+'</div>':'');
-          (o.dishes||[]).forEach(function(x){ h+='<div class="dish"><span>'+esc(x.name)+'</span><b>'+esc(x.price||'')+'</b></div>'; });
-          var q=encodeURIComponent(o.name+' '+city);
-          h+='<div class="actrow" style="margin-top:6px">'+
-             '<a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+q+'">🧭 导航</a>'+
-             '<a class="btn" target="_blank" rel="noopener" href="https://maps.apple.com/?q='+q+'">🍎 苹果地图</a>'+
-             '<button class="btn gold" data-copyname="'+esc(o.name+' '+city)+'">🚕 复制给 Grab</button>'+
-             '</div>'+
-             ((typeof o.lat==='number'&&typeof o.lng==='number')?'<div class="actrow" style="margin-top:6px"><button class="btn" style="background:#fff0f0;color:#c0392b" data-act="petal" data-lat="'+o.lat+'" data-lng="'+o.lng+'" data-name="'+esc(o.en||o.name)+'" data-city="">⭐ 花瓣地图</button><button class="btn" style="background:#eef4f0;color:#0d5d47" data-act="copycoord" data-lat="'+o.lat+'" data-lng="'+o.lng+'">📋 复制坐标</button></div>':'')+
-             '<div class="actrow" style="margin-top:6px"><button class="btn" data-food="'+fid+'" style="background:#e9f6fa;color:#0e7c9c">🍽 店铺详情 · 必点菜</button></div>';
-          h+='</div>';
-        });
-        h+='</div>';
+    var el=document.getElementById('view-美食');
+    if(state.foodDay==null) state.foodDay=state.day||0;
+    var di=Math.max(0,Math.min(TRIP.days.length-1,state.foodDay));
+    var d=TRIP.days[di];
+    var city = di<=1 ? '曼谷' : (di<=5 ? '清迈' : '曼谷');
+    var h='<div class="fooddays">'+TRIP.days.map(function(x,i){
+      return '<button class="fdchip'+(i===di?' on':'')+'" data-foodday="'+i+'"><b>'+(i+1)+'</b><small>'+esc(x.date.slice(5).replace('-','/'))+'</small></button>';
+    }).join('')+'</div>';
+    h+='<div class="card fooddayhead"><div><b>第 '+(di+1)+' 天 · '+esc(d.weekday)+' '+esc(d.date)+'</b><div class="fdtheme">'+esc(d.theme||'')+'</div></div><button class="gobtn" data-foodgoday="'+di+'">看当天行程</button></div>';
+    var meals=(d.dining||[]);
+    if(!meals.length) h+='<div class="card"><p style="font-size:13.5px;color:#8a9791">当天以行程里的简餐/小吃为主，没有固定餐厅。</p></div>';
+    meals.forEach(function(m,mi){
+      h+='<div class="card mealcard2"><div class="mt2"><span>'+esc(m.meal)+'</span>'+(m.time?'<i>'+esc(m.time)+'</i>':'')+'</div>';
+      var opts=(m.options&&m.options.length)?m.options:[{name:m.place,hours:m.hours,note:'',dishes:m.dishes,lat:m.lat,lng:m.lng}];
+      if(geo.sort&&geo.pos){ opts=opts.slice().sort(function(a,b){ return foodDist(a)-foodDist(b); }); }
+      opts.forEach(function(o,oi){
+        var fid='f'+di+'_'+mi+'_'+oi; foodMap[fid]=o;
+        var hasLoc=(typeof o.lat==='number'&&typeof o.lng==='number');
+        var onm=(o.en&&String(o.en).trim())?o.en:o.name;
+        h+='<div class="fopt"><div class="fohead"><span class="fonum">'+(oi+1)+'</span><b>'+esc(o.name)+'</b></div>';
+        var meta=[];
+        if(o.rating) meta.push('<span>★ '+esc(String(o.rating))+'</span>');
+        if(o.avg) meta.push('<span>💰 '+esc(o.avg)+'</span>');
+        if(o.hours) meta.push('<span>🕐 '+esc(o.hours)+'</span>');
+        if(hasLoc) meta.push('<span class="distchip" data-geo-lat="'+o.lat+'" data-geo-lng="'+o.lng+'">📍 --</span>');
+        h+='<div class="fometa">'+meta.join('')+'</div>';
+        if(o.note) h+='<div class="fonote">'+esc(o.note)+'</div>';
+        (o.dishes||[]).forEach(function(x){ h+='<div class="dish"><span>'+esc(x.name)+'</span><b>'+esc(x.price||'')+'</b></div>'; });
+        if(o.xhs){ var sx=String(o.xhs).replace(/^小红书/,'').replace(/（[^）]*）\s*$/,'').trim(); if(sx.length>34) sx=sx.slice(0,34)+'…'; h+='<div class="fosrc">📕 '+esc(sx)+'</div>'; }
+        h+='<div class="actrow" style="margin-top:8px">'+
+           (hasLoc?'<button class="btn" style="background:#fff0f0;color:#c0392b" data-act="petal" data-lat="'+o.lat+'" data-lng="'+o.lng+'" data-name="'+esc(onm)+'" data-city="">⭐ 花瓣地图</button>':'')+
+           '<a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(o.name+' '+city)+'">🧭 谷歌地图</a>'+
+           (hasLoc?'<button class="btn gold" data-act="grab" data-lat="'+o.lat+'" data-lng="'+o.lng+'" data-name="'+esc(onm)+'" data-city="'+city+'">🚕 Grab 打车</button>':'')+
+           '<button class="btn" data-food="'+fid+'" style="background:#eef4f0;color:#0d5d47">🍽 详情</button>'+
+           '</div></div>';
       });
-      h+='</div></div>';
+      h+='</div>';
     });
-    var giftGroup=(TRIP.checklists||[]).filter(function(g){return (g.name||'').indexOf('纪念品')>=0;})[0];
-    if(giftGroup){
-      h+='<div class="section"><h3>🛍 顺手买这些</h3><span>瓦洛洛/商场/机场</span></div><div class="card"><div class="chiprow">'+giftGroup.items.map(function(x){return '<span class="chip" style="font-size:13px;padding:4px 9px">'+esc(x.split('：')[0])+'</span>';}).join('')+'</div><p style="font-size:13px;color:#7b8a82;margin-top:8px">详细“哪里买 + 注意事项”见「清单」页的“纪念品与特产”分组。</p></div>';
-    }
-    h+='<div class="section"><h3>🔥 小红书高赞清单</h3><span>真实用户笔记整理</span></div><div class="card">'+
-      '<p style="font-size:14px;color:#42524b;line-height:1.9">'+
-      '1. <b>Alice\u2019s Restaurant</b>：咖喱蟹、芒果糯米饭（拌饭一绝）<br>'+
-      '2. <b>清迈大学后门夜市打抛饭</b>（第二家 7-11 对面）：被称打抛饭天花板<br>'+
-      '3. <b>后门夜市龙眼冰</b>：解辣神器，随手一杯<br>'+
-      '4. <b>Black Gooseberry</b>：四色吐司+煎蛋+泰奶<br>'+
-      '5. <b>Nai To Congee Shop</b>：米其林早餐店，鸡爪好吃<br>'+
-      '6. <b>Kiew Kai Ka (One Nimman)</b>：软壳蟹、炒空心菜<br>'+
-      '7. <b>Kao Soy Nimman</b>：泰北咖喱面、椰汁<br>'+
-      '8. <b>Joost Smoothies</b>：山竹冰沙'+
-      '</p><p style="font-size:13px;color:#8a9791;margin-top:8px">来源：小红书高赞笔记「清迈很美味！附上我念念不忘的 8 家（含店名）」（lucky Vicki，776 赞 / 1057 收藏），已按行程就近安排到对应餐次。</p></div>';
-    h='<div class="section"><h3>🍜 按天吃</h3><span>点任意一天展开</span></div>'+
-      '<div style="display:flex;gap:8px;margin-bottom:10px"><button class="bkreset" id="food-all">全部展开</button><button class="bkreset" id="food-none">全部收起</button></div>'+srcCard+h;
-    document.getElementById('view-美食').innerHTML=h;
-    document.querySelectorAll('.fday').forEach(function(card){
-      var head=card.querySelector('.daycard-head');
-      head.style.cursor='pointer';
-      head.addEventListener('click', function(e){
-        if(e.target.closest('[data-goday]')) return;
-        var b=document.getElementById('fbody-'+card.getAttribute('data-fday'));
-        b.style.display = (b.style.display==='none') ? 'block' : 'none';
-      });
+    el.innerHTML=h;
+    el.querySelectorAll('[data-foodday]').forEach(function(b){
+      b.addEventListener('click', function(){ state.foodDay=Number(b.getAttribute('data-foodday')); renderFood(); window.scrollTo(0,0); });
     });
-    var fa=document.getElementById('food-all'), fn=document.getElementById('food-none');
-    if(fa) fa.addEventListener('click', function(){ document.querySelectorAll('.fbody').forEach(function(b){ b.style.display='block'; }); });
-    if(fn) fn.addEventListener('click', function(){ document.querySelectorAll('.fbody').forEach(function(b){ b.style.display='none'; }); });
-    document.querySelectorAll('#view-美食 [data-goday]').forEach(function(b){ b.addEventListener('click',function(){ state.day=Number(b.getAttribute('data-goday')); switchTab('行程'); renderDay(); }); });
-    document.querySelectorAll('#view-美食 [data-copyname]').forEach(function(b){
-      b.addEventListener('click', function(){
-        var txt=b.getAttribute('data-copyname');
-        function ok(){ b.textContent='✓ 已复制'; setTimeout(function(){ b.textContent='🚕 复制给 Grab'; },1500); }
-        if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok); }
-        else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok(); }
-      });
+    el.querySelectorAll('[data-foodgoday]').forEach(function(b){
+      b.addEventListener('click', function(){ state.day=Number(b.getAttribute('data-foodgoday')); switchTab('行程'); renderDay(); });
     });
-    document.querySelectorAll('#view-美食 [data-food]').forEach(function(b){
+    el.querySelectorAll('[data-food]').forEach(function(b){
       b.addEventListener('click', function(){ openFood(foodMap[b.getAttribute('data-food')]); });
     });
+    refreshDistances();
   }
 
   /* ===== 酒店 ===== */
@@ -1156,7 +1127,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='<div class="card"><div style="font-size:13px;color:#0b6b4c;font-weight:800">'+esc(ha.area)+'</div><p style="font-size:14px;color:#5b6c65;margin:5px 0 2px">'+esc(ha.reason)+'</p></div>';
       h += hotelActions(ha);
     });
-    h+='<div class="tipbox"><p>定位为酒店坐标参考：点“地图导航”会唤起苹果/谷歌/高德，打车前建议先在 Grab 里确认上车点名称。</p></div>';
+    h+='<div class="tipbox"><p>定位为酒店坐标参考：点「地图导航」可选花瓣/谷歌，打车前先在 Grab 里确认上车点名称。</p></div>';
     document.getElementById('view-酒店').innerHTML=h;
     bindNavCopy(document.getElementById('view-酒店'));
   }
@@ -1183,7 +1154,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='<div class="tipbox"><p>已确认 4 段接送机，订单都在平台里：10.3 07:00 BKK 接机（乘车码 A000004）、10.5 10:00 席隆送机至廊曼 T2、10.5 14:15 清迈接机、10.9 08:16 清迈送机（CARIFY，含提拿行李）。<br>还缺 2 段：<b>10.9 廊曼 T2 接机</b>（清迈送机页面可直接加购 ¥173，含航班延误免费等）与<b>10.10 廊曼 T1 送机</b>。确认后我再补进来。</p></div>';
     }
     h+='<div class="card" style="background:#eef7f3;border-color:#cfe9dd"><b>🚕 交通总原则（本行程不开车）</b><p style="font-size:13.5px;color:#2f4a3f;margin-top:6px;line-height:1.7">全程不用自己开车：曼谷用 Grab 打车 + BTS/MRT + 湄南河渡船；清迈除 10.6 山区一日是包车（07:30–18:30 共约 11 小时，含大象营等待与瀑布）外，其余都是 Grab 打车，古城区内以步行为主。机场四段都是已订的接送机。</p></div>';
-    h+='<div class="card" style="background:#fff8e9;border-color:#f0dfb8"><b>🗺 地图 App 怎么用</b><p style="font-size:13.5px;color:#6b5836;margin-top:6px;line-height:1.75">• 花瓣地图（Petal Maps）：点「⭐ 花瓣地图」会打开花瓣自己的网页地图，并把标记点精确落在这一家上（地图上显示的就是这家店的名字）。页面右上角有蓝色的「打开App」，点一下就能跳进你手机里的花瓣地图，按右上角 ☆ 收藏标星；这个链接不依赖 App 跳转，在微信里也能打开。<br>• 导航用「🗺 高德导航」或「🧭 谷歌导航」，都是直接跳转、最稳定。<br>• 底图：标准图为 OpenStreetMap（泰国覆盖完整）；高德路网瓦片在泰国是空白的，但卫星影像可用，路线卡里有「🛰 卫星影像」按钮。<br>• 谷歌地图 / 苹果地图 / 高德：页面里都有直接跳转的按钮，谷歌在泰国最好用、高德中文界面最顺。<br>• 打车用 Grab：点「🚕 Grab」会把英文地名 + 坐标复制到剪贴板，切到 Grab 目的地栏粘贴即可。</p></div>';
     h+='<div class="section"><h3>☎️ 紧急联络</h3><span>点号码直接拨号</span></div>';
     h+='<div class="card"><p style="font-size:13.5px;color:#3f514a;line-height:1.8">· 驻泰使馆领保 <b>+66-2-245-7010</b>｜驻清迈总领馆领保 <b>+66-53-280-618</b><br>· 外交部全球领保 <b>+86-10-12308</b>（24h）<br>· 泰国旅游警察 <b>1155</b>（有中文）｜报警 <b>191</b>｜急救 <b>1669</b></p><div class="actrow"><button class="btn primary" data-goto="__emg__">☎️ 紧急联络</button></div></div>';
     h+='<div class="section"><h3>航班</h3><span>已确认 · 接送机已安排</span></div>';
@@ -1263,7 +1233,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     document.querySelector('.tabbar button[data-tab="'+name+'"]').classList.add('on');
     document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
     document.getElementById('view-'+name).classList.add('on');
-    if(name==='课表') renderTimetable();
+    if(name==='行程表') renderTimetable();
     if(name==='美食') renderFood();
     if(name==='酒店') renderHotels();
     if(name==='出行') renderTravel();
@@ -1349,7 +1319,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     var q=encodeURIComponent(full.trim());
     if(act==='petal'){ window.open('https://www.petalmaps.com/place/?center='+plat+'&z=17&marker='+plat+U,'_blank'); showToast('花瓣地图已定位到该点：点页面右上角「打开App」即可跳进花瓣收藏'); }
     else if(act==='petalnav'||act==='gmapnav'){ window.open('https://www.google.com/maps/dir/?api=1&destination='+plat+'&travelmode=driving','_blank'); }
-    else if(act==='amap'){ window.open('https://uri.amap.com/navigation?to='+encodeURIComponent(lng+','+lat+','+nm)+'&mode=car&coordinate=wgs84&callnative=1','_blank'); }
+    else if(act==='gmap'){ window.open('https://www.google.com/maps/search/?api=1&query='+q,'_blank'); }
     else if(act==='grab'){ var txt=full.trim()+' · '+plat; copyText(txt, function(){ showToast('已复制：'+txt+'　在 Grab 目的地栏粘贴'); }); window.open('https://www.grab.com/th/en/','_blank'); }
     else if(act==='copycoord'){ copyText(plat, function(){ showToast('已复制坐标 '+plat); }); }
   });
@@ -1357,9 +1327,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   if(sos) sos.addEventListener('click', function(){ showSheet('sheet-emg'); });
   document.querySelectorAll('[data-tab]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-tab')); }); });
   document.querySelectorAll('[data-goto]').forEach(function(b){ b.addEventListener('click', function(){ switchTab(b.getAttribute('data-goto')); }); });
-  document.getElementById('btn-copy').addEventListener('click', function(){
+  var _copyBtn=document.getElementById('btn-copy');
+  if(_copyBtn) _copyBtn.addEventListener('click', function(){
     var txt=document.getElementById('sheet-addr').textContent;
-    function ok(){ var b=document.getElementById('btn-copy'); b.textContent='✓ 已复制'; setTimeout(function(){ b.textContent='📋 复制定位'; },1500); }
+    function ok(){ var b=document.getElementById('btn-copy'); if(!b) return; b.textContent='✓ 已复制'; setTimeout(function(){ b.textContent='📋 复制定位'; },1500); }
     if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(ok); }
     else { var ta=document.createElement('textarea'); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok(); }
   });
