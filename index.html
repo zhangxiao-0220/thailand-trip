@@ -74,7 +74,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .item .nm{font-weight:800;font-size:16px;line-height:1.3}
 .item .rv{font-size:13.5px;color:#52615c;margin-top:3px}
 .item .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip{font-size:12.5px;background:#f0f4f1;color:#5b6c65;border-radius:999px;padding:4px 10px;white-space:nowrap;line-height:1.5}
+.chip{font-size:12.5px;background:#f0f4f1;color:#5b6c65;border-radius:999px;padding:4px 10px;line-height:1.5;max-width:100%;overflow-wrap:anywhere}
 .chip.book{background:#fdeadd;color:#b0471f}
 .actrow{display:flex;gap:8px;margin-top:12px}
 .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:12px 10px;font-size:15px;font-weight:700;border:none;cursor:pointer;text-decoration:none;background:#eef4f0;color:#0d5d47}
@@ -174,6 +174,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .mini-note{font-size:13px;color:#8b9892;margin-top:10px;text-align:center}
 .sheet .box,.sheet .scroll{overflow-x:hidden}
+.sheet .box{min-width:0}
+.sheet .box>*,.sheet .scroll,.sheet .scroll *{min-width:0;max-width:100%}
+.sheet .qrow,.sheet .row,.gmeta,.tlmeta,.mealopts{min-width:0}
 .sheet h3,.sheet .sub,.sheet .addr{overflow-wrap:anywhere}
 .sheet .chip,.gmeta .chip,.tlmeta .chip{white-space:normal;max-width:100%;overflow-wrap:anywhere;text-align:left}
 .sheet ol,.sheet ul{padding-left:18px}
@@ -269,8 +272,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .qbtn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 9px;font-size:14px;line-height:1;cursor:pointer}
 .qbtn.petal{background:#fff0f0;border-color:#f6d3d3}
 .qbtn.grab{background:#eafaef;border-color:#c9ecd6}
-.qrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
-.qrow a,.qrow button{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:11px 8px;font-size:13.5px;font-weight:700;border:none;text-decoration:none;cursor:pointer}
+.qrow{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.qrow a,.qrow button{flex:1 1 30%;min-width:100px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:11px 8px;font-size:13.5px;font-weight:700;border:none;text-decoration:none;cursor:pointer;white-space:nowrap}
 .qrow .b1{background:#fff0f0;color:#c0392b}
 .qrow .b2{background:#eafaef;color:#1c7a44}
 .qrow .b3{background:#eef4f0;color:#0d5d47}
