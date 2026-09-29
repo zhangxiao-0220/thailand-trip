@@ -927,7 +927,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       h+='<div class="ttday2 ttrow'+(d.date===_iso?' tt-today':'')+'" data-day="'+i+'">'+
          '<div class="ttd2-head"><span class="ttd2-n">第'+(i+1)+'天</span><b>'+esc(d.date.slice(5).replace('-','/'))+' '+esc(d.weekday)+'</b>'+
          '<span class="ttd2-city">'+esc(CITY[d.date]||'')+'</span>'+
-         (isFlight?'<span class="ttd2-tag">✈️ 航班日</span>':'')+(isTour?'<span class="ttd2-tag vc">🚐 一日游</span>':(isCharter?'<span class="ttd2-tag vc">🚐 包车日</span>':''))+
+         (isFlight?'<span class="ttd2-tag">✈️ 航班日</span>':'')+(isTour?'<span class="ttd2-tag vc">🚐 一日游</span>':(isCharter?'<span class="ttd2-tag vc">🚐 一日游（含接送）</span>':''))+
          '</div><div class="ttd2-grid">';
       buckets.forEach(function(b){
         var items=cell[b]||[];
