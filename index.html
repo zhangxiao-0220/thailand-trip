@@ -104,6 +104,25 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .foodopt:first-of-type{border-top:none}
 .foodopt .pl{font-size:15px}
 .foodopt .note{font-size:13px;color:#7b8a82;margin:2px 0 4px}
+.quick button.hot{background:#ffd479;color:#5a3f00}
+.trbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:none;border-radius:16px;padding:15px;font-size:16px;font-weight:800;cursor:pointer;margin-bottom:9px}
+.trbtn.zh{background:linear-gradient(135deg,#0f6b52,#2ca381);color:#fff}
+.trbtn.en{background:linear-gradient(135deg,#1d5f8a,#3d9bd1);color:#fff}
+.trbtn.live{animation:pulse 1.1s infinite}
+@keyframes pulse{0%{opacity:1}50%{opacity:.55}100%{opacity:1}}
+.trbox{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px 14px;margin-bottom:10px}
+.trzh{font-size:16px;line-height:1.6;color:#1e332c;font-weight:700}
+.tren{font-size:15px;line-height:1.6;color:#0b6b4c;font-weight:700;margin-top:9px}
+.trsmall{font-size:12.5px;color:#8a9791;margin-top:8px}
+.tract{display:flex;gap:8px;margin-top:10px}
+.tract .btn{flex:1}
+.trrow{display:flex;gap:9px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:8px}
+.trrow .tx{flex:1 1 auto;min-width:0}
+.trrow .zh{font-size:14.5px;color:#1e332c;font-weight:700;line-height:1.5}
+.trrow .en{font-size:13.5px;color:#4d5d66;margin-top:4px;line-height:1.55}
+.spk{flex:0 0 auto;width:40px;height:40px;border-radius:12px;border:none;background:#eef4f0;color:#0d5d47;font-size:17px;cursor:pointer}
+.spk.en{background:#eaf3fa;color:#1d5f8a}
+.trinput{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:15px;font-family:inherit}
 .subnav{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subnav::-webkit-scrollbar{display:none}
 .tnav{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:#3f514a;border-radius:999px;padding:8px 13px;font-size:13.5px;font-weight:700;cursor:pointer}
@@ -375,6 +394,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       <div class="quick">
         <button data-goto="美食">🍜 今天吃什么</button>
         <button data-goto="出行">🚗 航班与交通</button>
+        <button data-goto="翻译" class="hot">🗣 翻译 / 口语</button>
       </div>
     </div>
     <div id="day-root"></div>
@@ -384,6 +404,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   <div id="view-行程表" class="panel"></div>
   <div id="view-美食" class="panel"></div>
   <div id="view-购物" class="panel"></div>
+  <div id="view-翻译" class="panel"></div>
   <div id="view-酒店" class="panel"></div>
   <div id="view-出行" class="panel"></div>
   <div id="view-清单" class="panel"></div>
@@ -1148,6 +1169,230 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     refreshDistances();
   }
 
+  /* ===== 翻译 / 口语 ===== */
+  var PHRASES=[
+    {g:'🏨 酒店入住',items:[
+      ['我有预订，名字是 ZHANG。','I have a reservation under the name ZHANG.'],
+      ['我想办入住。','I would like to check in.'],
+      ['我的房间好了吗？','Is my room ready yet?'],
+      ['可以晚一点退房吗？','Can I have a late check-out?'],
+      ['早餐几点开始？在几楼？','What time does breakfast start, and on which floor?'],
+      ['Wi-Fi 密码是多少？','What is the Wi-Fi password?'],
+      ['空调 / 热水不工作了。','The air conditioner / hot water is not working.'],
+      ['可以再给我两条毛巾吗？','Could I have two more towels?'],
+      ['我想换一间房。','I would like to change rooms.'],
+      ['我要退房，谢谢。','I would like to check out, please.'],
+    ]},
+    {g:'🧳 行李寄存',items:[
+      ['可以帮我寄存行李吗？','Could you store my luggage here?'],
+      ['我下午五点前回来取。','I will pick it up before 5 p.m.'],
+      ['请问行李寄存处在哪里？','Where is the luggage storage?'],
+      ['可以帮我保管到晚上吗？','Could you keep it until this evening?'],
+      ['这是行李牌，我来取行李。','Here is my luggage tag, I would like to collect my luggage.'],
+      ['我的行李不见了。','My luggage is missing.'],
+    ]},
+    {g:'🚕 打车',items:[
+      ['请到这个地址，谢谢。','Please take me to this address.'],
+      ['请打表。','Please use the meter.'],
+      ['大概多少钱？','About how much will it cost?'],
+      ['大概要多久？','How long will it take?'],
+      ['请在这里停一下。','Please stop here.'],
+      ['我赶时间，能快一点吗？','I am in a hurry, could you go a bit faster?'],
+      ['我在这里下车就行。','I will get off here.'],
+      ['可以刷卡吗？还是只收现金？','Do you take cards, or cash only?'],
+      ['请给我收据。','Could I have a receipt?'],
+      ['我在 4 号门等您。','I am waiting at Gate 4.'],
+    ]},
+    {g:'🛍 购物',items:[
+      ['多少钱？','How much is this?'],
+      ['太贵了，能便宜一点吗？','That is too expensive. Can you make it cheaper?'],
+      ['有别的颜色吗？','Do you have this in another color?'],
+      ['有大一号 / 小一号的吗？','Do you have a bigger / smaller size?'],
+      ['我可以试穿吗？','Can I try it on?'],
+      ['可以刷信用卡吗？','Do you accept credit cards?'],
+      ['可以退税吗？','Can I get a tax refund?'],
+      ['我要这个，谢谢。','I will take this one, thank you.'],
+      ['可以帮我包起来吗？','Could you wrap it up, please?'],
+    ]},
+    {g:'🍜 点单',items:[
+      ['两位，谢谢。','A table for two, please.'],
+      ['请给我菜单。','Could I see the menu, please?'],
+      ['有中文菜单吗？','Do you have a Chinese menu?'],
+      ['有什么推荐的？','What do you recommend?'],
+      ['这个是什么？','What is this?'],
+      ['不要放辣椒，谢谢。','No chili, please.'],
+      ['不要香菜。','No cilantro, please.'],
+      ['少辣。','Not too spicy, please.'],
+      ['我要这个，谢谢。','I would like this one, please.'],
+      ['再要一份这个。','One more of this, please.'],
+      ['可以打包吗？','Could I get this to go?'],
+      ['买单，谢谢。','The bill, please.'],
+    ]},
+    {g:'💵 付钱',items:[
+      ['多少钱？','How much is it?'],
+      ['我付现金。','I will pay in cash.'],
+      ['可以刷卡吗？','Can I pay by card?'],
+      ['可以扫码吗？支付宝 / 微信。','Do you take Alipay or WeChat Pay?'],
+      ['请给我收据。','Could I have the receipt?'],
+      ['分开付。','Separate bills, please.'],
+      ['不用找了。','Keep the change.'],
+    ]},
+    {g:'🧭 问路',items:[
+      ['请问洗手间在哪里？','Excuse me, where is the restroom?'],
+      ['请问这里怎么走？','Excuse me, how do I get here?'],
+      ['走路要多久？','How long does it take on foot?'],
+      ['我迷路了。','I am lost.'],
+      ['最近的地铁站怎么走？','How do I get to the nearest BTS or MRT station?'],
+      ['可以在地图上指给我看吗？','Could you show me on the map?'],
+    ]},
+    {g:'✈️ 机场',items:[
+      ['我的航班几点登机？','What time does my flight board?'],
+      ['登机口在哪里？','Where is the boarding gate?'],
+      ['我只带随身行李。','I only have carry-on luggage.'],
+      ['行李是直挂到上海吗？','Is my luggage checked through to Shanghai?'],
+      ['请问哪里可以接水？','Where can I refill water?'],
+      ['这里可以办退税吗？','Can I do the tax refund here?'],
+    ]},
+    {g:'🆘 紧急',items:[
+      ['帮帮我！','Help me, please!'],
+      ['我需要看医生。','I need to see a doctor.'],
+      ['我的护照丢了。','I lost my passport.'],
+      ['请叫警察。','Please call the police.'],
+      ['请叫救护车！','Please call an ambulance!'],
+      ['我对花生过敏。','I am allergic to peanuts.'],
+    ]},
+  ];
+  var TR={rec:null,listening:false,auto:true,last:'',lastLang:'en'};
+  function speak(text,lang){
+    if(!text) return;
+    try{
+      window.speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang=lang||'en-US'; u.rate=0.92;
+      var vs=window.speechSynthesis.getVoices()||[];
+      var hit=vs.filter(function(v){ return (v.lang||'').toLowerCase().indexOf((lang||'en').slice(0,2))===0; })[0];
+      if(hit) u.voice=hit;
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+  function trFallback(text,to){
+    var t=String(text).replace(/[\s，。？！,.?!、]/g,'');
+    var hit=null;
+    PHRASES.forEach(function(g){ g.items.forEach(function(it){
+      var zh=it[0].replace(/[\s，。？！,.?!、]/g,''), en=it[1].replace(/[\s，。？！,.?!、]/g,'');
+      if(to==='en'&&t===zh) hit=it[1];
+      if(to==='zh'&&t.toLowerCase()===en.toLowerCase()) hit=it[0];
+      if(!hit&&to==='en'&&zh.indexOf(t)>=0&&t.length>=4) hit=it[1];
+    });});
+    return hit||'';
+  }
+  function translate(text,to){
+    var from=(to==='en')?'zh-CN':'en';
+    var url='https://translate.googleapis.com/translate_a/single?client=gtx&sl='+from+'&tl='+to+'&dt=t&q='+encodeURIComponent(text);
+    return fetch(url,{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+      var s=(j&&j[0]||[]).map(function(x){ return x[0]||''; }).join('').trim();
+      if(!s) throw new Error('empty');
+      return {text:s,src:'在线翻译'};
+    }).catch(function(){
+      var alt='https://api.mymemory.translated.net/get?q='+encodeURIComponent(text)+'&langpair='+encodeURIComponent(from+'|'+to);
+      return fetch(alt,{cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){
+        var s=j&&j.responseData&&j.responseData.translatedText;
+        if(!s) throw new Error('empty2');
+        return {text:s,src:'在线翻译'};
+      }).catch(function(){
+        var f=trFallback(text,to);
+        if(f) return {text:f,src:'离线常用句'};
+        return {text:'',src:'离线'};
+      });
+    });
+  }
+  function showPair(zh,en,srcNote){
+    var box=document.getElementById('tr-out');
+    if(!box) return;
+    box.innerHTML='<div class="trbox">'+
+      (zh?'<div class="trzh">'+esc(zh)+'</div>':'')+
+      (en?'<div class="tren">'+esc(en)+'</div>':'')+
+      '<div class="tract"><button class="btn" id="tr-spk-zh">🔊 中文</button><button class="btn primary" id="tr-spk-en">🔊 英文</button></div>'+
+      '<div class="trsmall">'+(srcNote||'')+'</div></div>';
+    var b1=document.getElementById('tr-spk-zh'), b2=document.getElementById('tr-spk-en');
+    if(b1) b1.addEventListener('click', function(){ speak(zh,'zh-CN'); });
+    if(b2) b2.addEventListener('click', function(){ speak(en,'en-US'); });
+  }
+  function trGo(text, to){
+    var note=document.createElement('div');
+    translate(text,to).then(function(r){
+      if(to==='en'){
+        showPair(text, r.text||'（没译出来，试试下面常用句）', '来源：'+r.src);
+        TR.last=r.text; TR.lastLang='en';
+        if(TR.auto&&r.text) speak(r.text,'en-US');
+      } else {
+        showPair(r.text||'（没译出来）', text, '来源：'+r.src);
+        TR.last=r.text; TR.lastLang='zh-CN';
+        if(TR.auto&&r.text) speak(r.text,'zh-CN');
+      }
+    });
+  }
+  function listen(lang,to){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    var out=document.getElementById('tr-out');
+    if(!SR){ out.innerHTML='<div class="trbox">当前浏览器不支持语音识别。用下面的「手动输入」也能翻译，或在 Safari / Chrome 里打开这个页面。</div>'; return; }
+    if(TR.rec){ try{ TR.rec.stop(); }catch(e){} TR.rec=null; }
+    var rec=new SR();
+    rec.lang=lang; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
+    TR.rec=rec;
+    var btnZh=document.getElementById('tr-btn-zh'), btnEn=document.getElementById('tr-btn-en');
+    rec.onstart=function(){ TR.listening=true; if(btnZh) btnZh.classList.add('live'); if(btnEn) btnEn.classList.add('live'); };
+    rec.onerror=function(e){ out.innerHTML='<div class="trbox">没听清（'+(e.error||'error')+'）：点按钮再说一次，或改用手动输入。</div>'; };
+    rec.onresult=function(e){
+      var txt='';
+      for(var i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript;
+      txt=txt.trim();
+      if(!txt) return;
+      out.innerHTML='<div class="trbox"><div class="trzh">🎤 '+esc(txt)+'</div><div class="trsmall">正在翻译…</div></div>';
+      trGo(txt,to);
+    };
+    rec.onend=function(){ TR.listening=false; if(btnZh) btnZh.classList.remove('live'); if(btnEn) btnEn.classList.remove('live'); };
+    try{ rec.start(); }catch(e){}
+  }
+  function renderTrans(){
+    var h='<div class="tract" style="margin-bottom:10px"><button class="btn" id="tr-back">← 返回行程</button></div>';
+    h+='<div class="section"><h3>🗣 翻译 / 常用口语</h3><span>说中文出英文 · 说英文出中文</span></div>';
+    h+='<button class="trbtn zh" id="tr-btn-zh">🎤 我说中文 → 翻译成英文</button>';
+    h+='<button class="trbtn en" id="tr-btn-en">🎤 I speak English → 翻译成中文</button>';
+    h+='<div class="trsmall" style="margin:-2px 0 10px">第一次点会弹麦克风权限，允许即可；说了几秒不说话会自动结束并翻译。手机上如果没反应，换成 Safari / Chrome 打开，或直接用下面的手动输入。</div>';
+    h+='<div id="tr-out"><div class="trbox"><div class="trsmall">点上面的按钮开始说话：说完会自动翻译并朗读；如果在泰国说英语，就用蓝色那个按钮，把对方的英语变成中文。</div></div></div>';
+    h+='<div class="trbox"><div style="font-size:13.5px;color:#42524b;font-weight:700">英文自动朗读</div>'+
+       '<div class="tract" style="margin-top:8px"><button class="btn '+(TR.auto?'primary':'')+'" id="tr-auto">'+(TR.auto?'✅ 已开启':'已关闭')+'</button></div></div>';
+    h+='<div class="trbox"><div style="font-size:13.5px;color:#42524b;font-weight:700">手动输入（不方便说话时）</div>'+
+       '<div style="margin-top:8px"><input class="trinput" id="tr-text" placeholder="输入中文或英文，点按钮翻译"></div>'+
+       '<div class="tract"><button class="btn primary" id="tr-2en">译成英文</button><button class="btn" id="tr-2zh">译成中文</button></div></div>';
+    PHRASES.forEach(function(g,gi){
+      h+='<div class="section"><h3>'+esc(g.g)+'</h3><span>'+g.items.length+' 句 · 点 🔊 直接播放</span></div>';
+      g.items.forEach(function(it,ii){
+        h+='<div class="trrow"><div class="tx"><div class="zh">'+esc(it[0])+'</div><div class="en">'+esc(it[1])+'</div></div>'+
+           '<button class="spk en" data-say="'+gi+'_'+ii+'_en" title="播放英文">🔊</button>'+
+           '<button class="spk" data-say="'+gi+'_'+ii+'_zh" title="播放中文">🀄</button></div>';
+      });
+    });
+    document.getElementById('view-翻译').innerHTML=h;
+    var bz=document.getElementById('tr-btn-zh'), be=document.getElementById('tr-btn-en');
+    var bk=document.getElementById('tr-back'); if(bk) bk.addEventListener('click', function(){ switchTab('行程'); });
+    if(bz) bz.addEventListener('click', function(){ listen('zh-CN','en'); });
+    if(be) be.addEventListener('click', function(){ listen('en-US','zh'); });
+    var au=document.getElementById('tr-auto');
+    if(au) au.addEventListener('click', function(){ TR.auto=!TR.auto; renderTrans(); });
+    var t2e=document.getElementById('tr-2en'), t2z=document.getElementById('tr-2zh'), ti=document.getElementById('tr-text');
+    if(t2e) t2e.addEventListener('click', function(){ var v=(ti.value||'').trim(); if(v) trGo(v,'en'); });
+    if(t2z) t2z.addEventListener('click', function(){ var v=(ti.value||'').trim(); if(v) trGo(v,'zh'); });
+    document.querySelectorAll('#view-翻译 [data-say]').forEach(function(b){
+      b.addEventListener('click', function(){
+        var p=b.getAttribute('data-say').split('_'), it=PHRASES[Number(p[0])].items[Number(p[1])];
+        speak(p[2]==='en'?it[1]:it[0], p[2]==='en'?'en-US':'zh-CN');
+      });
+    });
+    if(window.speechSynthesis) { try{ window.speechSynthesis.getVoices(); }catch(e){} }
+  }
+
   /* ===== 购物清单 ===== */
   var SHOP=[
     {g:'🍜 吃的带回国',ic:'🍜',n:'泰式船面（方便装）',img:'images/shop/boat-noodle.jpg',
@@ -1416,12 +1661,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
   function switchTab(name){
     state.tab=name;
     document.querySelectorAll('.tabbar button').forEach(function(x){ x.classList.remove('on'); });
-    document.querySelector('.tabbar button[data-tab="'+name+'"]').classList.add('on');
+    var tb=document.querySelector('.tabbar button[data-tab="'+name+'"]'); if(tb) tb.classList.add('on');
+    else { var home=document.querySelector('.tabbar button[data-tab="行程"]'); if(home) home.classList.add('on'); }
     document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('on'); });
     document.getElementById('view-'+name).classList.add('on');
     if(name==='行程表') renderTimetable();
     if(name==='美食') renderFood();
     if(name==='购物') renderShop();
+    if(name==='翻译') renderTrans();
     if(name==='酒店') renderHotels();
     if(name==='出行') renderTravel();
     if(name==='清单') renderChecklist();
