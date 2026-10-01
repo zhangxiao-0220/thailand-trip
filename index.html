@@ -1276,6 +1276,22 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     btn.textContent=txt||btn.__orig;
     if(!txt) btn.textContent=btn.__orig;
   }
+  function trPad(n){ n=Number(n)||0; return n<10?('0'+n):String(n); }
+  function playLocal(url,text,lang,btn){
+    try{
+      var a=new Audio(url);
+      a.setAttribute('playsinline','');
+      a.onerror=function(){ speak(text,lang,btn); };
+      var pr=a.play();
+      if(pr&&pr.then){
+        pr.then(function(){
+          trBtnFlash(btn,'🔊 播放中…');
+          a.onended=function(){ trBtnFlash(btn,null); };
+          setTimeout(function(){ trBtnFlash(btn,null); },8000);
+        }).catch(function(){ speak(text,lang,btn); });
+      } else { trBtnFlash(btn,'🔊 播放中…'); setTimeout(function(){ trBtnFlash(btn,null); },3000); }
+    }catch(e){ speak(text,lang,btn); }
+  }
   function ttsSources(text,lang){
     var zh=/^zh/i.test(lang||'en');
     var q=encodeURIComponent(String(text).slice(0,180));
@@ -1446,12 +1462,14 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     h+='<div class="trbox"><div style="font-size:13.5px;color:#42524b;font-weight:700">手动输入（不方便说话时）</div>'+
        '<div style="margin-top:8px"><input class="trinput" id="tr-text" placeholder="输入中文或英文，点按钮翻译"></div>'+
        '<div class="tract"><button class="btn primary" id="tr-2en">译成英文</button><button class="btn" id="tr-2zh">译成中文</button></div></div>';
+    var trIdx=0;
     PHRASES.forEach(function(g,gi){
       h+='<div class="section"><h3>'+esc(g.g)+'</h3><span>'+g.items.length+' 句 · 点 🔊 直接播放</span></div>';
       g.items.forEach(function(it,ii){
+        trIdx++;
         h+='<div class="trrow"><div class="tx"><div class="zh">'+esc(it[0])+'</div><div class="en">'+esc(it[1])+'</div></div>'+
-           '<button class="spk en" data-say="'+gi+'_'+ii+'_en" title="播放英文">🔊</button>'+
-           '<button class="spk" data-say="'+gi+'_'+ii+'_zh" title="播放中文">🀄</button></div>';
+           '<button class="spk en" data-say="'+gi+'_'+ii+'_en" data-i="'+trIdx+'" title="播放英文">🔊</button>'+
+           '<button class="spk" data-say="'+gi+'_'+ii+'_zh" data-i="'+trIdx+'" title="播放中文">🀄</button></div>';
       });
     });
     document.getElementById('view-翻译').innerHTML=h;
@@ -1488,7 +1506,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     document.querySelectorAll('#view-翻译 [data-say]').forEach(function(b){
       b.addEventListener('click', function(){
         var p=b.getAttribute('data-say').split('_'), it=PHRASES[Number(p[0])].items[Number(p[1])];
-        speak(p[2]==='en'?it[1]:it[0], p[2]==='en'?'en-US':'zh-CN', b);
+        var isEn=(p[2]==='en');
+        var n=b.getAttribute('data-i');
+        playLocal('images/audio/'+(isEn?'en':'zh')+trPad(n)+'.m4a', isEn?it[1]:it[0], isEn?'en-US':'zh-CN', b);
       });
     });
     if(window.speechSynthesis) { try{ window.speechSynthesis.getVoices(); }catch(e){} }
