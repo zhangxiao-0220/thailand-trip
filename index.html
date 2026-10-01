@@ -1276,9 +1276,43 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     btn.textContent=txt||btn.__orig;
     if(!txt) btn.textContent=btn.__orig;
   }
+  function ttsSources(text,lang){
+    var zh=/^zh/i.test(lang||'en');
+    var q=encodeURIComponent(String(text).slice(0,180));
+    return [
+      'https://fanyi.baidu.com/gettts?lan='+(zh?'zh':'en')+'&text='+q+'&spd=3&source=web',
+      'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl='+(zh?'zh-CN':'en')+'&q='+q,
+      'https://dict.youdao.com/dictvoice?audio='+q+'&type='+(zh?1:2)
+    ];
+  }
+  function playRemote(text,lang,btn,i){
+    if(!text) return;
+    i=i||0;
+    var list=ttsSources(text,lang);
+    if(i>=list.length){ trBtnFlash(btn,null); trMsg('在线发音也失败了，像是网络问题，过一会儿再试。','bad'); return; }
+    try{
+      var a=new Audio(list[i]);
+      a.setAttribute('playsinline','');
+      var pr=a.play();
+      if(pr&&pr.then){
+        pr.then(function(){
+          trBtnFlash(btn,'🔊 播放中…');
+          a.onended=function(){ trBtnFlash(btn,null); };
+          setTimeout(function(){ trBtnFlash(btn,null); },6000);
+        }).catch(function(){ playRemote(text,lang,btn,i+1); });
+      } else { trBtnFlash(btn,'🔊 播放中…'); setTimeout(function(){ trBtnFlash(btn,null); },3000); }
+    }catch(e){ playRemote(text,lang,btn,i+1); }
+  }
+  function hasSysTTS(lang){
+    if(!window.speechSynthesis||!window.SpeechSynthesisUtterance) return false;
+    var want=((lang||'en').slice(0,2)).toLowerCase();
+    var vs=[]; try{ vs=window.speechSynthesis.getVoices()||[]; }catch(e){}
+    if(!vs.length) return true; /* 语音包可能还没加载完，先试系统 */
+    return vs.some(function(v){ return (v.lang||'').toLowerCase().indexOf(want)===0; });
+  }
   function speak(text,lang,btn){
     if(!text) return;
-    if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){ trMsg('这个浏览器不支持语音播放，可以先把英文给对方看（长按文字可复制）。','bad'); return; }
+    if(!hasSysTTS(lang)){ playRemote(text,lang,btn); trMsg('这台设备的浏览器没有自带语音合成，已改用在线发音（需要联网）。'); return; }
     var want=((lang||'en').slice(0,2)).toLowerCase();
     try{ window.speechSynthesis.cancel(); window.speechSynthesis.resume(); }catch(e){}
     var u=new SpeechSynthesisUtterance(text);
@@ -1292,7 +1326,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     try{ window.speechSynthesis.speak(u); }catch(e){ trMsg('播放失败：'+e.message,'bad'); }
     setTimeout(function(){
       var s=window.speechSynthesis;
-      if(s&&!s.speaking&&!s.pending){ trMsg('好像没出声：iPhone 请关掉侧边静音开关、把音量调大；安卓检查媒体音量。文字仍可长按复制。','bad'); trBtnFlash(btn,null); }
+      if(s&&!s.speaking&&!s.pending){ playRemote(text,lang,btn); trMsg('系统语音没出声，已自动改用在线发音；还是没声音就检查媒体音量。'); }
     },1500);
   }
   function trFallback(text,to){
@@ -1439,6 +1473,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       }catch(e){}
       lines.push('语音包：共 '+vc+' 个（英文 '+en+' / 中文 '+zh+'）');
       lines.push('https 安全页：'+(location.protocol==='https:'?'是':'否（麦克风会被拦）'));
+      lines.push('播放方式：'+(window.speechSynthesis?(vc?'系统语音':'系统接口在但没语音包 → 用在线发音'):'在线发音（这台浏览器没有系统语音）'));
       var show=function(extra){ trMsg(lines.concat(extra||[]).join('\n'),'ok'); };
       if(navigator.permissions&&navigator.permissions.query){
         navigator.permissions.query({name:'microphone'}).then(function(st){ show(['麦克风权限：'+st.state]); })
