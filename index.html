@@ -122,6 +122,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
 .trrow .en{font-size:13.5px;color:#4d5d66;margin-top:4px;line-height:1.55}
 .spk{flex:0 0 auto;width:40px;height:40px;border-radius:12px;border:none;background:#eef4f0;color:#0d5d47;font-size:17px;cursor:pointer}
 .spk.en{background:#eaf3fa;color:#1d5f8a}
+.spk:active,.trbtn:active{transform:scale(.96)}
+.spk:disabled{opacity:.5}
 .trinput{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:12px;padding:11px 12px;font-size:15px;font-family:inherit}
 .subnav{display:flex;gap:7px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .subnav::-webkit-scrollbar{display:none}
@@ -1263,17 +1265,35 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     ]},
   ];
   var TR={rec:null,listening:false,auto:true,last:'',lastLang:'en'};
-  function speak(text,lang){
+  function trMsg(txt,cls){
+    var el=document.getElementById('tr-alert');
+    if(!el){ try{ showToast(txt); }catch(e){} return; }
+    el.innerHTML='<div class="card" style="background:'+(cls==='bad'?'#fdeae2':'#eef7f3')+';border-color:'+(cls==='bad'?'#f5cbbd':'#cfe9dd')+'"><p style="font-size:13.5px;color:'+(cls==='bad'?'#a8442a':'#2f4a3f')+';line-height:1.7">'+esc(txt)+'</p></div>';
+  }
+  function trBtnFlash(btn,txt){
+    if(!btn) return;
+    if(!btn.__orig) btn.__orig=btn.textContent;
+    btn.textContent=txt||btn.__orig;
+    if(!txt) btn.textContent=btn.__orig;
+  }
+  function speak(text,lang,btn){
     if(!text) return;
-    try{
-      window.speechSynthesis.cancel();
-      var u=new SpeechSynthesisUtterance(text);
-      u.lang=lang||'en-US'; u.rate=0.92;
-      var vs=window.speechSynthesis.getVoices()||[];
-      var hit=vs.filter(function(v){ return (v.lang||'').toLowerCase().indexOf((lang||'en').slice(0,2))===0; })[0];
-      if(hit) u.voice=hit;
-      window.speechSynthesis.speak(u);
-    }catch(e){}
+    if(!window.speechSynthesis||!window.SpeechSynthesisUtterance){ trMsg('这个浏览器不支持语音播放，可以先把英文给对方看（长按文字可复制）。','bad'); return; }
+    var want=((lang||'en').slice(0,2)).toLowerCase();
+    try{ window.speechSynthesis.cancel(); window.speechSynthesis.resume(); }catch(e){}
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang=lang||'en-US'; u.rate=0.9; u.volume=1; u.pitch=1;
+    var vs=[]; try{ vs=window.speechSynthesis.getVoices()||[]; }catch(e){}
+    var hit=vs.filter(function(v){ return (v.lang||'').toLowerCase().indexOf(want)===0; })[0];
+    if(hit) u.voice=hit;
+    u.onstart=function(){ trBtnFlash(btn,'🔊 播放中…'); };
+    u.onend=function(){ setTimeout(function(){ trBtnFlash(btn,null); },300); };
+    u.onerror=function(){ trBtnFlash(btn,null); trMsg('播放失败：这台设备可能没装英文语音包，或者被静音模式挡住了。','bad'); };
+    try{ window.speechSynthesis.speak(u); }catch(e){ trMsg('播放失败：'+e.message,'bad'); }
+    setTimeout(function(){
+      var s=window.speechSynthesis;
+      if(s&&!s.speaking&&!s.pending){ trMsg('好像没出声：iPhone 请关掉侧边静音开关、把音量调大；安卓检查媒体音量。文字仍可长按复制。','bad'); trBtnFlash(btn,null); }
+    },1500);
   }
   function trFallback(text,to){
     var t=String(text).replace(/[\s，。？！,.?!、]/g,'');
@@ -1313,10 +1333,13 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       (zh?'<div class="trzh">'+esc(zh)+'</div>':'')+
       (en?'<div class="tren">'+esc(en)+'</div>':'')+
       '<div class="tract"><button class="btn" id="tr-spk-zh">🔊 中文</button><button class="btn primary" id="tr-spk-en">🔊 英文</button></div>'+
+      '<div class="tract"><button class="btn" id="tr-copy">📋 复制英文（给对方看）</button></div>'+
       '<div class="trsmall">'+(srcNote||'')+'</div></div>';
     var b1=document.getElementById('tr-spk-zh'), b2=document.getElementById('tr-spk-en');
-    if(b1) b1.addEventListener('click', function(){ speak(zh,'zh-CN'); });
-    if(b2) b2.addEventListener('click', function(){ speak(en,'en-US'); });
+    if(b1) b1.addEventListener('click', function(){ speak(zh,'zh-CN',b1); });
+    if(b2) b2.addEventListener('click', function(){ speak(en,'en-US',b2); });
+    var bc=document.getElementById('tr-copy');
+    if(bc) bc.addEventListener('click', function(){ copyText(en||zh, function(){ trMsg('已复制：'+(en||zh)); }); });
   }
   function trGo(text, to){
     var note=document.createElement('div');
@@ -1332,27 +1355,47 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
       }
     });
   }
+  var TRERR={'not-allowed':'麦克风权限被拒绝了：点地址栏左边的锁形图标 → 允许麦克风，再试一次','service-not-allowed':'浏览器不允许这个页面用麦克风：请把链接复制到 Safari / Chrome 打开（不是微信内置浏览器）','audio-capture':'没找到麦克风设备','network':'语音识别需要联网，检查一下网络','no-speech':'没有听到声音，点按钮再说一次','aborted':'已取消'};
+  function micOK(){
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia) return Promise.resolve(true);
+    return navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){
+      try{ st.getTracks().forEach(function(t){ t.stop(); }); }catch(e){}
+      return true;
+    }).catch(function(){ return false; });
+  }
   function listen(lang,to){
     var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
     var out=document.getElementById('tr-out');
-    if(!SR){ out.innerHTML='<div class="trbox">当前浏览器不支持语音识别。用下面的「手动输入」也能翻译，或在 Safari / Chrome 里打开这个页面。</div>'; return; }
+    if(location.protocol==='file:'){
+      trMsg('现在是用本机文件（file://）打开的，浏览器不允许麦克风。请改用这个链接：https://zhangxiao-0220.github.io/thailand-trip/ （密码 1103）','bad');
+      return;
+    }
+    if(!SR){
+      trMsg('这个浏览器不支持语音识别（微信里打开常常不行）。用 Safari / Chrome 打开这个链接，或先用下面的「手动输入」。','bad');
+      return;
+    }
     if(TR.rec){ try{ TR.rec.stop(); }catch(e){} TR.rec=null; }
-    var rec=new SR();
-    rec.lang=lang; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
-    TR.rec=rec;
-    var btnZh=document.getElementById('tr-btn-zh'), btnEn=document.getElementById('tr-btn-en');
-    rec.onstart=function(){ TR.listening=true; if(btnZh) btnZh.classList.add('live'); if(btnEn) btnEn.classList.add('live'); };
-    rec.onerror=function(e){ out.innerHTML='<div class="trbox">没听清（'+(e.error||'error')+'）：点按钮再说一次，或改用手动输入。</div>'; };
-    rec.onresult=function(e){
-      var txt='';
-      for(var i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript;
-      txt=txt.trim();
-      if(!txt) return;
-      out.innerHTML='<div class="trbox"><div class="trzh">🎤 '+esc(txt)+'</div><div class="trsmall">正在翻译…</div></div>';
-      trGo(txt,to);
-    };
-    rec.onend=function(){ TR.listening=false; if(btnZh) btnZh.classList.remove('live'); if(btnEn) btnEn.classList.remove('live'); };
-    try{ rec.start(); }catch(e){}
+    trMsg('正在申请麦克风权限…如果弹出提示请点「允许」。');
+    micOK().then(function(ok){
+      if(!ok){ trMsg('麦克风没打开：请点地址栏左边的锁形图标 → 允许麦克风；如果一直不行，换成 Safari / Chrome 打开。','bad'); return; }
+      var rec=new SR();
+      rec.lang=lang; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
+      TR.rec=rec;
+      var btnZh=document.getElementById('tr-btn-zh'), btnEn=document.getElementById('tr-btn-en');
+      var btn=to==='en'?btnZh:btnEn;
+      rec.onstart=function(){ TR.listening=true; if(btn) btn.classList.add('live'); out.innerHTML='<div class="trbox"><div class="trzh">🎤 正在听…请说话</div><div class="trsmall">说完停顿一下就会自动翻译</div></div>'; };
+      rec.onerror=function(e){ var k=e.error||'error'; trMsg('没听清：'+(TRERR[k]||k),'bad'); };
+      rec.onresult=function(e){
+        var txt='';
+        for(var i=e.resultIndex;i<e.results.length;i++) txt+=e.results[i][0].transcript;
+        txt=txt.trim();
+        if(!txt) return;
+        out.innerHTML='<div class="trbox"><div class="trzh">🎤 '+esc(txt)+'</div><div class="trsmall">正在翻译…</div></div>';
+        trGo(txt,to);
+      };
+      rec.onend=function(){ TR.listening=false; if(btn) btn.classList.remove('live'); };
+      try{ rec.start(); }catch(e){ trMsg('启动语音识别失败：'+e.message,'bad'); }
+    });
   }
   function renderTrans(){
     var h='<div class="tract" style="margin-bottom:10px"><button class="btn" id="tr-back">← 返回行程</button></div>';
@@ -1360,7 +1403,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     h+='<button class="trbtn zh" id="tr-btn-zh">🎤 我说中文 → 翻译成英文</button>';
     h+='<button class="trbtn en" id="tr-btn-en">🎤 I speak English → 翻译成中文</button>';
     h+='<div class="trsmall" style="margin:-2px 0 10px">第一次点会弹麦克风权限，允许即可；说了几秒不说话会自动结束并翻译。手机上如果没反应，换成 Safari / Chrome 打开，或直接用下面的手动输入。</div>';
+    h+='<div id="tr-alert"></div>';
+    if(location.protocol==='file:') h+='<div class="card" style="background:#fdeae2;border-color:#f5cbbd"><p style="font-size:13.5px;color:#a8442a;line-height:1.7">⚠️ 你现在是用本机文件（file://）打开的：浏览器会拦掉麦克风和在线翻译。请改用 <b>https://zhangxiao-0220.github.io/thailand-trip/</b>（密码 1103）打开，功能才正常。</p></div>';
     h+='<div id="tr-out"><div class="trbox"><div class="trsmall">点上面的按钮开始说话：说完会自动翻译并朗读；如果在泰国说英语，就用蓝色那个按钮，把对方的英语变成中文。</div></div></div>';
+    h+='<div class="tract" style="margin-bottom:10px"><button class="btn" id="tr-diag">🔍 检查语音功能（点了没反应按这个）</button></div>';
     h+='<div class="trbox"><div style="font-size:13.5px;color:#42524b;font-weight:700">英文自动朗读</div>'+
        '<div class="tract" style="margin-top:8px"><button class="btn '+(TR.auto?'primary':'')+'" id="tr-auto">'+(TR.auto?'✅ 已开启':'已关闭')+'</button></div></div>';
     h+='<div class="trbox"><div style="font-size:13.5px;color:#42524b;font-weight:700">手动输入（不方便说话时）</div>'+
@@ -1379,6 +1425,26 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     var bk=document.getElementById('tr-back'); if(bk) bk.addEventListener('click', function(){ switchTab('行程'); });
     if(bz) bz.addEventListener('click', function(){ listen('zh-CN','en'); });
     if(be) be.addEventListener('click', function(){ listen('en-US','zh'); });
+    var dg=document.getElementById('tr-diag');
+    if(dg) dg.addEventListener('click', function(){
+      var lines=[];
+      lines.push('页面来源：'+location.protocol);
+      lines.push('语音识别接口：'+((window.SpeechRecognition||window.webkitSpeechRecognition)?'有':'没有'));
+      lines.push('语音播放接口：'+(window.speechSynthesis?'有':'没有'));
+      var vc=0,en=0,zh=0;
+      try{
+        var vs=window.speechSynthesis.getVoices()||[];
+        vc=vs.length;
+        vs.forEach(function(v){ var l=(v.lang||'').toLowerCase(); if(l.indexOf('en')===0) en++; if(l.indexOf('zh')===0) zh++; });
+      }catch(e){}
+      lines.push('语音包：共 '+vc+' 个（英文 '+en+' / 中文 '+zh+'）');
+      lines.push('https 安全页：'+(location.protocol==='https:'?'是':'否（麦克风会被拦）'));
+      var show=function(extra){ trMsg(lines.concat(extra||[]).join('\n'),'ok'); };
+      if(navigator.permissions&&navigator.permissions.query){
+        navigator.permissions.query({name:'microphone'}).then(function(st){ show(['麦克风权限：'+st.state]); })
+          .catch(function(){ show([]); });
+      } else { show([]); }
+    });
     var au=document.getElementById('tr-auto');
     if(au) au.addEventListener('click', function(){ TR.auto=!TR.auto; renderTrans(); });
     var t2e=document.getElementById('tr-2en'), t2z=document.getElementById('tr-2zh'), ti=document.getElementById('tr-text');
@@ -1387,7 +1453,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:6px
     document.querySelectorAll('#view-翻译 [data-say]').forEach(function(b){
       b.addEventListener('click', function(){
         var p=b.getAttribute('data-say').split('_'), it=PHRASES[Number(p[0])].items[Number(p[1])];
-        speak(p[2]==='en'?it[1]:it[0], p[2]==='en'?'en-US':'zh-CN');
+        speak(p[2]==='en'?it[1]:it[0], p[2]==='en'?'en-US':'zh-CN', b);
       });
     });
     if(window.speechSynthesis) { try{ window.speechSynthesis.getVoices(); }catch(e){} }
